@@ -1,0 +1,27 @@
+#listOrders tbody tr {
+  cursor: pointer;
+}
+
+#listOrders tbody tr:hover {
+  background-color: #bbc5d5;
+}
+
+#listOrders thead tr {
+  cursor: default;
+}
+
+#orderItem thead tr {
+  background-color: #FDC018;
+}
+
+#orderItem thead tr th {
+  color: #ffffff;
+}
+
+#orderItem tbody tr {
+  background-color: #fcf8e3;
+}
+
+#orderItem tbody tr:hover {
+  background-color: #fddfdf;
+}

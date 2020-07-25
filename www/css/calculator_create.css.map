@@ -1,0 +1,7 @@
+{
+"version": 3,
+"mappings": "AAAA,EAAG;EACD,cAAc,EAAE,QAAQ",
+"sources": ["calculator_create.scss"],
+"names": [],
+"file": "calculator_create.css"
+}

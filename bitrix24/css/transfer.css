@@ -1,0 +1,18 @@
+body {
+	/*background: url(img/logo-big.png) center no-repeat;*/
+	/*background-color: #f7e946;*/
+	background-color: transparent;
+}
+
+#body_content {
+	top: 1vh;
+    left: 1vw;
+    position: absolute;
+	width: 98vw;
+	background-color: white;
+	/*box-shadow: 0 0 10px rgba(169, 159, 39, 0.5);*/
+    padding: 20px;
+    border-radius: 30px;
+	opacity: 0.9;
+	font-family: Times New Romance, sans serif;
+}

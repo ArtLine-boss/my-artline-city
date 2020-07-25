@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+</head>
+<body>
+    <script>
+        function save() {
+            $.ajax({
+                url: "http://artline.city/www/api/",
+                headers: {
+                    'Method': 'FreeCalc',
+                    'Content-Type': 'application/json'
+                },
+                type: "POST",
+                data: JSON.stringify($('#calcVisit').serializeArray()),
+                cache: false,
+                dataType: 'json',
+                async: true,
+                success: function(response) {
+                    if(!response.Msg && response.Data) {
+                        alert(response.Data + " BYN");
+                    }
+                    if(response.Msg) {
+                        alert(response.Msg);
+                    }
+                },
+                error: function () {
+                    alert('что-то не так!');
+                }
+            });
+        }
+    </script>
+    
+    <form id="calcVisit" action='' enctype='multipart/form-data' method='post'>
+        <label>Количество</label><input name="p_cir" type="number" min="0"><label>штук</label><br>
+
+        <label>Размер</label>
+        <input type="radio" name="p_size" value="80*50"> 80x50
+        <input type="radio" name="p_size" value="100*50"> 100x50
+        <input type="radio" name="p_size" value="50*80"> 50x80
+        <input type="radio" name="p_size" value="50*100"> 50x100
+        <br>
+
+        <label>Цвет</label>
+        <input type="radio" name="p_color_1" value="42"> 1+0
+        <input type="radio" name="p_color_1" value="43"> 1+1
+        <input type="radio" name="p_color_1" value="49"> 4+0
+        <input type="radio" name="p_color_1" value="44"> 4+1
+        <input type="radio" name="p_color_1" value="3"> 4+4
+        <br>
+
+        <input type="hidden" name="FormId" value="1607">
+
+        <input type="button" onclick="save()" value="Отправить">
+
+    </form>
+</body>

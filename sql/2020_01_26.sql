@@ -1,0 +1,1 @@
+INSERT INTO `art`.`accesslevel` (`ID`, `category_id`, `name`, `access_code`) VALUES ('35', '2', 'Печать бланка заказа', 'PRINT_ORDERS_BLANK');

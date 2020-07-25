@@ -1,0 +1,56 @@
+body {
+	/*background: url(img/logo-big.png) center no-repeat;*/
+	/*background-color: #f7e946;*/
+	background-color: transparent;
+}
+
+#body_content {
+	top: 1vh;
+    left: 1vw;
+    position: absolute;
+	width: 98vw;
+	background-color: white;
+	/*box-shadow: 0 0 10px rgba(169, 159, 39, 0.5);*/
+    padding: 20px;
+    border-radius: 30px;
+	opacity: 0.9;
+	font-family: Times New Romance, sans serif;
+}
+
+label {
+	font-weight: bold;
+}
+
+table {
+	border-collapse: collapse;
+	width: 100%;
+    max-width: 100%;
+    margin-bottom: 20px;
+}
+
+td {
+	border-top: 1px solid #ddd;
+}
+
+.checkbox {
+	margin-left: 10px;
+}
+
+.block_table {
+	border: 1px solid black;
+	position: relative;
+	background-color: yellow;
+	width: 120px;
+	height: 120px;
+}
+
+.bl {
+	background-color: black;
+	position: absolute;
+	border: 1px solid white;
+}
+
+.dataTables_filter {
+	width: 50%;
+}
+

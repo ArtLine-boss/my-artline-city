@@ -1,0 +1,14 @@
+@charset "utf-8";
+
+a img {
+    border: none;
+}
+
+#preview {
+    background: none repeat scroll 0 0 #333333;
+    border: 1px solid #CCCCCC;
+    color: #FFFFFF;
+    display: none;
+    padding: 5px;
+    position: absolute;
+}

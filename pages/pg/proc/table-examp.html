@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+	<meta charset="UTF-8">
+	<title>ОАО "Брестский ликероводочный завод"</title>
+<!-- 	<link rel="stylesheet" type="text/css" href="ttn.css">
+		<link rel="stylesheet" type="text/css" media="print" href="ttn-print.css">  -->
+<style>
+	body{
+	font-family: Arial, sans-serif;
+	margin:0; 
+	padding: 0;
+	font-size: 8pt;
+}
+.ttn-wrapper{
+	
+	width: 60%;
+	margin: 0 auto;
+
+}
+.col24-tuning{
+	height: 1pt;
+	line-height: 0.1;
+
+}
+
+table{
+	width: 100%;
+	margin: 0 auto;
+	display: block;
+	
+}
+.tbl-info{
+	font-size: 6pt;
+	margin: 0;
+	padding: 0;
+	line-height: 0.7;
+}
+.tbl-main{
+	line-height: 1.1;
+}
+.header-info td{
+	width: 4.16666667%;
+}
+
+.test-border{
+	border: 1px solid #aaa;
+}
+
+table .table-date{
+	font-size: 8pt;
+	font-weight: 700;
+}
+
+
+table .header-border_bottom{
+	border-bottom: 1px solid #000;
+}
+
+table .header-label{
+	font-style: italic;
+	font-weight: 800;
+	border: none;
+	padding:0 5pt 0 5pt;
+}
+
+.unp-table{
+	width: 30%;
+	margin: 0 auto;
+	text-align: center;
+	border-collapse: collapse;
+}
+.unp-table tr td{
+	padding: 5px;
+	border: 1px solid #000;
+	
+}
+
+.goods-table{
+	width: 100%;
+	margin: 0 auto;
+	border-collapse: collapse;
+}
+
+.goods-table tr td{
+	border: 1px solid #000;
+	padding: 3px 5px;
+}
+
+.goods-table th{
+	text-align: center;
+	border: 1px solid black;
+	font-weight: 400;
+}
+
+.goods-table .good-row{
+	font-size: 7pt;
+}
+
+.table-total{
+	width: 100%;
+	
+}
+
+.table-total td{
+	width: 4.67777%;
+}
+
+/*для вывода на печать*/
+
+@media print{
+
+
+
+body{
+	font-family: Arial, sans-serif;
+	margin:0; 
+	padding: 0;
+	font-size: 6pt;
+}
+.ttn-wrapper{
+	
+	width: 100%;
+	margin: 0 auto;
+
+}
+.col24-tuning{
+	height: 1pt;
+	line-height: 0.1;
+
+}
+
+table{
+	width: 100%;
+	margin: 0 auto;
+	display: block;
+	
+}
+.tbl-info{
+	font-size: 6pt;
+	margin: 0;
+	padding: 0;
+	line-height: 0.7;
+}
+.tbl-main{
+	line-height: 1.1;
+}
+.header-info td{
+	width: 4.16666667%;
+}
+
+.test-border{
+	border: 1px solid #aaa;
+}
+
+table .table-date{
+	font-size: 8pt;
+	font-weight: 700;
+}
+
+
+table .header-border_bottom{
+	border-bottom: 1px solid #000;
+}
+
+table .header-label{
+	font-style: italic;
+	font-weight: 800;
+	border: none;
+	padding:0 5pt 0 5pt;
+}
+
+.unp-table{
+	width: 30%;
+	margin: 0 auto;
+	text-align: center;
+	border-collapse: collapse;
+}
+.unp-table tr td{
+	padding: 5px;
+	border: 1px solid #000;
+	
+}
+
+.goods-table{
+	width: 100%;
+	margin: 0 auto;
+	border-collapse: collapse;
+}
+
+.goods-table tr td{
+	border: 1px solid #000;
+	padding: 3px 5px;
+}
+
+.goods-table th{
+	text-align: center;
+	border: 1px solid black;
+	font-weight: 400;
+}
+
+.goods-table .good-row{
+	font-size: 7pt;
+}
+
+.table-total{
+	width: 100%;
+	
+}
+
+.table-total td{
+	width: 4.67777%;
+}
+
+}
+</style>
+
+</head>
+<body>
+	<div class="ttn-wrapper">
+		<table CELLSPACING=0 cellpadding=0 class="unp-table">
+			<tr>
+				<td class="border-none" style="border: none;">&nbsp; </td>
+				<td>Грузоотправитель </td>
+				<td>Грузополучатель</td>
+				<td>Заказчик <br>автомобильной <br> перевозки</td>
+			</tr>
+			<tr>
+				<td style="border: none;">УНП</td>
+				<td>123456789</td>
+				<td>123456789</td>
+				<td>123456789</td>
+
+			</tr>
+		</table>
+		<p>&nbsp;</p>
+		<p>&nbsp;</p>
+		<p>&nbsp;</p>
+
+		<table  cellspacing=0 class="header-info">
+			<tr>
+				<td colspan=24 align=left><span class='table-date'>25 июня 2018</span></td>
+			</tr>
+			<tr class="tbl-main">
+				<td colspan="2" class="header-label">Автомобиль</td>
+				<td colspan="8" class="header-border_bottom">Volkswagen Caravella ET 1747-1</td>
+				<td class="header-label style="text-align:right;">Прицеп</td>
+				<td colspan="5"  class="header-border_bottom">Зубренок К 8215</td>
+				<td colspan="5" align=right class="header-label">К путевому листу №</td>
+				<td colspan="3" class="header-border_bottom">1152</td>
+			</tr>
+			<tr class="tbl-info">
+				<td colspan="2" valign=top></td>
+				<td colspan="8" valign=top align="center"><sup>(марка, государственный номер)</sup></td>
+				<td colspan="1" valign=top>&nbsp;</td>
+				<td colspan="5" valign=top align="center"><sup>(марка, гос. номер)</sup></td>
+				<td colspan="5" valign=top>&nbsp;</td>
+				<td colspan="3" valign=top>&nbsp;</td>
+			</tr>
+			<tr class="tbl-main">
+				<td colspan="2" class='header-label'>Водитель</td>
+				<td colspan="22" class="header-border_bottom" >Кравцов В.П.</td>
+			</tr>
+			<tr class="tbl-info">
+				<td colspan="2" valign=top  >&nbsp;</td>
+				<td colspan="22" valign=top  align=center ><sup>(фамилия, инициалы)</sup></td>
+			</tr>
+			<tr class="tbl-main">
+				<td colspan="10" class="header-label">Заказчик автомобильной перевозки (плательщик) </td>
+				<td colspan="14" class="header-border_bottom">Заказчик автоперевозки</td>
+			</tr>
+			<tr class="tbl-info">
+				<td colspan="8" class="tbl-info">&nbsp;</td>
+				<td colspan="16"  valign=top align=center><sup>(наименование, адрес)</sup></td>
+			</tr>
+			<tr class="tbl-main">
+				<td colspan="3" ><font style="bold" class='header-label' valign=middle>Грузоотправитель</td>
+					<td colspan="21" class="header-border_bottom"><strong>ОДО "Артлайн" г. Брест, ул. Карбышева 74-9</strong></td>
+				</tr>
+				<tr class="tbl-info">
+					<td colspan="3" >&nbsp;</td>
+					<td colspan="21"   align=center><sup>(наименование, адрес)</sup></td>
+				</tr>
+				<tr class="tbl-main">
+					<td colspan="3"><font style="bold" class="header-label" valign=middle>Грузополучатель</td>
+						<td colspan="21" class="header-border_bottom"><strong>dipisci delectus consequuntur ipsum aperiam placeat. Tempora neque labore explicabo placeat non dicta ratione officiis.ОАО "Брестский ликероводочный завод, 224005, ул. Советская, 2/1</strong></td>
+					</tr>
+					<tr class="tbl-info">
+						<td colspan="3" >&nbsp;</td>
+						<td colspan="21" align=center><sup>(наименование, адрес)</sup></td>
+					</tr>
+
+					<tr class=tbl-main>
+						<td colspan="3" valign=middle class="header-label">Основание отпуска</td>
+						<td colspan="4" class="header-border_bottom">Договор от 21.06.2018 №253</td>
+						<td colspan="3" valign=middle class="header-label">Пункт погрузки</td>
+						<td colspan="6" class="header-border_bottom">г. Брест, ул. Карбышева, 2/1</td>
+						<td colspan="3" valign=middle class="header-label">Пункт разгрузки</td>
+						<td colspan="5" class="header-border_bottom" >г. Брест, ул. Советская, 2/1</td>
+					</tr>
+
+					<tr class=tbl-info>
+						<td border="0" colspan=7 align=right  valign=top><sup>(дата и номер договора или другого документа)</sup></td>
+						<td  colspan=17 >&nbsp;</td>
+					</tr>
+					<tr>
+						<td colspan="2" class="header-label">Переадресовка</td>
+						<td colspan="22" class="header-border_bottom">&nbsp;</td>
+					</tr class=tbl-main>
+					<tr class=tbl-info>
+						<td colspan="2"  >&nbsp;</td>
+						<td colspan="22" valign=top  align=center><sup>(наименование, адрес нового грузополучателя, фамилия, инициалы уполномоченного лица)</sup></td>
+					</tr>
+					<tr class="col24-tuning">
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>
+					</tr>
+
+				</table>
+
+				<table CELLSPACING=0 cellpadding=0 class="goods-table">
+					<tr>
+						<td  align=center colspan="24">I. ТОВАРНЫЙ РАЗДЕЛ</td>
+					</tr>
+					<tr>
+						<th colspan=5>Наименование товара </th>
+						<th >Еди-<br>ница изме-<br>рения </th>
+						<th >Коли-<br>чество</td> 
+							<th colspan=2>Цена,<br> руб. коп.</th>
+							<th colspan=2>Стоимость, руб. коп.</th>
+							<th >Ставка НДС, %</th>
+							<th colspan=2>Сумма НДС, <br>руб. коп.</th>
+							<th colspan=2>Стоимость с НДС, руб. коп.</th>
+							<th colspan=2>Коли-<br>чество <br>грузовых <br> мест</th>
+							<th >Масса груза, кг</th>
+							<th colspan=5>Примечание</th>
+						</tr>
+
+						<tr class="good-row">
+							<td colspan=5>Наклейка обычнаф 50*50 </td>
+							<td >шт.</td>
+							<td >300</td> 
+							<td colspan=2>1,20</td>
+							<td colspan=2>1 252,30</td>
+							<td >20%</td>
+							<td colspan=2>320,00</td>
+							<td colspan=2>1570,45</td>
+							<td colspan=2>25</td>
+							<td >115</td>
+							<td colspan=5>предприятие-производитель</td>
+						</tr>
+						<tr class="good-row">
+							<td colspan=5>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias, possimus? </td>
+							<td >шт.</td>
+							<td >300</td> 
+							<td colspan=2>1,20</td>
+							<td colspan=2>1 252,30</td>
+							<td >20%</td>
+							<td colspan=2>320,00</td>
+							<td colspan=2>1570,45</td>
+							<td colspan=2>25</td>
+							<td >115</td>
+							<td colspan=5>предприятие-производитель, первый импортер</td>
+						</tr>
+						<tr >
+							<td colspan=5>ИТОГО </td>
+							<td >x</td>
+							<td >300</td> 
+							<td colspan=2>x</td>
+							<td colspan=2>1 252,30</td>
+							<td >20%</td>
+							<td colspan=2>320,00</td>
+							<td colspan=2>1 570,45</td>
+							<td colspan=2>25</td>
+							<td >115</td>
+							<td colspan=5>x</td>
+						</tr>
+
+
+						<tr class="col24-tuning">
+							<td style="border:none;">&nbsp;</td>
+							<td style="border:none;">&nbsp;</td>
+							<td style="border:none;">&nbsp;</td>
+							<td style="border:none;">&nbsp;</td>
+							<td style="border:none;">&nbsp;</td>
+							<td style="border:none;">&nbsp;</td>
+							<td style="border:none;">&nbsp;</td>
+							<td style="border:none;">&nbsp;</td>
+							<td style="border:none;">&nbsp;</td>
+							<td style="border:none;">&nbsp;</td>
+							<td style="border:none;">&nbsp;</td>
+							<td style="border:none;">&nbsp;</td>
+							<td style="border:none;">&nbsp;</td>
+							<td style="border:none;">&nbsp;</td>
+							<td style="border:none;">&nbsp;</td>
+							<td style="border:none;">&nbsp;</td>
+							<td style="border:none;">&nbsp;</td>
+							<td style="border:none;">&nbsp;</td>
+							<td style="border:none;">&nbsp;</td>
+							<td style="border:none;">&nbsp;</td>
+							<td style="border:none;">&nbsp;</td>
+							<td style="border:none;">&nbsp;</td>
+							<td style="border:none;">&nbsp;</td>
+							<td style="border:none;">&nbsp;</td>
+
+						</tr> 
+					</table>
+
+		<table class="table-total" cellpadding="0" cellspacing="0">
+			<tr  class="tbl-main">
+				<td colspan=3 class="header-label">Всего сумма НДС</td>
+				<td colspan=21 class="header-border_bottom">Одна тысяча триста пятьдесят рублей, 50 коп.</td>
+			</tr>
+			<tr  class="tbl-info">
+				<td colspan=3  valign="top">&nbsp;</td>
+				<td colspan=21  align=center valign="top"><sup>(сумма прописью)</sup></td>
+			</tr>
+			<tr lass="tbl-main">
+				<td colspan=4  class="header-label">Всего стоимость с НДС</td>
+				<td colspan=20 class="header-border_bottom">Одна тысяча триста пятьдесят рублей, 50 коп.</td>
+			</tr>
+			<tr  class="tbl-info">
+				<td colspan=4 valign="top" >&nbsp;</td>
+				<td colspan=20 valign="top"  align=center><sup>(сумма прописью)</sup></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+			</tr>
+		</table>
+
+		
+				</div>
+
+			</body>
+			</html>

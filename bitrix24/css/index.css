@@ -1,0 +1,23 @@
+body {
+	/*background: url(img/logo-big.png) center no-repeat;*/
+	background-color: white;
+	padding: 10px;
+}
+
+#windowCalc {
+	width: 100%;
+	height: 100%;
+}
+
+.dataTables_filter {
+	width: 50%;
+}
+
+.block_add {
+	border-radius: 8px;
+	border-color: #EEF2F5;
+	background-color: white;
+	box-shadow: 0 0 10px rgba(0,0,0,0.5);
+	text-align: center;
+	cursor: pointer;
+}

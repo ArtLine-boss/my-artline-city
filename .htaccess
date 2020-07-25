@@ -1,0 +1,24 @@
+Options All -Indexes
+<Files Apache-2.4_vhost.conf>
+	deny from all
+</Files>
+
+#Защищаем .htaccess файл
+<files .htaccess>
+order allow,deny
+deny from all
+</files>
+
+RewriteEngine On
+RewriteBase /
+
+# меняем http на https
+#<If "%{HTTP_HOST} != '192.168.1.42'">
+#	<If "%{HTTP_HOST} != 'localhost'">
+#		RewriteCond %{SERVER_PORT} ^80$ [OR]
+#		RewriteCond %{HTTP} =on
+#		RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+#	</If>
+#</If>
+
+ErrorDocument 404 /404.html

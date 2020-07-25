@@ -1,0 +1,52 @@
+<?php
+include '../firewall.php';
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>Добавление нового материаа</title>
+    <!-- Bootstrap core CSS -->
+    <link href="../../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+
+    <script src="../../js/funJs.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+  </head>
+  <body>
+    <script>
+window.onblur = function () {window.close()}
+</script>
+    <div class="container">
+		<div class='masthead'>
+            <input type="radio" name="r2" value="n" onclick="fun2()">Новый<br>
+			<input type="radio" name="r2" value="s" onclick="fun2()">Существующий<br>
+			<?php
+                    print  "<form  class='form-signin' method='post' action='_addOrders.php'>";
+                    print "<select name = 'orderClient'>";
+                    print "<option value=''>Выберите клиента</option>"; 
+				    include_once '../db.php';
+                    $query="select id,client_name from clients";
+                    $result = mysql_query($query) or die("Query failed");
+                    while ($row = mysql_fetch_row($result))
+					{ 
+                    print "<option value='$row[0]'>$row[1]</option>"; 
+					}
+                    print "</select><br/><br/>";
+                    print "<input type='submit' value='Добавить' />";
+                    print "</form>";
+			?>
+		</div>
+	</div>
+<div class="container" id="elem2"></div>
+  </body>
+</html>

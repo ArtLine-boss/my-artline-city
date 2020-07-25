@@ -1,0 +1,111 @@
+html {
+  font-size: 12pt; }
+
+body {
+  background-color: white; }
+
+.c-navbar {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  display: none;
+  position: fixed;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  width: 100%;
+  min-width: 100%;
+  /*min-height: 70px;*/
+  padding: 13px 30px;
+  border-bottom: 1px solid #E6EAEE;
+  background-color: #222c3c;
+  z-index: 400; }
+
+@media (max-width: 992px) {
+  .c-navbar {
+    padding: 0.625rem 0.9375rem;
+    display: block; }
+
+  .container-fluid {
+    margin-top: 90px; } }
+.c-sidebar-toggle {
+  width: 100px;
+  height: 50px; }
+
+.c-sidebar__brand.small_log {
+  border-bottom: none;
+  height: auto; }
+
+.container-fluid {
+  padding: 10px; }
+
+.c-table__cell {
+  white-space: pre-wrap; }
+
+.c-modal__header {
+  background-color: #aaa;
+  background: linear-gradient(180deg, #aaa, #aaa); }
+
+.select2-container--default .select2-selection--single {
+  background: #fff;
+  background: linear-gradient(180deg, #fff, #f2f4f7);
+  height: auto;
+  border: 1px solid #dfe3e9;
+  border-radius: 4px;
+  color: rgba(53, 64, 82, 0.5);
+  font-size: .875rem;
+  font-weight: 500;
+  outline: 0; }
+
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+  line-height: 23px;
+  padding-right: .9375rem;
+  padding-left: .9375rem;
+  color: rgba(53, 64, 82, 0.5); }
+
+.c-sidebar__link {
+  font-size: 12pt; }
+
+input {
+  font-size: .875rem; }
+
+select {
+  font-size: .875rem; }
+
+.m-modal {
+  display: none;
+  position: fixed;
+  list-style: none;
+  padding: 10px;
+  margin: 0;
+  box-sizing: border-box;
+  width: 100%;
+  background-color: #eee;
+  height: 100%;
+  top: 0;
+  left: 0;
+  transition: left .2s;
+  z-index: 2;
+  -webkit-transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  opacity: 0.9; }
+
+.m-modal.show {
+  left: 0;
+  display: block; }
+
+.block_table {
+  border: 1px solid black;
+  position: relative;
+  background-color: yellow;
+  width: 130px;
+  height: 120px; }
+
+.bl {
+  background-color: black;
+  position: absolute;
+  border: 1px solid white; }
+
+/*# sourceMappingURL=controller.css.map */
