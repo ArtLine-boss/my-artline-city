@@ -362,5 +362,14 @@
             $k = $this->_key;
             $this->$k = null;
         }
+
+        /** Фабрика загрузки объекта по ид */
+        public function _oid($oid) {
+            do {
+                $this->loadById($oid);
+            } while(false);
+
+            return $this;
+        }
     }
 ?>
