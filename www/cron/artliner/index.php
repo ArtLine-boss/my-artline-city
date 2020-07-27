@@ -68,7 +68,7 @@ do {
         //пишем текущую дату
         $bitrix24->date_add = API::CurrentDate(CONSTANTS::DB_DATETIME_FORMAT);
         //Пользователь системы
-        $bitrix24->user_login = '026'; //АНЯ
+        $bitrix24->user_login = factorys_classes::getObject('classes_settings')->loadById(CONSTANTS::SETTINGS22)->VAL; //АНЯ
         //Пишем что полный перенос в систему
         $bitrix24->in_work = 1;
 

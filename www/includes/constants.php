@@ -31,6 +31,9 @@ class CONSTANTS
     const OPERATIONS_TYPE_CUT = 2;
     const OPERATIONS_TYPE_PRINT_COMBI_COLOR = 3;
     const OPERATIONS_TYPE_PLOTTER_CUT = 4;
+
+    /** НАСТРОЙКИ */
+    const SETTINGS22 = 22;
 }
 
 ?>

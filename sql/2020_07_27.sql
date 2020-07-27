@@ -1,0 +1,1 @@
+INSERT INTO `art`.`settings` (`ID`, `NAME`, `VAL`) VALUES ('22', 'Пользователь скрипта Artliner', '026');
