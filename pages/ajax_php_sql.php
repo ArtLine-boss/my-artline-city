@@ -1527,7 +1527,7 @@
 	$summ1 = $row[10];
 	
 	$opl = "";
-	if ($admin == '4' OR $admin == '2' OR $login == '026' OR $login == '027' or $login == '033' or $login == '032'){
+	if ($admin == '4' OR $admin == '2' OR $login == '026' OR $login == '027'  OR $login == '028' or $login == '033' or $login == '032'){
 	$opl = "<a onclick = add_oplat('$row[0]','$row[6]')><span class = 'pull-right'><i class='glyphicon glyphicon-euro'></i></<span></a>";
 	}
 	
@@ -2223,7 +2223,7 @@
 	$summ1 = $row[10];
 	
 	$opl = "";
-	if ($admin == '4' OR $admin == '2' OR $login == '026' OR $login == '027' or $login == '033' or $login == '032'){
+	if ($admin == '4' OR $admin == '2' OR $login == '026' OR $login == '027'  OR $login == '028' or $login == '033' or $login == '032'){
 	$opl = "<a onclick = add_oplat('$row[0]','$row[6]')><span class = 'pull-right'><i class='glyphicon glyphicon-euro'></i></<span></a>";
 	}
 	$json[] = array(
@@ -2278,7 +2278,7 @@
 	$summ1 = $row[10];
 	
 	$opl = "";
-	if ($admin == '4' OR $admin == '2' OR $login == '026' OR $login == '027' or $login == '033' or $login == '032'){
+	if ($admin == '4' OR $admin == '2' OR $login == '026' OR $login == '027' OR $login == '028' or $login == '033' or $login == '032'){
 	$opl = "<a onclick = add_oplat('$row[0]','$row[6]')><span class = 'pull-right'><i class='glyphicon glyphicon-euro'></i></<span></a>";
 	}
 	$json[] = array(
