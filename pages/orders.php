@@ -425,12 +425,12 @@
                                             }
                                         ?>
                                         <?php
-                                            if ($admin == '4' or $login == '008' or $login == '029') {
+                                            if ($admin == '4' or $login == '008' or $login == '029' or $login == '030') {
                                                 echo "<div class='col-md-2'>		<button type='button' class='btn btn-default form-control'  onClick='_add_plan_job3()'>Создать план работы</button></div>";
                                             }
                                         ?>
                                         <?php
-                                            if ($admin == '4' or $login == '008' or $login == '029') {
+                                            if ($admin == '4' or $login == '008' or $login == '029' or $login == '030') {
                                                 echo "<div class='col-md-2'>		<button type='button' class='btn btn-default form-control'  onclick='downloadCSV({ filename: ".'"'."stock-data.csv".'"'." });'>Всего в работе</button></div>";
                                             }
                                         ?>
