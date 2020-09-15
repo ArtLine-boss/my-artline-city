@@ -107,7 +107,7 @@
 	<a class="menu_a" href="diz.php"><i class="fa fa-money fa-fw"></i> Загруженность дизайнеров</a>
 	</li>';
 	}							
-	if($login == '8' || $login == '29'){
+	if($login == '8' || $login == '29' || $login == '030'){
 	
 	echo '<li>
 	<a class="menu_a" href="mang_bank.php"> Оформленные заказы</a>
