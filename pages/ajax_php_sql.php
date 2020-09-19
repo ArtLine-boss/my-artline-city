@@ -2394,7 +2394,7 @@
 			}
 			$dates= '';
 			$status = '';
-			if($row[3] != '' AND $row[4] == '' AND $row[5] == '') {
+			/*if($row[3] != '' AND $row[4] == '' AND $row[5] == '') {
 				$status1 = explode("|", track_post($row[3]));
 				$dates = $status1[0];
 				$status = $status1[1];
@@ -2405,7 +2405,7 @@
 					$qwe = "UPDATE mail SET date='{$dates}', status='{$status}' WHERE ID=". $row[6];
 					mysql_query($qwe) or die($qwe);
 				}
-			} 
+			} */
 			IF ($row[4] != '') {
 				$dates = $row[4] ;
 			}
