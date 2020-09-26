@@ -42,6 +42,9 @@
             exit;
         }
         $AppUI->endViewPage();
+
+        // Сообщения
+        include_once('popup/index.php');
     }
 
 

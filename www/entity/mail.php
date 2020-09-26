@@ -22,6 +22,7 @@ class entity_mail extends core_DBObject {
     public $status = null; //
     public $raion = null; //
     public $mail = null; //
+    public $status_read = 0; //Прочитана ли информация по доставке
 
     public function __construct()
     {

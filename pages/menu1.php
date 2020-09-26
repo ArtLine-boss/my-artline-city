@@ -166,8 +166,9 @@
 	</div>
 	</div>
 	</nav>';
-	
-	
+
+// Сообщения
+include_once($_SERVER['DOCUMENT_ROOT'] . '/www/popup/index.php');
 	
 	
 	?>	
