@@ -77,11 +77,11 @@
 	if($admin == '4' || $login == '026' || $login == 'buh2') {
 		echo '<li><a class="menu_a" href="../artliner_report.php"><i class="fa fa-book fa-fw"></i> Отчет по артлайнерам</a></li>';
 	}
-	if ($admin == '4' OR $admin == '2' OR $login == '026' OR $login == '027' OR $login == '028' or $login == '033' or $login == '032'){
+	if ($admin == '4' OR $admin == '2' OR $login == '026' OR $login == '030' OR $login == '028' or $login == '033' or $login == '032'){
 		echo '<li><a class="menu_a" href="../tn_list.php"><i class="fa fa-money fa-fw"></i>ТН</a></li>';
 		echo ' <li><a class="menu_a" href="../oplati.php"><i class="fa fa-money fa-fw"></i> Оплаты</a></li>';
 	}
-	if($login == '026' OR  $admin == '027' or $login == '033' or $login == '032'){
+	if($login == '026' OR  $admin == '030' or $login == '033' or $login == '032'){
 		echo '<li>
 		<a class="menu_a" href="../stock.php"><i class="fa fa-money fa-fw"></i> Склад</a>
 	</li>';}

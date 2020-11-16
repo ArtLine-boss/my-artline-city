@@ -336,7 +336,7 @@
 						if ($tn_count == '0') {
 							echo ' <button type="button" class="btn btn-warning" id = "add">Добавить продукт</button>';
 						}
-						if ($admin == '4' OR $login == '026' OR $login == '027' OR $login == '030' or $login == '033'){
+						if ($admin == '4' OR $login == '026' OR $login == '030' OR $login == '030' or $login == '033'){
 							echo ' <button type="button" class="btn btn-fancy"   id = "post">Доставка <span class="fa fa-car"> </span></button>';
 						}
 						echo "</div> <br/>";
