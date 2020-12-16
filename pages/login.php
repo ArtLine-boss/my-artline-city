@@ -122,6 +122,24 @@
     <!-- Custom Theme JavaScript -->
     <script src="../dist/js/sb-admin-2.js"></script>
 
+    <script>
+        $(document).ready(function() {
+            var d_today = new Date();
+            var year_start = d_today.getFullYear();
+            var year_end = d_today.getFullYear();
+            if(d_today.getMonth() == 0)
+                year_start--;
+            else
+                year_end++;
+            var d_start = new Date(year_start, 11, 17);
+            var d_end = new Date(year_end, 0, 20);
+
+            if(d_today.getTime() < d_start.getTime() || d_today.getTime() > d_end.getTime())
+                return;
+            document.getElementsByTagName('body')[0].setAttribute('style', 'background: url(/js/snowfall/img/pexels.jpeg) no-repeat center center fixed; background-size: cover;');
+        });
+    </script>
+
 </body>
 
 </html>

@@ -7,20 +7,20 @@ body {
   background-color: #222c3c;
 }
 .navbar-brand {
-	color: #f7e946;
+	color: #ffffff;
 }
 .navbar-default {
 	background-color: #222c3c;
-	border-color: #f7e946;
+	border-color: #ffffff;
 }
 .nav>li>a:hover {
-	background-color: #f7e946;
+	background-color: #f8f8f8;
 }
 table.dataTable>tbody>tr:hover {
-	background-color: #f7e946;
+	background-color: #f8f8f8;
 }
 table>tbody>tr:hover {
-	background-color: #f7e946;
+	background-color: #f8f8f8;
 }
 a {
 	color: #222c3c;
@@ -41,7 +41,7 @@ a {
     position: inherit;
     margin: 0 0 0 250px;
     padding: 0 30px;
-    border-left: 1px solid #f7e946;
+    /*border-left: 1px solid #f7e946;*/
   }
 }
 .logo {
@@ -101,10 +101,10 @@ a {
   padding: 15px;
 }
 .sidebar ul li {
-  border-bottom: 1px solid #f7e946;
+  /*border-bottom: 1px solid #f7e946;*/
 }
 .sidebar ul li a.active {
-  background-color: #f7e946;
+  background-color: #f8f8f8;
   color: #222c3c;
 }
 .sidebar .arrow {

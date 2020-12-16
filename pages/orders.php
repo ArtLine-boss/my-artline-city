@@ -1108,7 +1108,7 @@
         </div>
 
         <!--------------------------------------------------------------------------------------------------------->
-        !------------------------------------------addParentCompany --------------------------------------------------------------->
+        <!------------------------------------------addParentCompany --------------------------------------------------------------->
         <div id="addParentCompany" class="modal fade bd-example-modal-lg"  tabindex="-1" data-backdrop="static" data-keyboard="false" style="display: none;">
             <div class="modal-dialog  modal-lg">
                 <div class="modal-content">

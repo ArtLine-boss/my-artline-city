@@ -46,7 +46,7 @@
 	<span class="icon-bar"></span>
 	<span class="icon-bar"></span>
 	</button>
-	<a class="navbar-brand" href="../orders.php" style="color: #f7e946" id="headerSystem"'.$color_default.'>Система управления заказами</a>
+	<a class="navbar-brand" href="../orders.php" style="color: #ffffff" id="headerSystem"'.$color_default.'>Система управления заказами</a>
 	</div>
 	<ul class="nav navbar-top-links navbar-right">
 	<li class="dropdown">

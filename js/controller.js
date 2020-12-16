@@ -9,8 +9,8 @@ function NewYear(doc, timeout) {
 		year_start--;
 	else
 		year_end++;
-	var d_start = new Date(year_start, 11, 20);
-	var d_end = new Date(year_end, 0, 8);
+	var d_start = new Date(year_start, 11, 17);
+	var d_end = new Date(year_end, 0, 20);
 	
 	if(d_today.getTime() < d_start.getTime() || d_today.getTime() > d_end.getTime())
 		return;
@@ -23,49 +23,32 @@ function NewYear(doc, timeout) {
 	//когда скрипт загрузился
 	script.onload = function() {
 		var body = doc.getElementsByTagName('body')[0];
-		//добавляем гирлянду
-		var div = document.createElement('div');
-		div.setAttribute('id', "girlianda");
-		div.setAttribute('style', "height: 30px; background: url(/js/snowfall/img/girlianda.gif) repeat-x 100%; position: fixed; width: 100%; z-index: 1000; top: 0");
-		body.appendChild(div);
-		div.onclick = function() {
-			remove(doc.getElementById("girlianda"));
-		}
-		
-		//добавляем елку
+
 		var div = document.createElement('div');
 		div.setAttribute('id', "elka");
-		div.setAttribute('style', "position:fixed; z-index: 1000; bottom: 0; right: 0;");
+		div.setAttribute('style', "position:absolute; z-index: 1000; top: 0; right: 270px;");
 		body.appendChild(div);
 		var img = document.createElement('img');
-		img.setAttribute('src', "/js/snowfall/img/elka.gif");
-		img.setAttribute('width', 118);
-		img.setAttribute('height', 173);
+		img.setAttribute('src', "/js/snowfall/img/2021.png");
+		img.setAttribute('width', 200);
+		img.setAttribute('height', 200);
 		div.appendChild(img);
 		div.onclick = function() {
 			remove(doc.getElementById("elka"));
 		}
-		
-		//запускаем снег
-		/*$(doc).snowfall({
-			image :"/js/snowfall/img/snow4.png", 
-			flakeCount: 100,
-			minSize: 10, 
-			maxSize:50
-		});*/
-		
-		//через время удаляем
-		/*setTimeout(function(){
-			if(doc.getElementById("elka"))
-				remove(doc.getElementById("elka"));
-			if(doc.getElementById("girlianda"))
-				remove(doc.getElementById("girlianda"));
-			
-			var imgs = doc.getElementsByClassName("snowfall-flakes");
-			while(imgs.length > 0) {
-				remove(imgs[0]);
-			}
-		}, timeout);*/
+
+		var div = document.createElement('div');
+		div.setAttribute('id', "elka2");
+		div.setAttribute('style', "position:fixed; z-index: 1000; bottom: 0; left: 0;");
+		body.appendChild(div);
+		var img = document.createElement('img');
+		img.setAttribute('src', "/js/snowfall/img/covid2021.png");
+		img.setAttribute('width', 200);
+		img.setAttribute('height', 200);
+		div.appendChild(img);
+		div.onclick = function() {
+			remove(doc.getElementById("elka2"));
+		}
 	}
 }
 

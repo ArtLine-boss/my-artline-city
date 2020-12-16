@@ -316,15 +316,15 @@
 						$sum_acct = 0;
 
 						if($firm_parent == 2) {
-                            echo '<div style="width: 127px; height: 100px; background-image: url(\'proc/logoM.png\'); position: absolute; right: 20%; top: 5%; background-size: cover;" onclick="selectedFirm(' . $idAcct . ')"></div>';
+                            echo '<div style="width: 381px; height: 300px; background-image: url(\'proc/logoM.png\'); position: absolute; right: 20%; top: 0; background-size: cover;" onclick="selectedFirm(' . $idAcct . ')"></div>';
                         } else {
-                            echo '<div style="width: 100px; height: 100px; background-image: url(\'proc/logo.jpg\'); position: absolute; right: 20%; top: 5%; background-size: cover;" onclick="selectedFirm(' . $idAcct . ')"></div>';
+                            echo '<div style="width: 300px; height: 300px; background-image: url(\'proc/logo.jpg\'); position: absolute; right: 20%; top: 0; background-size: cover;" onclick="selectedFirm(' . $idAcct . ')"></div>';
                         }
 
-						echo "<h3 class='text-muted'>Счет № $row[0]</h3><br/>";
+						echo "<h3 class='text-muted' style='margin-left: 20%;'>Счет № $row[0]</h3><br/>";
 						echo "<h4 class='text-muted'>Плательщик $row[1]</h4>";
 						//echo '<div class="alert alert-info">';
-						echo '<div class="alert alert-info" style="background-color: #000000; color: #f7e946; border-color: #f7e946">';
+						echo '<div style="color: #777">';
 						echo "<h4 class='text-muted'>МЕНЕДЖЕР: $username <br><br>БАЛАНС: $balaceSum <br> &nbsp; &nbsp; &nbsp; В работе $balaceJob; <br>&nbsp; &nbsp; &nbsp; Готовы $balaceRdy; <br>&nbsp; &nbsp; &nbsp; Выписаны ТН $balaceTN; <br>&nbsp; &nbsp; &nbsp; Оплаты $balaceOpl </h4>";
 						echo '</div>';
 						$query1 = "select TRUNCATE(sum(ost_sum),2), TRUNCATE(sum(all_sum),2) from oplati where client_id =" . $client_id;
