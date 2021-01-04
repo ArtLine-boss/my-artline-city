@@ -673,6 +673,41 @@
 			return $_table;
 		}
 
+		public static function getCurl($url = null, $data = null) {
+			$result = null;
+
+			do {
+				if(empty($url))
+					break;
+				$ch = curl_init();
+				curl_setopt($ch, CURLOPT_HEADER, false);
+				curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+				curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+				curl_setopt($ch, CURLOPT_URL, $url);
+				curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+				curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+				curl_setopt($ch, CURLOPT_POST, true);
+				curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
+				curl_setopt($ch, CURLOPT_USERAGENT, "Opera/9.80 (Windows NT 5.1; U; ru) Presto/2.9.168 Version/11.51");
+				if(!empty($data)) {
+					$data = json_encode($data);
+					curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+					$requestHeader = [
+						'Content-Type:application/json',
+						'Content-Length:' . strlen($data)
+					];
+					curl_setopt($ch, CURLOPT_HTTPHEADER, $requestHeader);
+				}
+				$result = curl_exec($ch);
+				curl_close($ch);
+				if(static::isJSON($result)) {
+					$result = json_decode($result, true);
+				}
+			} while(false);
+
+			return $result;
+		}
+
 	}
 
 ?>

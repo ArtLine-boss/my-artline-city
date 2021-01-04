@@ -8,5 +8,6 @@ class CONFIG
     const CHARSET = 'utf8';
 
     const BELPOST = 'https://webservices.belpost.by/searchRu/';
+    const BELPOST2 = 'https://api.belpost.by/api/v1/tracking';
 }
 ?>

@@ -41,7 +41,7 @@ class entity_mail extends core_DBObject {
                 break;
             }
 
-            if(null !== ($msg = $this->getStatusTrack())) {
+            if(null !== ($msg = $this->getStatusTrack2())) {
                 break;
             }
 
@@ -60,7 +60,9 @@ class entity_mail extends core_DBObject {
         do {
             $object = new entity_mail();
             $whr = [
-                'sql' => "`mail`.`track_cod` <> '' AND `mail`.`date` IS NULL AND `mail`.`date_otpr` IS NOT NULL AND DATE_FORMAT(`mail`.`date_otpr`,'%Y') = DATE_FORMAT(NOW(), '%Y')",
+                'sql' => "`mail`.`track_cod` <> '' AND `mail`.`date` IS NULL AND `mail`.`date_otpr` IS NOT NULL 
+                        AND (DATE_FORMAT(`mail`.`date_otpr`,'%Y') = DATE_FORMAT(NOW(), '%Y')
+                         OR (DATE_FORMAT(`mail`.`date_otpr`,'%Y') = DATE_FORMAT(DATE_ADD(NOW(), INTERVAL -1 MONTH), '%Y') AND DATE_FORMAT(`mail`.`date_otpr`, '%m') = 12))",
             ];
             $result = $object->loadAll($whr);
         } while(false);
@@ -121,6 +123,53 @@ class entity_mail extends core_DBObject {
             $this->status = $match[1][count($match[1]) - 2] . '(' . $match[1][count($match[1]) - 1] . ')';
             if(strpos($match[1][count($match[1]) - 2], 'Вручено') !== false) {
                 $this->date = API::FormatDate($match[1][count($match[1]) - 3], CONSTANTS::DB_DATE_FORMAT);
+            }
+
+            // обновляем запись
+            if(null !== ($msg = $this->store())) {
+                break;
+            }
+        } while(false);
+
+        return $msg;
+    }
+
+    /**
+     * Запрос статуса доставки (ver2)
+     * @param $track - код трека
+     * @return |null
+     */
+    public function getStatusTrack2() {
+        $msg = null;
+
+        do {
+            if(empty($this->track_cod)) {
+                $msg = 'Не задан трек код';
+                break;
+            }
+
+            $result = API::getCurl(CONFIG::BELPOST2, ['number' => $this->track_cod]);
+
+            if(!isset($result['data']) || !isset($result['data'][0])) {
+                $msg = 'Не найдены данные по трек-коду: ' . $this->track_cod;
+                break;
+            }
+            $result = $result['data'][0];
+
+            if(!isset($result['steps']) || !isset($result['steps'][0])) {
+                $msg = 'Не удалось отследить статус трека: ' . $this->track_cod;
+                break;
+            }
+            $result = $result['steps'][0];
+
+            if(!isset($result['event']) || !isset($result['place']) || !isset($result['created_at'])) {
+                $msg = 'Неверный формат данных для этапа трека ' . $this->track_cod;
+                break;
+            }
+
+            $this->status = $result['event'] . '(' . $result['place'] . ')';
+            if($result['event'] == 'Вручено') {
+                $this->date = API::FormatDate($result['created_at'], CONSTANTS::DB_DATE_FORMAT);
             }
 
             // обновляем запись
