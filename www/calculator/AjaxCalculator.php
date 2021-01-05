@@ -32,7 +32,7 @@
                             users.USER_FIO
                         FROM bitrix24_template_calculation
                         JOIN users ON bitrix24_template_calculation.user_login=users.USER_LOGIN
-                        WHERE bitrix24_template_calculation.user_id=" . $user->id_bitrix24 . " OR bitrix24_template_calculation.user_login='" . $user->USER_LOGIN . "'
+                        WHERE (bitrix24_template_calculation.user_id=" . $user->id_bitrix24 . " AND bitrix24_template_calculation.user_id > 0) OR bitrix24_template_calculation.user_login='" . $user->USER_LOGIN . "'
                         ORDER BY bitrix24_template_calculation.DATE_ADD DESC";
         $listOrders = $bitrix->select($sql);
 
