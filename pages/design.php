@@ -677,7 +677,7 @@
 					<script>
 					function updd(id){
 					//
-					array = JSON.parse('<?echo json_encode($json_diz);?>');
+					array = <?echo json_encode($json_diz);?>;
 					
 					for (var i = 0; i < array.length; i++){
 					if (array[i].id == id){
