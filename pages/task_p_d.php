@@ -139,7 +139,7 @@
 		<th>Дата сдачи</th>
 		<th>Дата отправки в работу</th>
 		<th>Номер счета</th>
-		
+		<th>Стоимость дизайна</th>
 		<th>Наименование клиента</th>
 		<th>Продукт</th>
 		<th>Размер</th>
@@ -180,7 +180,7 @@
 		op.comment	,
 		(select (select c.temp from clients c where c.ID = o.CLIENT_ID ) from orders o where o.number = op.ORDER_ID) temps		,
 		op.units			,
-		(select  DATE_FORMAT(lk.datetime, '%Y-%m-%d %H:%i') from log_task lk where lk.id_prod = op.id and lk.status_old = '' ORDER BY lk.id LIMIT 1) date_ot								
+		(select  DATE_FORMAT(lk.datetime, '%Y-%m-%d %H:%i') from log_task lk where lk.id_prod = op.id and lk.status_old = '' ORDER BY lk.id LIMIT 1) date_ot, op.TEMP_PR								
 		from order_product op where status in (".$srttt.") AND EXISTS (select lt.flags from lock_task lt where lt.id_prod = op.id AND lt.flags = 1 AND lt.users = '".$login."')";
 		
 		
@@ -200,7 +200,7 @@
 		op.comment,
 		(select (select c.temp from clients c where c.ID = o.CLIENT_ID ) from orders o where o.number = op.ORDER_ID) temps,
 		op.units,
-		(select  DATE_FORMAT(lk.datetime, '%Y-%m-%d %H:%i') from log_task lk where lk.id_prod = op.id and lk.status_old = '' ORDER BY lk.id LIMIT 1) date_ot
+		(select  DATE_FORMAT(lk.datetime, '%Y-%m-%d %H:%i') from log_task lk where lk.id_prod = op.id and lk.status_old = '' ORDER BY lk.id LIMIT 1) date_ot, op.TEMP_PR
 		from order_product op where status in (".$srttt.") AND EXISTS (select lt.flags from lock_task lt where lt.id_prod = op.id AND lt.flags = 1)";
 		}
 		
@@ -208,7 +208,7 @@
 		
 		$result = mysql_query($query) or die($query);
 		echo "<tbody>";
-		while ($row = mysql_fetch_row($result)) { 
+		while ($row = mysql_fetch_array($result)) {
 		$eqq = "";
 		$list_prod = '';
 		$list_prod1 = '';
@@ -525,11 +525,15 @@
 		}
 		}
 		}
+
+		$temp_pr_list = explode('|', $row['TEMP_PR']);
+
 		echo "<td> $row[25]</td>";
 		echo "<td> <input type='checkbox' name='chjob3' value='".$row[18]."'>" . $eqq." </td>";
 		echo "<td>$row[0]</td>";
 		echo "<td>$row[29]</td>";	
 		echo "<td>".$row[1]."_".$row[19]."</td>";
+		echo '<td>' . (isset($temp_pr_list[23]) && !empty($temp_pr_list[23]) ? $temp_pr_list[23] : 0) . '</td>';
 		echo "<td>$row[2]</td>";
 		echo "<td>$row[4]</td>";
 		echo "<td>$row[5]</td>";
@@ -591,7 +595,7 @@
 		<th>Дата сдачи</th>
 		<th>Дата отправки в работу</th>
 		<th>Номер счета</th>
-		
+		<th>Стоимость дизайна</th>
 		<th>Наименование клиента</th>
 		<th>Продукт</th>
 		<th>Размер</th>
@@ -627,7 +631,7 @@
 		(select  DATE_FORMAT(lk.datetime, '%Y-%m-%d %H:%i') dt from log_task lk where lk.id_prod = op.id and lk.status_old = '' ORDER BY lk.id LIMIT 1) date_ot,
 		op.comment,
 		(select (select u.USER_LOGIN from users u where u.USER_LOGIN = o.USER_ID ) from orders o where o.number = op.ORDER_ID) login_,
-		(select (select u.USER_PER from users u where u.USER_LOGIN = o.USER_ID ) from orders o where o.number = op.ORDER_ID) group_
+		(select (select u.USER_PER from users u where u.USER_LOGIN = o.USER_ID ) from orders o where o.number = op.ORDER_ID) group_, op.TEMP_PR
 		from order_product op where status in (".$srttt.") AND NOT EXISTS (select lt.flags from lock_task lt where lt.id_prod = op.id AND lt.flags = 1)";
 		$result = mysql_query($query) or die($query);
 		echo "<tbody>";
@@ -821,12 +825,14 @@
 			if($row['login_'] == 'admin' && $admin == 7) {
 				$class = " style='background-color:#ffb4b4'";
 			}
-			
+
+            $temp_pr_list = explode('|', $row['TEMP_PR']);
+
 			echo "<tr".$class."><td><input type='checkbox' name='chjob5' value='".$row[18]."' onchange='ChangeOneEquipment()'>".$eqq."</td>";
 			echo "<td>$row[0]</td>";
 			echo "<td>$row[23]</td>";
 			echo "<td>".$row[1]."_".$row[19]."</td>";
-			
+            echo '<td>' . (isset($temp_pr_list[23]) && !empty($temp_pr_list[23]) ? $temp_pr_list[23] : 0) . '</td>';
 			echo "<td>$row[2]</td>";
 			echo "<td>$row[4]</td>";
 			echo "<td>$row[5]</td>";
