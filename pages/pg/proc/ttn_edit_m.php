@@ -1,5 +1,5 @@
 <?php
-
+include '../../firewall.php';
 require_once 'functions.php';
 
 define('FPDF_FONTPATH','../../../PHPpdf/font/');
@@ -132,12 +132,12 @@ if($row = mysql_fetch_row($result)){
     $user_post = $row[2];
 }
 
-if($users != '026' && $users != '033') {
+/*if($users != '026' && $users != '033') {
     $user_fio = "Мякишев Е.В.";
     $user_post ="Директор";
     $user_fio = iconv("cp1251", "UTF-8", $user_fio);
     $user_post = iconv("cp1251", "UTF-8", $user_post);
-}
+}*/
 
 
 $query = "select c.CLIENT_NAME, c.ADDRESS_POST,c.PHONE_CITY,c.PHONE_MOB,c.EMAIL,c.ACCT,c.BANK,c.CODE_BANK,c.fio_dir1, c.num_doc, c.UNP, c.num_doc_m from clients c  where c.ID = ".$clients;
@@ -616,7 +616,7 @@ $table_html ='<TABLE
 	<table cellspacing=0 cellpadding=0 width=100%>
 		<tr>
 			<td colspan=3 valign=middle >Отпуск разрешил</td>
-			<td colspan=9 valign=middle >'.iconv("UTF-8", "cp1251", $user_post).' '.iconv("UTF-8", "cp1251", $user_fio).'</td>
+			<td colspan=9 valign=middle >'.iconv("UTF-8", "cp1251", classes_accordUsers::getPOST($users, classes_accordUsers::ACCORD_TYPE_AM)).' '.iconv("UTF-8", "cp1251", classes_accordUsers::getFIO($users, classes_accordUsers::ACCORD_TYPE_AM)).'</td>
 			<td colspan=4 valign=middle >Товар к перевозке принял</td>
 			<td colspan=8 valign=middle  >'.iconv("UTF-8", "cp1251",$face_to).'</td>
 		</tr>
@@ -670,7 +670,7 @@ $table_html ='<TABLE
 	<table cellspacing=0 cellpadding=0 width=100%>
 		<tr>
 			<td colspan=3 valign=middle >Сдал грузоотправитель</td>
-			<td colspan=9 valign=middle >'.iconv("UTF-8", "cp1251", $user_post).' '.iconv("UTF-8", "cp1251", $user_fio).'</td>
+			<td colspan=9 valign=middle >'.iconv("UTF-8", "cp1251", classes_accordUsers::getPOST($users, classes_accordUsers::ACCORD_TYPE_AM)).' '.iconv("UTF-8", "cp1251", classes_accordUsers::getFIO($users, classes_accordUsers::ACCORD_TYPE_AM)).'</td>
 			<td colspan=3 valign=middle >По доверенности №</td>
 			<td colspan=3 valign=middle >'.$str_dov.'</td>
 			<td colspan=6 valign=middle >'.$str_dane  .'</td>

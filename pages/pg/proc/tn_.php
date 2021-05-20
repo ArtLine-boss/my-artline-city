@@ -528,7 +528,7 @@ $html .= '<TR>
 <TD VALIGN=TOP>Отпуск разрешил
 <TD VALIGN=TOP>&nbsp;
 
-<TD VALIGN=TOP COLSPAN=23 border=0010>'.iconv("UTF-8", "cp1251", $user_post).' '.iconv("UTF-8", "cp1251", $user_fio).'
+<TD VALIGN=TOP COLSPAN=23 border=0010>'.iconv("UTF-8", "cp1251", classes_accordUsers::getPOST($users, classes_accordUsers::ACCORD_TYPE_MA)).' '.iconv("UTF-8", "cp1251", classes_accordUsers::getFIO($users, classes_accordUsers::ACCORD_TYPE_MA)).'
 </TR>
 <TR>
 <TD VALIGN=TOP BORDERCOLOR=#ffffff><FONT SIZE=5>&nbsp;</FONT>
@@ -539,7 +539,7 @@ $html .= '<TR>
 <TR>
 <TD VALIGN=TOP COLSPAN=5>Сдал грузоотправитель
 
-<TD VALIGN=TOP COLSPAN=23 border=0010>'.iconv("UTF-8", "cp1251", $user_post).' '.iconv("UTF-8", "cp1251", $user_fio).'
+<TD VALIGN=TOP COLSPAN=23 border=0010>'.iconv("UTF-8", "cp1251", classes_accordUsers::getPOST($users, classes_accordUsers::ACCORD_TYPE_MA)).' '.iconv("UTF-8", "cp1251", classes_accordUsers::getFIO($users, classes_accordUsers::ACCORD_TYPE_MA)).'
 </TR>
 <TR>
 <TD VALIGN=TOP BORDERCOLOR=#ffffff><FONT SIZE=5>&nbsp;</FONT>

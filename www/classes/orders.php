@@ -7,7 +7,10 @@
 		var $CUR_ID = null;
 		var $CALC = null;
 		var $parent_company = null;
-		
+
+		const PARENT_COMPANY_ARTLINE = 1;
+		const PARENT_COMPANY_MECHTA = 2;
+
 		public function __construct() {
 			parent::__construct('orders', 'NUMBER', 'classes_orders');
 		}

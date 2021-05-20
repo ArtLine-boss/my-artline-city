@@ -114,5 +114,65 @@ class classes_accordUsers extends core_DBObject
         unset($class);
         return $result;
     }
+
+    /**
+     * @param string $login
+     * @param int $accordType
+     * @return string
+     */
+    public static function getFIO($login = '', $accordType = 0)
+    {
+        $result = '';
+
+        do {
+            $login = empty($login) ? $_SESSION['login'] : $login;
+            // Текущий пользователь
+            $user = new classes_users();
+            if(null !== $user->LoadByLogin($login)) break;
+            $result = $user->USER_FIO;
+            // Пользователь соответствия
+            $class = new static();
+            $list = $class->loadAll(['sql' => '`user1` = \'' . $login . '\' AND `accord_type` = ' . $accordType . ' AND `status` = ' . static::ACCORD_STATUS_YES . ' AND `date_start` <= \'' . API::CurrentDate(CONSTANTS::DB_DATETIME_FORMAT) . '\'']);
+            if(isset($list[0])) {
+                /** @var classes_accordUsers $accord */
+                $accord = $list[0];
+                $user2 = new classes_users();
+                if(null !== $user2->LoadByLogin($accord->user2)) break;
+                $result = $user2->USER_FIO;
+            }
+        } while(false);
+
+        return $result;
+    }
+
+    /**
+     * @param string $login
+     * @param int $accordType
+     * @return string
+     */
+    public static function getPOST($login = '', $accordType = 0)
+    {
+        $result = '';
+
+        do {
+            $login = empty($login) ? $_SESSION['login'] : $login;
+            // Текущий пользователь
+            $user = new classes_users();
+            if(null !== $user->LoadByLogin($login)) break;
+            $result = $user->USER_POST;
+            // Пользователь соответствия
+            $class = new static();
+            $list = $class->loadAll(['sql' => '`user1` = \'' . $login . '\' AND `accord_type` = ' . $accordType . ' AND `status` = ' . static::ACCORD_STATUS_YES . ' AND `date_start` <= \'' . API::CurrentDate(CONSTANTS::DB_DATETIME_FORMAT) . '\'']);
+            if(isset($list[0])) {
+                /** @var classes_accordUsers $accord */
+                $accord = $list[0];
+                $user2 = new classes_users();
+                if(null !== $user2->LoadByLogin($accord->user2)) break;
+                $result = $user2->USER_POST;
+            }
+        } while(false);
+
+        return $result;
+    }
 }
 ?>

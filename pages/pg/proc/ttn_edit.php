@@ -1,5 +1,5 @@
 <?php
-
+include '../../firewall.php';
 require_once 'functions.php';
 
 define('FPDF_FONTPATH','../../../PHPpdf/font/');
@@ -611,7 +611,7 @@ $table_html ='<TABLE
 	<table cellspacing=0 cellpadding=0 width=100%>
 		<tr>
 			<td colspan=3 valign=middle >Отпуск разрешил</td>
-			<td colspan=9 valign=middle >'.iconv("UTF-8", "cp1251", $user_post).' '.iconv("UTF-8", "cp1251", $user_fio).'</td>
+			<td colspan=9 valign=middle >'.iconv("UTF-8", "cp1251", classes_accordUsers::getPOST($users, classes_accordUsers::ACCORD_TYPE_MA)).' '.iconv("UTF-8", "cp1251", classes_accordUsers::getFIO($users, classes_accordUsers::ACCORD_TYPE_MA)).'</td>
 			<td colspan=4 valign=middle >Товар к перевозке принял</td>
 			<td colspan=8 valign=middle  >'.iconv("UTF-8", "cp1251",$face_to).'</td>
 		</tr>
@@ -665,7 +665,7 @@ $table_html ='<TABLE
 	<table cellspacing=0 cellpadding=0 width=100%>
 		<tr>
 			<td colspan=3 valign=middle >Сдал грузоотправитель</td>
-			<td colspan=9 valign=middle >'.iconv("UTF-8", "cp1251", $user_post).' '.iconv("UTF-8", "cp1251", $user_fio).'</td>
+			<td colspan=9 valign=middle >'.iconv("UTF-8", "cp1251", classes_accordUsers::getPOST($users, classes_accordUsers::ACCORD_TYPE_MA)).' '.iconv("UTF-8", "cp1251", classes_accordUsers::getFIO($users, classes_accordUsers::ACCORD_TYPE_MA)).'</td>
 			<td colspan=3 valign=middle >По доверенности №</td>
 			<td colspan=3 valign=middle >'.$str_dov.'</td>
 			<td colspan=6 valign=middle >'.$str_dane  .'</td>

@@ -144,10 +144,10 @@
 
 <table style="width: auto;">
 	<tr>
-		<td>Продавец</td><td style="border-bottom: 1px solid; width: 40%;"></td><td>/</td><td style="border-bottom: 1px solid"><?php echo $user->USER_FIO; ?></td>
+		<td>Продавец</td><td style="border-bottom: 1px solid; width: 40%;"></td><td>/</td><td style="border-bottom: 1px solid"><?php echo classes_accordUsers::getFIO($user->USER_LOGIN, ($order->parent_company - 1)); ?></td>
 	</tr>
 	<tr>
-		<td>Кассир</td><td style="border-bottom: 1px solid; width: 40%;"></td><td>/</td><td style="border-bottom: 1px solid"><?php echo $user_kassa->USER_FIO; ?></td>
+		<td>Кассир</td><td style="border-bottom: 1px solid; width: 40%;"></td><td>/</td><td style="border-bottom: 1px solid"><?php echo classes_accordUsers::getFIO($user_kassa->USER_LOGIN, ($order->parent_company - 1)); ?></td>
 	</tr>
 </table>
 

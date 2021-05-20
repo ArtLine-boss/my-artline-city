@@ -2,6 +2,7 @@
 header('Cache-Control: no-cache, no-store, must-revalidate'); // HTTP 1.1.
 header('Pragma: no-cache'); // HTTP 1.0.
 header('Expires: 0'); // Proxies.
+include '../../firewall.php';
 require_once 'functions.php';
 
 define('FPDF_FONTPATH','../../../PHPpdf/font/');
@@ -311,7 +312,7 @@ $pdf->Ln(50);
 
 
 
-$pdf->Cell(0,0,'Ваш менеджер: '. iconv("UTF-8", "cp1251", $user_fio));  
+$pdf->Cell(0,0,'Ваш менеджер: '. iconv("UTF-8", "cp1251", classes_accordUsers::getFIO($users, classes_accordUsers::ACCORD_TYPE_MA)));
 
 
 $strr = $ID."_".$clients.".pdf";
