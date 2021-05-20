@@ -139,7 +139,9 @@
 		<th>Дата сдачи</th>
 		<th>Дата отправки в работу</th>
 		<th>Номер счета</th>
+            <?php if($admin == 3 || $admin == 4 || $admin == 5) { ?>
 		<th>Стоимость дизайна</th>
+            <?php } ?>
 		<th>Наименование клиента</th>
 		<th>Продукт</th>
 		<th>Размер</th>
@@ -533,7 +535,9 @@
 		echo "<td>$row[0]</td>";
 		echo "<td>$row[29]</td>";	
 		echo "<td>".$row[1]."_".$row[19]."</td>";
-		echo '<td>' . (isset($temp_pr_list[23]) && !empty($temp_pr_list[23]) ? $temp_pr_list[23] : 0) . '</td>';
+        if ($admin == 3 || $admin == 4 || $admin == 5) {
+            echo '<td style="text-align: right;">' . (isset($temp_pr_list[23]) && !empty($temp_pr_list[23]) ? $temp_pr_list[23] : 0) . '</td>';
+        }
 		echo "<td>$row[2]</td>";
 		echo "<td>$row[4]</td>";
 		echo "<td>$row[5]</td>";
@@ -832,7 +836,9 @@
 			echo "<td>$row[0]</td>";
 			echo "<td>$row[23]</td>";
 			echo "<td>".$row[1]."_".$row[19]."</td>";
-            echo '<td>' . (isset($temp_pr_list[23]) && !empty($temp_pr_list[23]) ? $temp_pr_list[23] : 0) . '</td>';
+            if ($admin == 3 || $admin == 4 || $admin == 5) {
+                echo '<td style="text-align: right;">' . (isset($temp_pr_list[23]) && !empty($temp_pr_list[23]) ? $temp_pr_list[23] : 0) . '</td>';
+            }
 			echo "<td>$row[2]</td>";
 			echo "<td>$row[4]</td>";
 			echo "<td>$row[5]</td>";
