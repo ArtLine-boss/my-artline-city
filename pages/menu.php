@@ -167,6 +167,7 @@
 	<li><a class="menu_a" href="operation.php">Операции</a></li>
 	<li><a class="menu_a" href="calendar.php">Календарь</a> </li>
 	<li><a class="menu_a" href="rpassword.php">Сбросить пароль пользователя</a></li>
+	<li><a class="menu_a" href="/www/index.php?m=settings&u=accord">Соответствие пользователей</a></li>
 	<li><a class="menu_a" href="#">Справочники<span class="fa arrow"></span></a>
 	<ul class="nav nav-third-level">
 	<li><a class="menu_a" href="users.php">Пользователи</a></li>

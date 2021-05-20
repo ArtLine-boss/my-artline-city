@@ -69,22 +69,24 @@ class ACCESSES
     const ACCESS_PAGE_DIRECTORY_DESIGNS = 33;
     //Доступ к справочнику единиц измерения
     const ACCESS_PAGE_DIRECTORY_UNITS = 34;
+    // Доступ к странице соответствий пользователей в компаниях
+    const ACCESS_PAGE_SETTINGS_ACCORD = 35;
     //Печать бланка заказа
-    const PRINT_ORDERS_BLANK = 35;
+    const PRINT_ORDERS_BLANK = 36;
     //Доступ к странице заказов в работе
-    const ACCESS_PAGE_ORDERS_ACTIVE = 36;
+    const ACCESS_PAGE_ORDERS_ACTIVE = 37;
     //Доступ к странице отчета по менеджерам
-    const ACCESS_PAGE_ORDERS_REPORT_MANAGER = 37;
+    const ACCESS_PAGE_ORDERS_REPORT_MANAGER = 38;
     //Доступ к странице оплаченных заказов но не в работе
-    const ACCESS_PAGE_ORDERS_NOTWORK = 38;
+    const ACCESS_PAGE_ORDERS_NOTWORK = 39;
     //Доступ к странице заказов (продукты)
-    const ACCESS_PAGE_ORDERS_PRODUCTS = 39;
+    const ACCESS_PAGE_ORDERS_PRODUCTS = 40;
     //Доступ к странице заказов (оплаты)
-    const ACCESS_PAGE_ORDERS_PAYMENTS = 40;
+    const ACCESS_PAGE_ORDERS_PAYMENTS = 41;
     //Доступ к странице заказов (ТН)
-    const ACCESS_PAGE_ORDERS_TN = 41;
+    const ACCESS_PAGE_ORDERS_TN = 42;
     //Доступ к странице заказов (Доставка)
-    const ACCESS_PAGE_ORDERS_POST = 42;
+    const ACCESS_PAGE_ORDERS_POST = 43;
 }
 
 ?>
