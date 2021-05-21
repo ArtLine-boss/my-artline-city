@@ -435,6 +435,11 @@
                                             }
                                         ?>
                                     </div>
+                                    <?php
+                                        if($admin == 4 && $login != 'admins') {
+                                            echo '<div class="row"><div class="col-md-3"><input type="checkbox" id="all_list_orders_work" onchange="refListOrdersWork(this)"><b>Все заявки</b></div></div>';
+                                        }
+                                    ?>
                                     <div class="panel-body">
                                         <table  width="100%"  class="table table-striped table-bordered table-hover responsive nowrap " cellspacing="0" id="example1"  >
                                             <thead>
@@ -1293,6 +1298,42 @@
             };
 
             var dTable1 = $('#example1').dataTable( default_options5);
+            
+            function refListOrdersWork(e) {
+                let all = $(e).prop('checked');
+                let str_all = all ? '&allListOrdersWork' : '';
+                dTable1.fnDestroy();
+                dTable1 = $('#example1').dataTable({
+                    "iDisplayLength": 50,
+                    "responsive": true,
+                    "buttons": [
+                        {
+                            extend: 'collection',
+                            text: 'Export',
+                            buttons: [ 'pdfHtml5', 'csvHtml5', 'copyHtml5', 'excelHtml5' ]
+                        }
+                    ],
+                    "ajax" : {
+                        "url" : 'ajax_php_sql.php?flag=44' + str_all,
+                        "dataSrc": ""
+                    },
+                    "columns": [
+                        { "data": "flags"},
+                        { "data": "dats" , "sType": "ruDate"},
+                        { "data": "ids" },
+                        { "data": "namess"},
+                        { "data": "namess_orod"},
+                        { "data": "stast"},
+                        { "data": "prob"},
+                        { "data": "comm"},
+                        { "data": "total"},
+                        { "data": "rdy"},
+                        { "data": "zakaz"},
+                        { "data": "info"}
+                    ] ,
+                    "aaSorting": [[1,'asc']]
+                });
+            }
 
             function view_tn(id, type) {
                 if (type == 'tn') {

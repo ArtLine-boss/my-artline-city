@@ -1936,8 +1936,8 @@
 	/*---------------------------44---------------------------*/	
 	
 	case '44':
-	
-		if (/*$login == 'admins'*/ $admin == 4 ){
+
+		if ($login == 'admins' || ($admin == 4 && isset($_GET['allListOrdersWork'])) ) {
 			$query="select t7.dt,t7.ORDER_ID,t7.client_name name,t7.status,t7.flag,t7.num_prod_ord,t7.p_names,t7.prob,t7.comm,t7.id,t7.total,t7.rdy,IF(t8.TOTAL_PROD is null, 0, t8.TOTAL_PROD) zakaz
 					from
 						(select t5.id,t5.dt,t5.ORDER_ID,t5.p_names,t5.status,t5.num_prod_ord,t5.total,t5.client_name,t5.prob,t5.comm,IF(t6.FINAL_TOTAL is null, 0, t6.FINAL_TOTAL) rdy,t5.flag
