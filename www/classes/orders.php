@@ -29,5 +29,13 @@
             }
 		    return $list;
         }
+
+        /**
+         * Возврат продуктов
+         * @return array
+         */
+        public function getProducts() {
+            return factorys_classes::getObject('classes_orderProduct')->loadAll(['sql' => 'ORDER_ID = ' . $this->getId(), 'param' => null]);
+        }
 	}
 ?>

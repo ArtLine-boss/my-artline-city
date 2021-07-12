@@ -94,6 +94,28 @@
             }
         }
 
+        /**
+         * Выполнение запроса(ов)
+         * @param string $sql
+         * @return int
+         */
+        private function mysql_exec($sql) {
+            try {
+                $this->mysql_connect();
+                if ($this->mysql_get_status()) {
+                    $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                    $this->pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, 0);
+                    $count = $this->pdo->exec($sql);
+                    $this->mysql_destroy();
+                    return $count === false ? -1 : $count;
+                }
+            } catch (PDOException $e) {
+                $log = new core_log('logs/pdo_exec.log');
+                $log->store($e->getCode() . ": " . $e->getMessage() . ". Строка: " . $e->getLine());
+            }
+            return -1;
+        }
+
         //деструктор
         private function mysql_destroy() {
             $this->pdo = null;
@@ -370,6 +392,39 @@
             } while(false);
 
             return $this;
+        }
+
+        /**
+         * Поиск по ИД (статический метод)
+         * @param $id
+         * @return static
+         */
+        public static function oid($id) {
+            $class = new static();
+            return $class->_oid($id);
+        }
+
+        /**
+         * загрузка полного списка (статический метод)
+         * @param null $where
+         * @param null $field
+         * @param int $desk
+         * @param null $limit
+         * @return array
+         */
+        public static function all($where = null, $field = null, $desk = 0, $limit = null) {
+            $class = new static();
+            $list = $class->loadAll($where, $field, $desk, $limit);
+            return $list;
+        }
+
+        /**
+         * Выполнение запроса(ов)
+         * @param string $sql
+         * @return mixed
+         */
+        public function exec($sql) {
+            return $this->mysql_exec($sql);
         }
     }
 ?>
