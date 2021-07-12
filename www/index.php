@@ -5,6 +5,7 @@
     if(isset($_GET['scr']) && $_GET['scr'] == 1) {
         $AppUI = new core_ui(true);
         if(isset($_GET['m'])) {
+            set_time_limit(0);
             $file = strval($_GET['m']);
             if(isset($_GET['u'])) {
                 $file .= "/" . strval($_GET['u']);
@@ -15,6 +16,7 @@
                 $file .= "/index.php";
             }
             include_once ($file);
+            set_time_limit(60);
         }
     }
     else if(isset($_GET['login']) && $_GET['login'] == -1) {
