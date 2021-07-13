@@ -129,5 +129,25 @@ class classes_oplati extends core_DBObject {
 
         return $msg;
     }
+
+    /**
+     * Возврат суммы оплат по условиям
+     * @param string $where - условие
+     * @return float
+     */
+    public static function getSumByQuery($where = '') {
+        $sum = 0;
+
+        do {
+            $class = new static();
+            $sql = "SELECT SUM(`" . $class->getTable() . "`.`ALL_SUM`) `sum` FROM `" . $class->getTable() . "`" . (empty($where) ? '' : ' WHERE ' . $where);
+            $data = $class->select($sql);
+            if(isset($data[0]) && isset($data[0]['sum'])) {
+                $sum = round(floatval($data[0]['sum']) * 100) / 100;
+            }
+        } while (false);
+
+        return $sum;
+    }
 }
 ?>

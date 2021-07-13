@@ -152,6 +152,10 @@ class cron_clearOrders_Manager extends core_Singleton {
             $time = strtotime(API::CurrentDate(CONSTANTS::DB_DATE_FORMAT) . ' -' . static::MONTHLY_BY_PAYMENTS . ' months');
             $date = date("Y-m-01", $time);
 
+            // sec
+            $const = floatval(entity_params::get('PAYMENT4')->val);
+            $current = classes_oplati::getSumByQuery('`view_opl` = 4 AND `DATE_` < \'' . $date . '\'');
+
             $query = [];
             $query[] = 'DELETE FROM `oplati` WHERE `oplati`.`view_opl` = 4 AND `oplati`.`DATE_` < \'' . $date . '\';';
 
@@ -159,9 +163,11 @@ class cron_clearOrders_Manager extends core_Singleton {
 
             // Чистим лог оплат
             $query = [];
-            $query[] = 'DELETE FROM `log_oplati` WHERE  `log_oplati`.`view_opl` = 4 AND `oplati`.`DATE_` < \'' . $date . '\';';
+            $query[] = 'DELETE FROM `log_oplati` WHERE  `log_oplati`.`view_opl` = 4 AND `log_oplati`.`DATE_` < \'' . $date . '\';';
             if(null !== ($msg = $this->exec($query))) break;
 
+            if(null !== ($msg = entity_params::set('PAYMENT4', $const + $current))) break;
+            if(null !== ($msg = entity_params::set('PAYMENT4_DATE', $date))) break;
             $this->log->store('Удаление оплат. Оплаты удалены. Время выполнения - ' . $this->getTime());
         } while(false);
 
