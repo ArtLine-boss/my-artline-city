@@ -19,8 +19,8 @@ class cron_clearOrders_Manager extends core_Singleton {
             $this->log = new core_log('cron/clearOrders/process.log');
 
             do {
-                /** Удаляем сделки */
-                if(null !== ($msg = $this->clearOrders())) break;
+                /** Удаляем сделки. Временно убрали */
+                //if(null !== ($msg = $this->clearOrders())) break;
                 /** Удаляем оплаты */
                 if(null !== ($msg = $this->clearPayments())) break;
             } while (false);
