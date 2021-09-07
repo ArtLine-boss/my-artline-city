@@ -377,6 +377,18 @@
 			return $dt;
 		}
 
+		static function addMonth($date, $month, $format = CONSTANTS::REPORT_DATE_FORMAT) {
+			$dt = $date;
+
+			do {
+				if (empty($date) || empty($month) || !is_numeric($month))
+					break;
+				$dt = self::FormatDate($date . ($month >= 0 ? '+ ' : '- ') . abs($month) . ' month', $format);
+			} while (false);
+
+			return $dt;
+		}
+
 		//десериализация формы
 		static function dSerializationForm(&$form)
 		{

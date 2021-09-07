@@ -266,6 +266,11 @@
             return $this->mysql_query($query, $placeholders, $select);
         }
 
+        public static function s_select($query, $placeholders = null, $select = true) {
+            $class = new static('', '');
+            return $class->select($query, $placeholders, $select);
+        }
+
         //запись или обновление
         public function store() {
             $msg = null;
