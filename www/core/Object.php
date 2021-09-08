@@ -68,7 +68,7 @@ class core_Object
         return empty($val) ? $val : strval($val);
     }
 
-    public function set($key, $val) {
+    public function setVal($key, $val) {
         $this->$key = $this->toType($key, $val);
     }
 }

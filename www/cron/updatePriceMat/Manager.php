@@ -6,7 +6,7 @@ class cron_updatePriceMat_Manager
     const COUNT_MONTHLY = 12;
     const MAIL_TO = [
         'wladfm.prylutski@gmail.com',
-        '6248654@gmal.com'
+        '6248654@gmail.com'
     ];
 
     public function __construct()

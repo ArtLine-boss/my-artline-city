@@ -32,8 +32,8 @@ class cron_updatePriceMat_Dto extends core_Object
         if(!empty($this->ttnTotal) && !empty($this->ttnDate)) {
             $settings_attr = entity_settingsAttr::getValByDate(2, $this->ttnDate);
             if($settings_attr->getInit() && !empty($settings_attr->VAL)) {
-                $this->set('currency', $settings_attr->VAL);
-                $this->set('newPrice', ceil($this->ttnSum * 100 * (1 + (static::PERCENT / 100)) / $this->ttnTotal * $this->currency) / 100);
+                $this->setVal('currency', $settings_attr->VAL);
+                $this->setVal('newPrice', ceil($this->ttnSum * 100 * (1 + (static::PERCENT / 100)) / $this->ttnTotal * $this->currency) / 100);
             }
         }
     }
