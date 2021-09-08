@@ -4324,12 +4324,21 @@
 												if(arr.length > 0)
 													smeta = JSON.stringify(arr);
 																								
-												
-												document.getElementById('fr').src = 'proc/act.php?id=' + id + "&no_nds=0&smeta=" + smeta;
+												let src = 'act';
+                                                let firm = <?php echo $firm_parent; ?>
+                                                if(firm == 2) {
+                                                    src = 'act_m';
+                                                }
+												document.getElementById('fr').src = 'proc/' + src + '.php?id=' + id + "&no_nds=0&smeta=" + smeta;
 												$('#myacct').modal('show');
 											}
 											function showacct1(id) {
-												document.getElementById('fr1').src = 'proc/act.php?id=' + id + "&no_nds=1";
+                                                let src = 'act';
+                                                let firm = <?php echo $firm_parent; ?>
+                                                if(firm == 2) {
+                                                    src = 'act_m';
+                                                }
+												document.getElementById('fr1').src = 'proc/' + src + '.php?id=' + id + "&no_nds=1";
 												$('#myacct1').modal('show');
 											}
 											/*function addshamp() {

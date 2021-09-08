@@ -22,32 +22,30 @@ $nds = (double)str_replace(',', '.', $nds);
 $nds = 20;
 $nds_ = 1 + $nds/100;
 
-$ID1 = $_GET['id'];
-$query = "select order_id, num_tm,DATE_FORMAT(dates_, '%d %M %Y'),no_nds from tn_list_par where id = ".$ID1 ;
-$result = mysql_query($query) or die($query);
-if($row = mysql_fetch_row($result)){
-	$ID = $row[0];
-	$num = $row[1];
-	$DATE_OR = $row[2];
-	$no_nds =  $row[3];
-}
+$ID = $_GET['id'];
+$no_nds = $_GET['no_nds'];
+$smeta = $_GET['smeta'];
 
 
+$newDate = date("d.m.Y", strtotime($date_dover));
+
+
+
+$face_to_face = $face_to.', '.$to_face;
+$dover  = '№ '.$num_dover.', '.$newDate.'г.';
 
 $query = "select user_id, client_id , DATE_FORMAT(DATE_OR, '%d %M %Y'),DATE_FORMAT(DATE_OR, '%d.%m.%Y'),CUR_ID  from orders where number = ".$ID;
 $result = mysql_query($query) or die("Query failed");
 if($row = mysql_fetch_row($result)){
 	$users = $row[0];
 	$clients = $row[1];
-
+	$DATE_OR = $row[2];
 	$DATE_ = $row[3];
 	$cur_val = $row[4]; 
 }
 
 
-
-
-
+$DATE_OR = date("d F Y");
 // $DATE_OR  = date("d F Y");
 $DATE_OR  = str_replace('January','Января',$DATE_OR);
 $DATE_OR  = str_replace('February','Февраля',$DATE_OR);
@@ -61,7 +59,6 @@ $DATE_OR  = str_replace('September','Сентября',$DATE_OR);
 $DATE_OR  = str_replace('October','Октября',$DATE_OR);
 $DATE_OR  = str_replace('November','Ноября',$DATE_OR);
 $DATE_OR  = str_replace('December','Декабря',$DATE_OR);
-
 
 
 $query = "select user_fio, user_mail, user_post from users where user_login = '".$users."';";
@@ -109,7 +106,7 @@ $pdf = new PDFTable();
    
     // Line break
 	    $pdf->SetFont('ArialMT','',8);
-	// $pdf->Image('11.png',6,6,50,50);
+	$pdf->Image('11.png',6,6,50,50);
 
 	$pdf->Cell(0,7,'Исполнитель: Частное предприятие "Мечта клиента"',0,0,'L');
 	$pdf->Ln();
@@ -120,19 +117,33 @@ $pdf = new PDFTable();
 	$pdf->Cell(0,0,'Адрес: 224030, г. Брест, ул. Карбышева, 74, тел.: ,бухгалтерия (0162) 53-45-42',0,0,'L');
 	$pdf->Ln(10);
 	$pdf->SetFont('ArialMT','',10);
-   $pdf->Cell(0,7,'АКТ № '.$num.' от '.$DATE_OR,0,0,'L');
+   $pdf->Cell(0,7,'АКТ № 0000000 от '.$DATE_OR,0,0,'L');
 	$pdf->Ln(10);
 	$pdf->SetFont('ArialMT','',8);
 	$pdf->Cell(0,7,'Заказчик: '.iconv("UTF-8", "cp1251", $CLIENT_NAME),0,0,'L');
 	$pdf->Ln();
 	$pdf->Cell(0,0,'Счет-протокол № '.$ID.' от '.$DATE_.'г.',0,0,'L');
 	$pdf->Ln();
-	$pdf->Cell(0,7,'Р/сч:'.iconv("UTF-8", "cp1251", $ACCT).', '.iconv("UTF-8", "cp1251", $BANK),0,0,'L');
-	$pdf->Ln();
-	$pdf->Cell(0,0,'код '.iconv("UTF-8", "cp1251", $CODE_BANK).', УНП: '.iconv("UTF-8", "cp1251", $unp),0,0,'L');
-	$pdf->Ln();
-	$pdf->Cell(0,7,'Адрес: '.iconv("UTF-8", "cp1251", $ADDRESS_POST),0,0,'L');
-	$pdf->Ln();
+	if(!empty($num_doc)) {
+		$pdf->Cell(0,7,'Номер договора: '.iconv("UTF-8", "cp1251", $num_doc),0,0,'L');
+		$pdf->Ln();
+		$pdf->Cell(0,0,'Р/сч:'.iconv("UTF-8", "cp1251", $ACCT).', '.iconv("UTF-8", "cp1251", $BANK),0,0,'L');
+		$pdf->Ln();
+		$pdf->Cell(0,7,'код '.iconv("UTF-8", "cp1251", $CODE_BANK).', УНП: '.iconv("UTF-8", "cp1251", $unp),0,0,'L');
+		$pdf->Ln();
+		$pdf->Cell(0,0,'Адрес: '.iconv("UTF-8", "cp1251", $ADDRESS_POST),0,0,'L');
+		$pdf->Ln();
+		$pdf->Cell(0,7,'',0,0,'L');
+		$pdf->Ln();
+	}
+	else {
+		$pdf->Cell(0,7,'Р/сч:'.iconv("UTF-8", "cp1251", $ACCT).', '.iconv("UTF-8", "cp1251", $BANK),0,0,'L');
+		$pdf->Ln();
+		$pdf->Cell(0,0,'код '.iconv("UTF-8", "cp1251", $CODE_BANK).', УНП: '.iconv("UTF-8", "cp1251", $unp),0,0,'L');
+		$pdf->Ln();
+		$pdf->Cell(0,7,'Адрес: '.iconv("UTF-8", "cp1251", $ADDRESS_POST),0,0,'L');
+		$pdf->Ln();
+	}
 
 	
 	
@@ -160,7 +171,44 @@ $html = '
 
 
 $flags = 0;
-$query = "select p_names, total, summ,DIZ,sum_press,units,price from order_product where order_id = ".$ID;
+
+if($smeta == "") {
+	//$query = "select p_names, total, summ,DIZ,sum_press,units,price from order_product where order_id = ".$ID;
+	$query = "SELECT *
+				FROM
+					(SELECT p_names, total, summ,DIZ,sum_press,units,price,code_stat FROM order_product WHERE order_id=".$ID.") t1
+				INNER JOIN
+					(SELECT ID,code_stat FROM directoryCodeStat) t2
+				ON t1.code_stat=t2.ID
+				WHERE t2.code_stat='18.14.10' OR t2.code_stat='18.13.30'";
+}
+else {
+	$arr_smeta = json_decode($smeta);
+	if(count($arr_smeta) <= 0) {
+		//$query = "select p_names, total, summ,DIZ,sum_press,units,price from order_product where order_id = ".$ID;
+		$query = "SELECT *
+				FROM
+					(SELECT p_names, total, summ,DIZ,sum_press,units,price,code_stat FROM order_product WHERE order_id=".$ID.") t1
+				INNER JOIN
+					(SELECT ID,code_stat FROM directoryCodeStat) t2
+				ON t1.code_stat=t2.ID
+				WHERE t2.code_stat='18.14.10' OR t2.code_stat='18.13.30'";
+	}
+	else {
+		$str_smeta = $arr_smeta[0];
+		for($i = 1; $i < count($arr_smeta); $i++) {
+			$str_smeta .= ",".$arr_smeta[$i];
+		}
+		//$query = "select p_names, total, summ,DIZ,sum_press,units,price from order_product where id in (".$str_smeta.")";
+		$query = "SELECT *
+				FROM
+					(SELECT p_names, total, summ,DIZ,sum_press,units,price,code_stat FROM order_product WHERE order_id IN (".$str_smeta.")) t1
+				INNER JOIN
+					(SELECT ID,code_stat FROM directoryCodeStat) t2
+				ON t1.code_stat=t2.ID
+				WHERE t2.code_stat='18.14.10' OR t2.code_stat='18.13.30'";
+	}
+}
 $result = mysql_query($query) or die($query);
 $var = 187;
 while ($row = mysql_fetch_row($result)) { 
@@ -177,6 +225,7 @@ $p_names = $row[0];
 $total = $row[1];
 $summ = $row[2]+$row[3]+$row[4];
 if ($total != 0){
+
 $price = round($row[6],2) / $nds_; 
 $price = round($price ,2);
 
@@ -188,11 +237,11 @@ IF($no_nds == 1 OR $no_nds == '1'){
 
 $summ = $total * round($price,2) * $nds_;
 
-
 IF($no_nds == 1 OR $no_nds == '1'){
 	$summ = $total * round($price,2) ;
 	$nds = 0;
 }
+
 
 $summ = round($summ ,2);
 $summ_no_nds = round($price * $total,2); 
@@ -261,9 +310,6 @@ $html .= '<tr>'.
 	.'<td align=right border=1111 >'.number_format($summ_all , 2, ',', ' ').'</td>'
 	.'</tr>'
 	;
-	
-	$qt = "UPDATE tn_list_par SET summ='".str_ireplace(",", ".", $summ_all)."' WHERE  id = ".$ID1; 
-		mysql_query($qt) or die($qt);
 $html .= '</table>';
 $pdf->Ln();
 $pdf->htmltable($html);
@@ -311,9 +357,9 @@ $pdf->Cell(100,5,'ЗАКАЗЧИК:');
 $pdf->Ln();
 
 
-$pdf->Cell(100,0,iconv("UTF-8", "cp1251", classes_accordUsers::getPOST($users, classes_accordUsers::ACCORD_TYPE_AM)) );
+$pdf->Cell(100,0,iconv("UTF-8", "cp1251", $user_post) );
 $pdf->Ln(3);
-$pdf->Cell(100,5,'                _________________/'. iconv("UTF-8", "cp1251", classes_accordUsers::getFIO($users, classes_accordUsers::ACCORD_TYPE_AM)) );
+$pdf->Cell(100,5,'                _________________/'. iconv("UTF-8", "cp1251", $user_fio) );
 $pdf->Cell(100,5,'__________________________/'. iconv("UTF-8", "cp1251", $fio_dir1) );
 $pdf->Ln();
 $pdf->Cell(100,10,'                                     м.п');  
