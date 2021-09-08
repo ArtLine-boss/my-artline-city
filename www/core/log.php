@@ -3,12 +3,20 @@
  * Класс логирования
  */
 class core_log extends core_Object {
-    var $_filename = null;
+    protected $_filename = null;
 
     public function __construct($filename = null) {
         if(empty($filename) || !is_string($filename))
             return;
-        $this->_filename = $filename;
+        $this->_filename = $_SERVER['DOCUMENT_ROOT'] . '/www/' . $filename;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getFilename()
+    {
+        return $this->_filename;
     }
 
     public function store($msg = null, $byDate = true) {

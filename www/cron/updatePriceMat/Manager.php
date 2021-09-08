@@ -4,6 +4,10 @@ class cron_updatePriceMat_Manager
     protected $listMat;
 
     const COUNT_MONTHLY = 12;
+    const MAIL_TO = [
+        'wladfm.prylutski@gmail.com',
+        'wladislove_best@mail.ru'
+    ];
 
     public function __construct()
     {
@@ -59,6 +63,21 @@ class cron_updatePriceMat_Manager
         } while(false);
 
         return $res;
+    }
+
+    public function mail($filepath = '') {
+        require $_SERVER['DOCUMENT_ROOT'] . '/libs/PHPMailer/src/PHPMailer.php';
+        $mail = new PHPMailer();
+        $mail->setFrom('boot@artline.biz');
+        foreach (static::MAIL_TO as $email) {
+            $mail->addAddress($email);
+        }
+        $mail->Subject = 'Результат работы скрипта обновления цен на материалы';
+        $mail->msgHTML('Данное сообщение <b>сгенерировано автоматически</b>. Результат работы скрипта представлен <b>в прикрепленном файле</b>.');
+        if(!empty($filepath)) {
+            $mail->addAttachment($filepath);
+        }
+        return $mail->send();
     }
 }
 ?>

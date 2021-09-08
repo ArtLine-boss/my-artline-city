@@ -40,4 +40,9 @@ if(count($errs) > 0) {
     $log->store(implode(PHP_EOL, $errs), false);
 }
 
+if(!$manager->mail($log->getFilename())) {
+    $log = new core_log('cron/updatePriceMat/mail.err');
+    $log->store('Результат не был отправлен');
+}
+
 ?>
