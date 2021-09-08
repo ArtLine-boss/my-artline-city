@@ -5,13 +5,16 @@
 
 $log = new core_log('cron/updatePriceMat/logs/' . API::CurrentDate(CONSTANTS::NAME_DATE_FORMAT) . '.txt');
 $errs = [];
+$delimiter = ';';
 try {
     $manager = new cron_updatePriceMat_Manager();
     $manager->proccess();
     $list = $manager->getListMat();
 
     $index = 0;
-    $result = 'Номер п/п;ИД материала;Наименование материала;Количество на складе;Старая цена;Новая цена;ТТН;Курс' . PHP_EOL;
+    $result = 'Номер п/п' . $delimiter . 'ИД материала' . $delimiter
+        . 'Наименование материала' . $delimiter . 'Количество на складе' . $delimiter
+        . 'Старая цена' . $delimiter . 'Новая цена' . $delimiter . 'ТТН' . $delimiter . 'Курс' . PHP_EOL;
     foreach ($list as $dto) {
         /** @var cron_updatePriceMat_Dto $dto */
         $mat = classes_MaterialAttr::oid($dto->matId);
@@ -24,9 +27,9 @@ try {
             $errs[] = 'Не удалось сохранить материал с ИД `' . $dto->matId . '`. ' . $msg;
             continue;
         }*/
-        $result .= ($index++) . ';' . $dto->matId . ';'
-            . $dto->matName . ';' . $dto->currentQ . ';' . $dto->price . ';' . $dto->newPrice
-            . ';' . $dto->ttnNum . ' от ' . API::FormatDate($dto->ttnDate, CONSTANTS::REPORT_DATE_FORMAT) . ';' . $dto->currency . PHP_EOL;
+        $result .= ($index++) . $delimiter . $dto->matId . $delimiter
+            . $dto->matName . $delimiter . $dto->currentQ . $delimiter . $dto->price . $delimiter . $dto->newPrice
+            . $delimiter . $dto->ttnNum . ' от ' . API::FormatDate($dto->ttnDate, CONSTANTS::REPORT_DATE_FORMAT) . $delimiter . $dto->currency . PHP_EOL;
     }
 
     $log->store($result, false);

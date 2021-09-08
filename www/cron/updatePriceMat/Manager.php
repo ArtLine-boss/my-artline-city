@@ -6,7 +6,7 @@ class cron_updatePriceMat_Manager
     const COUNT_MONTHLY = 12;
     const MAIL_TO = [
         'wladfm.prylutski@gmail.com',
-        'wladislove_best@mail.ru'
+        '6248654@gmal.com'
     ];
 
     public function __construct()
@@ -73,6 +73,7 @@ class cron_updatePriceMat_Manager
             $mail->addAddress($email);
         }
         $mail->Subject = 'Результат работы скрипта обновления цен на материалы';
+        $mail->CharSet = PHPMailer::CHARSET_UTF8;
         $mail->msgHTML('Данное сообщение <b>сгенерировано автоматически</b>. Результат работы скрипта представлен <b>в прикрепленном файле</b>.');
         if(!empty($filepath)) {
             $mail->addAttachment($filepath);
