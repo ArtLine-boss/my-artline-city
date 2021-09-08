@@ -3,7 +3,7 @@
  * Путь к скрипту - http://artline.city/www/index.php?m=cron&u=updatePriceMat&scr=1
  */
 
-$log = new core_log('cron/updatePriceMat/logs/' . API::CurrentDate(CONSTANTS::NAME_DATE_FORMAT) . '.txt');
+$log = new core_log('cron/updatePriceMat/logs/' . API::CurrentDate(CONSTANTS::NAME_DATE_FORMAT) . '.csv');
 $errs = [];
 $delimiter = ';';
 try {
@@ -27,9 +27,11 @@ try {
             $errs[] = 'Не удалось сохранить материал с ИД `' . $dto->matId . '`. ' . $msg;
             continue;
         }*/
-        $result .= ($index++) . $delimiter . $dto->matId . $delimiter
-            . $dto->matName . $delimiter . $dto->currentQ . $delimiter . $dto->price . $delimiter . $dto->newPrice
-            . $delimiter . $dto->ttnNum . ' от ' . API::FormatDate($dto->ttnDate, CONSTANTS::REPORT_DATE_FORMAT) . $delimiter . $dto->currency . PHP_EOL;
+        $result .= (++$index) . $delimiter . $dto->matId . $delimiter
+            . $dto->matName . $delimiter . str_replace('.', ',', $dto->currentQ) . $delimiter
+            . str_replace('.', ',', $dto->price) . $delimiter . str_replace('.', ',', $dto->newPrice)
+            . $delimiter . $dto->ttnNum . ' от ' . API::FormatDate($dto->ttnDate, CONSTANTS::REPORT_DATE_FORMAT) . $delimiter
+            . str_replace('.', ',', $dto->currency) . PHP_EOL;
     }
 
     $log->store($result, false);

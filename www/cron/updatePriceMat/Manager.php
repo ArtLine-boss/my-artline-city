@@ -32,6 +32,9 @@ class cron_updatePriceMat_Manager
         return empty($this->listMat) || !is_array($this->listMat) ? [] : $this->listMat;
     }
 
+    /**
+     * @return array
+     */
     public function proccess() {
         $res = [];
 
@@ -50,7 +53,7 @@ class cron_updatePriceMat_Manager
                     FROM `material_attr`
                     JOIN `ttn_mater` ON `ttn_mater`.`id_mat` = `material_attr`.`ID`
                     JOIN `ttn` ON `ttn`.`ID` = `ttn_mater`.`id_TTN`
-                    WHERE `ttn`.`dt` >= '" . $filter_date . "'";
+                    WHERE `material_attr`.`M_UNIT` = `ttn_mater`.`unit` AND `ttn`.`dt` >= '" . $filter_date . "'";
             $stocks = core_DBObject::s_select($sql);
             foreach ($stocks as $data) {
                 $dto = new cron_updatePriceMat_Dto();
@@ -65,6 +68,11 @@ class cron_updatePriceMat_Manager
         return $res;
     }
 
+    /**
+     * @param string $filepath
+     * @return bool
+     * @throws Exception
+     */
     public function mail($filepath = '') {
         require $_SERVER['DOCUMENT_ROOT'] . '/libs/PHPMailer/src/PHPMailer.php';
         $mail = new PHPMailer();
