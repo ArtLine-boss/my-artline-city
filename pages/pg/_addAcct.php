@@ -4325,7 +4325,7 @@
 													smeta = JSON.stringify(arr);
 																								
 												let src = 'act';
-                                                let firm = <?php echo $firm_parent; ?>
+                                                let firm = <?php echo intval($firm_parent); ?>;
                                                 if(firm == 2) {
                                                     src = 'act_m';
                                                 }
@@ -4334,7 +4334,7 @@
 											}
 											function showacct1(id) {
                                                 let src = 'act';
-                                                let firm = <?php echo $firm_parent; ?>
+                                                let firm = <?php echo intval($firm_parent); ?>;
                                                 if(firm == 2) {
                                                     src = 'act_m';
                                                 }
