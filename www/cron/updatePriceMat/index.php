@@ -23,10 +23,10 @@ try {
             continue;
         }
         $mat->M_PRICE = $dto->newPrice;
-        /*if(null !== ($msg = $mat->store())) {
+        if(null !== ($msg = $mat->store())) {
             $errs[] = 'Не удалось сохранить материал с ИД `' . $dto->matId . '`. ' . $msg;
             continue;
-        }*/
+        }
         $result .= (++$index) . $delimiter . $dto->matId . $delimiter
             . $dto->matName . $delimiter . str_replace('.', ',', $dto->currentQ) . $delimiter
             . str_replace('.', ',', $dto->price) . $delimiter . str_replace('.', ',', $dto->newPrice)
