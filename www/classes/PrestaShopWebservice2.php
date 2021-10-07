@@ -14,6 +14,70 @@ class classes_PrestaShopWebservice2 extends classes_PrestaShopWebservice {
         parent::__construct($url, $key, $debug);
     }
 
+    /**
+     * Retrieve (GET) a resource
+     * <p>Unique parameter must take : <br><br>
+     * 'url' => Full URL for a GET request of Webservice (ex: http://mystore.com/api/customers/1/)<br>
+     * OR<br>
+     * 'resource' => Resource name,<br>
+     * 'id' => ID of a resource you want to get<br><br>
+     * </p>
+     * <code>
+     * <?php
+     * require_once('./PrestaShopWebservice.php');
+     * try
+     * {
+     * $ws = new PrestaShopWebservice('http://mystore.com/', 'ZQ88PRJX5VWQHCWE4EE7SQ7HPNX00RAJ', false);
+     * $xml = $ws->get(array('resource' => 'orders', 'id' => 1));
+     *	// Here in $xml, a SimpleXMLElement object you can parse
+     * foreach ($xml->children()->children() as $attName => $attValue)
+     * 	echo $attName.' = '.$attValue.'<br />';
+     * }
+     * catch (PrestaShopWebserviceException $ex)
+     * {
+     * 	echo 'Error : '.$ex->getMessage();
+     * }
+     * ?>
+     * </code>
+     * @param array $options Array representing resource to get.
+     * @return SimpleXMLElement status_code, response
+     */
+    public function get($options)
+    {
+        if (isset($options['url']))
+            $url = $options['url'];
+        elseif (isset($options['resource']))
+        {
+            //$url = $this->url.'/api/'.$options['resource'];
+            $url = $this->url.$options['resource'];
+            $url_params = array();
+            if (isset($options['id']))
+                $url .= '/'.$options['id'];
+
+            $params = array('filter', 'display', 'sort', 'limit', 'id_shop', 'id_group_shop');
+            foreach ($params as $p)
+                foreach ($options as $k => $o)
+                    if (strpos($k, $p) !== false)
+                        $url_params[$k] = $options[$k];
+            if (count($url_params) > 0)
+                $url .= '?'.http_build_query($url_params);
+        }
+        else
+            throw new PrestaShopWebserviceException('Bad parameters given');
+
+        $request = self::executeRequest($url, array(
+            CURLOPT_CUSTOMREQUEST => 'GET',
+            CURLOPT_SSL_VERIFYPEER => false,
+            CURLOPT_SSL_VERIFYHOST => false,
+            CURLOPT_FOLLOWLOCATION => false,
+            CURLOPT_RETURNTRANSFER => true
+        ));
+
+        self::checkStatusCode($request['status_code']);// check the response validity
+        //return self::parseXML($request['response']);
+        return json_decode($request['response']);
+    }
+
     /*
      * Строим класс по массиву
      */
