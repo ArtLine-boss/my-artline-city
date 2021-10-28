@@ -405,8 +405,13 @@
          * @return static
          */
         public static function oid($id) {
-            $class = new static();
-            return $class->_oid($id);
+            $class = core_Cache::getInstance()->get(get_class(new static()), $id);
+            if($class === null) {
+                $class = new static();
+                $class = $class->_oid($id);
+                core_Cache::getInstance()->set($class);
+            }
+            return $class;
         }
 
         /**
@@ -421,6 +426,22 @@
             $class = new static();
             $list = $class->loadAll($where, $field, $desk, $limit);
             return $list;
+        }
+
+        /**
+         * Загрузка по уникальному полю
+         * @param string|null $field Поле
+         * @param string|null $value Значение
+         * @param bool $isempty
+         * @return static
+         */
+        public static function unique($field = null, $value = null, $isempty = true) {
+            $class = new static();
+            $msg = $class->loadByUnique($field, $value, true);
+            if($msg !== null) {
+                $class = new static();
+            }
+            return $class;
         }
 
         /**

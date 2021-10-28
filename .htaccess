@@ -21,4 +21,5 @@ RewriteBase /
 #	</If>
 #</If>
 
-ErrorDocument 404 /404.html
+ErrorDocument 404 /www/404.php
+#ErrorDocument 404 /404.html

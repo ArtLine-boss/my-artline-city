@@ -485,6 +485,33 @@
 			return $paths;
 		}
 
+		/**
+		 * @param $folder
+		 * @param $extension
+		 * @return array
+		 */
+		static function search_file_extension($folder, $extension)
+		{
+			$folder = trim($folder, '/');
+			// открываем текущую папку
+			$dir = opendir($folder);
+			// перебираем папку
+			$paths = glob($folder . '/*.' . $extension);
+			if($paths === false) {
+				$paths = [];
+			}
+			while (($file = readdir($dir)) !== false) { // перебираем пока есть файлы
+				if ($file != "." && $file != "..") { // если это не папка
+					if (is_dir($folder . "/" . $file)) {
+						$paths = array_merge($paths, self::search_file_extension($folder . "/" . $file, $extension));
+					}
+				}
+			}
+			// закрываем папку
+			closedir($dir);
+			return $paths;
+		}
+
 		/*
          * Создание каталога
          */

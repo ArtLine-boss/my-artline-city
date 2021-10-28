@@ -1,0 +1,153 @@
+.editor {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    align-items: center;
+}
+
+.editor-block {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    max-width: 886px;
+    max-height: 591px;
+}
+
+.editor-block.face {
+    max-width: 1082px;
+    max-height: 624px;
+}
+
+.editor-block-body {
+    width: 100%;
+    height: 100%;
+    max-width: 591px;
+    max-height: 591px;
+}
+
+.face .editor-block-body {
+    max-width: 787px;
+    max-height: 624px;
+}
+
+.editor-block-menu {
+    width: 295px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+}
+
+.editor-block-menu h1 {
+    text-transform: uppercase;
+    font-size: 1.2rem;
+}
+
+.editor-block-menu-header {
+    height: 60px;
+}
+
+.editor-block-menu-header h1 {
+    display: flex;
+    justify-content: center;
+    padding-bottom: 10px;
+    flex-direction: column;
+    align-items: center;
+}
+
+.editor-block-menu-header h1:after {
+    content: "";
+    width: 53%;
+    height: 5px;
+    background: #f69c41;
+}
+
+.editor-block-menu-body {
+    height: 100%;
+    overflow: auto;
+}
+
+.editor-block-menu-btn {
+    background-color: #f69c41;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+    text-transform: uppercase;
+    font-size: 1.6rem;
+    color: #354052;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.editor-block-body-background {
+    max-width: 591px;
+    max-height: 591px;
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.face .editor-block-body-background {
+    max-width: 787px;
+    max-height: 624px;
+}
+
+.editor-block-body-element {
+    max-width: 591px;
+    max-height: 591px;
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.face .editor-block-body-element {
+    max-width: 787px;
+    max-height: 624px;
+}
+
+.c-toggle__btn.is-active {
+    border-color: unset;
+    background-color: #f69c41;
+}
+
+.editor-block-menu-body-element {
+    border: 1px solid #ced0da;
+    margin: 3px;
+    border-radius: 6px;
+    height: 45px;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.editor-block-menu-body-element-color {
+    width: 30px;
+    height: 30px;
+    border: 1px solid #354052;
+    cursor: pointer;
+}
+
+.editor-block-menu-body-element-colors.show {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.editor-block-menu-body-element-colors {
+    display: none;
+}
+
+.editor-block-menu-body-element-color-value {
+    width: 40px;
+    height: 40px;
+    margin: 5px 0 20px 25px;
+}
+
+.editor-block-menu-body-element-color-value.active {
+    border: 1px solid #354052;
+}
