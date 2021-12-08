@@ -2285,14 +2285,14 @@
 									var x2 = Number(mat_size_2_old) / Number(mat_size_2);
 									var x3 = Number(mat_size_1_old) / Number(mat_size_2);
 									var x4 = Number(mat_size_2_old) / Number(mat_size_1);
-									x1 = x1.toFixed(2);
-									x3 = x3.toFixed(2);
-									x2 = x2.toFixed(2);
-									x4 = x4.toFixed(2);
+									x1 = (x1 ?? 0).toFixed(2);
+									x3 = (x3 ?? 0).toFixed(2);
+									x2 = (x2 ?? 0).toFixed(2);
+									x4 = (x4 ?? 0).toFixed(2);
 									var y1 = Number(parseInt(x1)) * Number(parseInt(x2));
 									var y2 = Number(parseInt(x3)) * Number(parseInt(x4));
-									y1 = Number(y1.toFixed());
-									y2 = Number(y2.toFixed());
+									y1 = Number((y1 ?? 0).toFixed());
+									y2 = Number((y2 ?? 0).toFixed());
 									
 									pagekol_new = 0;
 									if (y1 > y2) {
@@ -2314,7 +2314,7 @@
 									
 									price_mat_old = Number(price_mat);
 									price_mat = Number(price_mat_old) / Number(pagekol_new);
-									price_mat = price_mat.toFixed(2);
+									price_mat = (price_mat ?? 0).toFixed(2);
 									//console.log("Кол-во новых листов на старом = " + pagekol_new + "! Старая цена = " + price_mat_old + "! Новая = " + price_mat )
 									
 									pol = 0;
@@ -2394,14 +2394,14 @@
 									var x2 = Number(mat_size_22) / Number(prod_size_22);
 									var x3 = Number(mat_size_11) / Number(prod_size_22);
 									var x4 = Number(mat_size_22) / Number(prod_size_11);
-									x1 = x1.toFixed(2);
-									x3 = x3.toFixed(2);
-									x2 = x2.toFixed(2);
-									x4 = x4.toFixed(2);
+									x1 = (x1 ?? 0).toFixed(2);
+									x3 = (x3 ?? 0).toFixed(2);
+									x2 = (x2 ?? 0).toFixed(2);
+									x4 = (x4 ?? 0).toFixed(2);
 									var y1 = Number(parseInt(x1)) * Number(parseInt(x2));
 									var y2 = Number(parseInt(x3)) * Number(parseInt(x4));
-									y1 = Number(y1.toFixed());
-									y2 = Number(y2.toFixed());
+									y1 = Number((y1 ?? 0).toFixed());
+									y2 = Number((y2 ?? 0).toFixed());
 									
 									
 									if (y1 > y2) {
@@ -2472,19 +2472,19 @@
 											var x2 = Number(mat_size_22) / Number(prod_size_22);
 											var x3 = Number(new_mat_size_1) / Number(prod_size_22);
 											var x4 = Number(mat_size_22) / Number(prod_size_11);
-											x1 = x1.toFixed(2);
-											x3 = x3.toFixed(2);
-											x2 = x2.toFixed(2);
-											x4 = x4.toFixed(2);
+											x1 = (x1 ?? 0).toFixed(2);
+											x3 = (x3 ?? 0).toFixed(2);
+											x2 = (x2 ?? 0).toFixed(2);
+											x4 = (x4 ?? 0).toFixed(2);
 											var y1 = Number(parseInt(x1)) * Number(parseInt(x2));
 											var y2 = Number(parseInt(x3)) * Number(parseInt(x4));
 											
-											if (y1.toFixed() >= y2.toFixed()) {
-												pagekol1 = y1.toFixed(); 	//"К-во изд. на листе"
+											if ((y1 ?? 0).toFixed() >= (y2 ?? 0).toFixed()) {
+												pagekol1 = (y1 ?? 0).toFixed(); 	//"К-во изд. на листе"
 												alg = 1;
 											}
 											else {
-												pagekol1 = y2.toFixed(); 	//"К-во изд. на листе"
+												pagekol1 = (y2 ?? 0).toFixed(); 	//"К-во изд. на листе"
 												alg = 2;
 											}
 											//console.log( x1 + " " + x2  + " " + x3 + " " + x4 + " " +  y1 + " " + y2 + " " +   alg )
@@ -2529,22 +2529,22 @@
 											var x2 = Number(new_mat_size_2) / Number(prod_size_22);
 											var x3 = Number(mat_size_11) / Number(prod_size_22);
 											var x4 = Number(new_mat_size_2) / Number(prod_size_11);
-											x1 = x1.toFixed(2);
-											x3 = x3.toFixed(2);
-											x2 = x2.toFixed(2);
-											x4 = x4.toFixed(2);
+											x1 = (x1 ?? 0).toFixed(2);
+											x3 = (x3 ?? 0).toFixed(2);
+											x2 = (x2 ?? 0).toFixed(2);
+											x4 = (x4 ?? 0).toFixed(2);
 											var y1 = Number(parseInt(x1)) * Number(parseInt(x2));
 											var y2 = Number(parseInt(x3)) * Number(parseInt(x4));
 											
 											y1 = Number(y1);
 											y2 = Number(y2);
 											
-											if (y1.toFixed() >= y2.toFixed()) {
-												pagekol1 = y1.toFixed(); 	//"К-во изд. на листе"
+											if ((y1 ?? 0).toFixed() >= (y2 ?? 0).toFixed()) {
+												pagekol1 = (y1 ?? 0).toFixed(); 	//"К-во изд. на листе"
 												alg = 1;
 											}
 											else {
-												pagekol1 = y2.toFixed(); 	//"К-во изд. на листе"
+												pagekol1 = (y2 ?? 0).toFixed(); 	//"К-во изд. на листе"
 												alg = 2;
 											}
 											
@@ -2753,7 +2753,7 @@
 									}
 									
 									var print_sum = price_oper * nadbv * nadbvv_tir   //Стоимость печати	
-									print_sum = print_sum.toFixed(2);
+									print_sum = (print_sum ?? 0).toFixed(2);
 									if(isNaN(print_sum))
 										print_sum = 0;
 									
@@ -2849,7 +2849,7 @@
 									
 									price_mat = new_price;
 									price_mat = (Number(price_mat) * Number(nadb_mat));
-									price_mat = price_mat.toFixed(2);
+									price_mat = (price_mat ?? 0).toFixed(2);
 									
 									//		console.log("Стоимость материала 3 = " + price_mat )
 									//Тираж листов в зав. от того, каталог или изделие	
@@ -2860,7 +2860,7 @@
 										console.log("Метров пагонных материала " + (Number(mat_size_22) * Number(kofff) / 1000) + "  Цена материала " + Number(price_mat))
 										console.log("кол-во листов " + tir_list + " Цена материала " + ((Number(mat_size_22) * Number(kofff) / 1000) * Number(price_mat)) + " Стоимость печати полная " + print_sum + " надб " + nadbv + " стоимость печати " + price_oper + " надбавка на тираж " + nadbvv_tir)
 										sun_tir = ((Number(mat_size_22) * Number(kofff) / 1000) * Number(price_mat)) + Number(print_sum);	//Стоимость печати за тираж	
-										sun_tir = sun_tir.toFixed(2);
+										sun_tir = (sun_tir ?? 0).toFixed(2);
 										
 										} else {
 										console.log("----------------Материал цены-------------------")
@@ -2891,7 +2891,7 @@
 										if (new_wir == '1'){
 											
 											tir_list = Number(sqrs) * Number(n_cir) * Number(kot_total);
-											tir_list = tir_list.toFixed(2);
+											tir_list = (tir_list ?? 0).toFixed(2);
 										}
 										
 										//расчет для офсета
@@ -2942,7 +2942,7 @@
 											
 											//console.log("asdasd " + print_sum + " " + tir_list + " " + price_mat)
 											sun_tir = (Number(print_sum) * Number(tir_list))  + Number(price_mat);	//Стоимость печати за тираж	
-											sun_tir = sun_tir.toFixed(2);
+											sun_tir = (sun_tir ?? 0).toFixed(2);
 										}
 										else  {
 											sun_tir = (Number(print_sum) + Number(price_mat)) * Number(tir_list);	//Стоимость печати за тираж	
@@ -2954,7 +2954,7 @@
 													sun_tir += Number(price_mat) * parseInt($('#p_off_' + i).attr('data-plus-list'));
 												}
 											}
-											sun_tir = sun_tir.toFixed(2);
+											sun_tir = (sun_tir ?? 0).toFixed(2);
 										}
 										//	console.log("кол-во листов " + tir_list + " Цена материала "  + price_mat + " Стоимость печати полная " + print_sum + " надб " + nadbv + " стоимость печати " + price_oper + " надбавка на тираж " + nadbvv_tir)
 										//sun_tir = (Number(print_sum) + Number(price_mat)) * Number(tir_list);	//Стоимость печати за тираж	
@@ -2968,7 +2968,7 @@
 											ob_sun_tir = ob_sun_tir + " ";
 										}
 										seb_tir = (Number(price_oper) + Number(new_price)) * Number(tir_list);
-										seb_tir = seb_tir.toFixed(2);
+										seb_tir = (seb_tir ?? 0).toFixed(2);
 										ob_seb_tir = seb_tir
 										while (ob_seb_tir.length < 14) {
 											ob_seb_tir = ob_seb_tir + " ";
@@ -2991,7 +2991,7 @@
 											rez =  all_perim * kof_rez;
 										} else {*/
 										rez = Number(seb_tir) * P - Number(seb_tir);
-										rez = rez.toFixed(2);
+										rez = (rez ?? 0).toFixed(2);
 										//}
 										
 										if (rez != 0) {
@@ -3039,7 +3039,7 @@
 										else if (kol_bug >= 5000) {
 											price_bug = kol_bug * 0.008
 										}
-										price_bug = price_bug.toFixed(2);
+										price_bug = (price_bug ?? 0).toFixed(2);
 										console.log("Стоимость биговки " + price_bug + " $")
 										} else {
 										price_bug = 0
@@ -3080,7 +3080,7 @@
 										else if (kol_perf >= 5000) {
 											price_perf = kol_perf * 0.013
 										}
-										price_perf = price_perf.toFixed(2);
+										price_perf = (price_perf ?? 0).toFixed(2);
 										console.log("Стоимость перфорации " + price_perf + " $")
 										} else {
 										price_perf = 0
@@ -3107,7 +3107,7 @@
 											}
 										}
 									}
-									price_lam = price_lam.toFixed(2); 		//Цена ламинирование	
+									price_lam = (price_lam ?? 0).toFixed(2); 		//Цена ламинирование
 									
 									if (price_lam != 0) {
 										console.log("Стоимость ламинирование " + price_lam + " $")
@@ -3162,7 +3162,7 @@
 											price_ygl = kol_ygl * 0.0015
 										}
 										
-										price_ygl = price_ygl.toFixed(2); 				//Цена углы	
+										price_ygl = (price_ygl ?? 0).toFixed(2); 				//Цена углы
 										console.log("Стоимость углы " + price_ygl + " $")
 										} else {
 										price_ygl = 0
@@ -3202,7 +3202,7 @@
 											price_otv = kol_otv * 0.003
 										}
 										
-										price_otv = price_otv.toFixed(2); 				//Цена отверстия	
+										price_otv = (price_otv ?? 0).toFixed(2); 				//Цена отверстия
 										console.log("Стоимость отверстия " + price_otv + " $")
 										} else {
 										price_otv = 0
@@ -3257,7 +3257,7 @@
 											price_luv = kol_luv * 0.05
 										}
 										
-										price_luv = price_luv.toFixed(2);  //Цена люверс	
+										price_luv = (price_luv ?? 0).toFixed(2);  //Цена люверс
 										console.log("Стоимость люверс " + price_luv + " $")
 										} else {
 										price_luv = 0
@@ -3302,7 +3302,7 @@
 										else if (kot_rub >= 5000) {
 											price_rub = kot_rub * 0.04
 										}
-										price_rub = price_rub.toFixed(2);
+										price_rub = (price_rub ?? 0).toFixed(2);
 										if (price_rub < min_vir && price_rub > 0) {
 											price_rub = min_vir
 										}
@@ -3355,7 +3355,7 @@
 										else if (kot_con >= 10000) {
 											price_luv = kot_con * 0.04
 										}
-										price_con = price_con.toFixed(2);
+										price_con = (price_con ?? 0).toFixed(2);
 										if (price_con < min_con && price_con > 0) {
 											price_con = min_con
 										}
@@ -3375,7 +3375,7 @@
                                         }
                                         let costOper = sendAjax('m=ajaxs&u=systemOld&a=getCostOperations', obj, null, false, true);
                                         price_p = kot_p * parseFloat(costOper);
-                                        price_p = price_p.toFixed(2);
+                                        price_p = (price_p ?? 0).toFixed(2);
                                         console.log("Стоимость плотерной резки " + price_p + " $");
 
                                     } else if ((document.getElementById('p_cut2_' + i).checked) && (document.getElementById('p_size_cut_' + i).value != "")) {
@@ -3435,7 +3435,7 @@
 											}
 										}
 										price_p = Number(price_p);
-										price_p = price_p.toFixed(2);
+										price_p = (price_p ?? 0).toFixed(2);
 										console.log("Стоимость плотерной резки " + price_p + " $")
 									} else {
 										price_p = 0
@@ -3487,7 +3487,7 @@
 										else if (kot_tis >= 20000) {
 											price_tis = kot_tis * 0.04
 										}
-										price_tis = price_tis.toFixed(2);
+										price_tis = (price_tis ?? 0).toFixed(2);
 										console.log("Стоимость тиснение " + price_tis + " $")
 										if (price_tis < min_tis && price_tis > 0) {
 											price_tis = min_tis
@@ -3518,7 +3518,7 @@
 											}
 										}
 									}
-									price_per = price_per.toFixed(2); 		//Цена переплет	
+									price_per = (price_per ?? 0).toFixed(2); 		//Цена переплет
 									if (price_per != 0) {
 										console.log("Стоимость переплета " + price_per + " $")
 									}
@@ -3747,7 +3747,7 @@
 								if (sum_all > 0) {
 									sum_all = Number(sum_all) + Number(price_per)
 									sum_all = (sum_all * Number(kuByn) * nds_);
-									sum_all = sum_all.toFixed(2);
+									sum_all = (sum_all ?? 0).toFixed(2);
 								}
 								else sum_all = 0;
 								sum_all = Number(sum_all) + Number(sum_all1);
@@ -3755,10 +3755,10 @@
 								nadb_f = 1 + (Number(nadb_f) / 100);
 								console.log("Первая сумма " + sum_all)
 								sum_all = Number(sum_all) * Number(nadb_f);
-								sum_all = sum_all.toFixed(2);
+								sum_all = (sum_all ?? 0).toFixed(2);
 								console.log("Cумма  c надбавкой фирмы " + sum_all)
 								price_ed = ((sum_all / n_cir) / 1.2);
-								price_ed = price_ed.toFixed(2);
+								price_ed = (price_ed ?? 0).toFixed(2);
 								if (Number(price_ed) < 0.01 && Number(price_ed) > 0) {
 									if (document.getElementById('no_price').checked == false) {
 										if ($("#unit_prod1").val() != "тыс.шт.") {
@@ -3783,10 +3783,10 @@
 								}
 								price_ed = price_ed * 1.2;
 								
-								price_ed = price_ed.toFixed(3);
+								price_ed = (price_ed ?? 0).toFixed(3);
 								
 								sum_all = price_ed * n_cir;
-								sum_all = sum_all.toFixed(2);
+								sum_all = (sum_all ?? 0).toFixed(2);
 								
 								if (isNaN(sum_all)) {
 									sum_all = 0;
@@ -3815,7 +3815,7 @@
 								for (y = 0; y < arr.length; y++) {
 									kolasd++;
 									sum_all_arr = Number(arr[y]);
-									sum_all_arr = sum_all_arr.toFixed(2);
+									sum_all_arr = (sum_all_arr ?? 0).toFixed(2);
 									
 									console.log("Часть_" + kolasd + " = " + sum_all_arr + " BYN");
 								}
@@ -4715,15 +4715,15 @@
 													sum_all = Number(document.getElementById('p_sum_all').value);
 													n_cir = Number((document.getElementById('p_cir').value).replace(",", "."));
 													
-													sum_all = sum_all.toFixed(2);
+													sum_all = (sum_all ?? 0).toFixed(2);
 													price_ed = ((sum_all / n_cir) / 1.2);
-													price_ed = price_ed.toFixed(2);
+													price_ed = (price_ed ?? 0).toFixed(2);
 													sum_all = price_ed * n_cir * 1.2;
-													sum_all = sum_all.toFixed(2);
+													sum_all = (sum_all ?? 0).toFixed(2);
 													
 													document.getElementById('p_sum_all').value = sum_all;
 													price_ed = Number(sum_all) / Number(n_cir);
-													price_ed = price_ed.toFixed(3);
+													price_ed = (price_ed ?? 0).toFixed(3);
 													document.getElementById('p_price_all').value = price_ed;
 												}
 												else {
@@ -5092,7 +5092,7 @@
 													}
 													document.getElementById('view_diz').value = str.substring(0, str.length - 1);
 													summ = (sum / 60) * price_diz * kurs
-													document.getElementById('p_prdiz_1').value = summ.toFixed(2);
+													document.getElementById('p_prdiz_1').value = (summ ?? 0).toFixed(2);
 													
 													str = '', str1 = '', sum = 0;
 													nodeList = document.getElementsByName('pre');
@@ -5106,7 +5106,7 @@
 													}
 													document.getElementById('view_press').value = str.substring(0, str.length - 1);
 													summ = (sum / 60) * price_diz * kurs
-													document.getElementById('p_press_1').value = summ.toFixed(2);
+													document.getElementById('p_press_1').value = (summ ?? 0).toFixed(2);
 													document.getElementById('bnt_file').style.display = 'block';
 												}
 												if (id == '2') {
@@ -5133,7 +5133,7 @@
 													}
 													document.getElementById('view_press').value = str.substring(0, str.length - 1);
 													summ = (sum / 60) * price_diz * kurs
-													document.getElementById('p_press_1').value = summ.toFixed(2);
+													document.getElementById('p_press_1').value = (summ ?? 0).toFixed(2);
 													document.getElementById('bnt_file').style.display = 'block';
 												}
 												if (id == '3') {
@@ -5578,7 +5578,7 @@
 												}
 												document.getElementById('view_diz').value = str.substring(0, str.length - 1);
 												summ = (sum / 60) * price_diz * kurs
-												document.getElementById('p_prdiz_1').value = summ.toFixed(2);
+												document.getElementById('p_prdiz_1').value = (summ ?? 0).toFixed(2);
 												
 												$('#myModal3').modal('hide');
 												$('#myModalprod1').focus();
@@ -5596,7 +5596,7 @@
 												}
 												document.getElementById('view_press').value = str.substring(0, str.length - 1);
 												summ = (sum / 60) * price_diz * kurs
-												document.getElementById('p_press_1').value = summ.toFixed(2);
+												document.getElementById('p_press_1').value = (summ ?? 0).toFixed(2);
 												
 												$('#myModal4').modal('hide');
 												// $('#myModalprod1').focus();
@@ -5623,14 +5623,14 @@
 													total_time = time + time1
 													total_sum = sum + sum1
 													document.getElementById('total_time_pre').innerHTML = total_time;
-													document.getElementById('total_sum_pre').innerHTML = total_sum.toFixed(2);
+													document.getElementById('total_sum_pre').innerHTML = (total_sum ?? 0).toFixed(2);
 													
 													} else {
 													document.getElementById(str).style.display = 'none';
 													total_time = time - time1
 													total_sum = sum - sum1
 													document.getElementById('total_time_pre').innerHTML = total_time;
-													document.getElementById('total_sum_pre').innerHTML = total_sum.toFixed(2);
+													document.getElementById('total_sum_pre').innerHTML = (total_sum ?? 0).toFixed(2);
 													;
 												}
 											}
@@ -5659,13 +5659,13 @@
 															total_time = time + time1
 															total_sum = sum + sum1
 															document.getElementById('total_time_diz').innerHTML = total_time;
-															document.getElementById('total_sum_diz').innerHTML = total_sum.toFixed(2);
+															document.getElementById('total_sum_diz').innerHTML = (total_sum ?? 0).toFixed(2);
 															} else {
 															document.getElementById(str).style.display = 'none';
 															total_time = time - time1
 															total_sum = sum - sum1
 															document.getElementById('total_time_diz').innerHTML = total_time;
-															document.getElementById('total_sum_diz').innerHTML = total_sum.toFixed(2);
+															document.getElementById('total_sum_diz').innerHTML = (total_sum ?? 0).toFixed(2);
 														}
 													}
 												}
@@ -5752,7 +5752,7 @@
 														
 														sum_rev = 0;
 														sum_rev = Number(shab[5]);
-														sum_rev = sum_rev.toFixed(2);
+														sum_rev = (sum_rev ?? 0).toFixed(2);
 														$('#p_sum_all').val(sum_rev);
 														$('#p_price_all').val(shab[10]);
 														$('#p_size').val(shab[6]);

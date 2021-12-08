@@ -607,14 +607,14 @@
 					total_time = time + time1
 					total_sum = sum + sum1
 					document.getElementById('total_time_pre').innerHTML = total_time ;
-					document.getElementById('total_sum_pre').innerHTML =  total_sum.toFixed(2) ;
+					document.getElementById('total_sum_pre').innerHTML =  (total_sum ?? 0).toFixed(2) ;
 					
 					}else {
 					document.getElementById(str).style.display = 'none';
 					total_time = time - time1
 					total_sum = sum - sum1
 					document.getElementById('total_time_pre').innerHTML = total_time ;
-					document.getElementById('total_sum_pre').innerHTML =  total_sum.toFixed(2) ;;
+					document.getElementById('total_sum_pre').innerHTML =  (total_sum ?? 0).toFixed(2) ;;
 					}
 					}
 					function fun_view_diz(id) {
@@ -638,13 +638,13 @@
 					total_time = time + time1
 					total_sum = sum + sum1
 					document.getElementById('total_time_diz').innerHTML = total_time ;
-					document.getElementById('total_sum_diz').innerHTML =  total_sum.toFixed(2) ;
+					document.getElementById('total_sum_diz').innerHTML =  (total_sum ?? 0).toFixed(2) ;
 					}else {
 					document.getElementById(str).style.display = 'none';
 					total_time = time - time1
 					total_sum = sum - sum1
 					document.getElementById('total_time_diz').innerHTML = total_time ;
-					document.getElementById('total_sum_diz').innerHTML =  total_sum.toFixed(2);
+					document.getElementById('total_sum_diz').innerHTML =  (total_sum ?? 0).toFixed(2);
 					}
 					
 					}
