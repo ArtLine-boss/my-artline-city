@@ -24,6 +24,7 @@
         if($bitrix->user_login != $user->USER_LOGIN) {
             $bitrix->resetId();
             $bitrix->user_login = $user->USER_LOGIN;
+            $bitrix->file_path = '';
             if(null !== ($msg = $bitrix->store())) {
                 $ajaxObject->setMsg($msg);
                 break;
