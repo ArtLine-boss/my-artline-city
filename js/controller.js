@@ -25,13 +25,23 @@ function NewYear(doc, timeout) {
 		var body = doc.getElementsByTagName('body')[0];
 
 		var div = document.createElement('div');
-		div.setAttribute('id', "elka");
-		div.setAttribute('style', "position:absolute; z-index: 1000; top: 0; right: 270px;");
+		div.setAttribute('id', "cap");
+		div.setAttribute('style', "position:absolute; z-index: 1000; top: 2px; left: 2px;");
 		body.appendChild(div);
 		var img = document.createElement('img');
-		img.setAttribute('src', "/js/snowfall/img/2021.png");
-		img.setAttribute('width', 200);
-		img.setAttribute('height', 200);
+		img.setAttribute('src', "/js/snowfall/img/cap.png");
+		img.setAttribute('width', 30);
+		img.setAttribute('height', 30);
+		div.appendChild(img);
+
+		var div = document.createElement('div');
+		div.setAttribute('id', "elka");
+		div.setAttribute('style', "position:absolute; z-index: 1000; top: 0; right: 124px;");
+		body.appendChild(div);
+		var img = document.createElement('img');
+		img.setAttribute('src', "/js/snowfall/img/balls.png");
+		img.setAttribute('width', 206);
+		img.setAttribute('height', 196);
 		div.appendChild(img);
 		div.onclick = function() {
 			remove(doc.getElementById("elka"));

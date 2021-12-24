@@ -30,7 +30,7 @@ $(document).ready(function(){
 	document.getElementsByTagName("head")[0].appendChild(css);
 	
 	var script = document.createElement("script");
-	script.src = "/js/controller.js?version=2";
+	script.src = "/js/controller.js?version=3";
 	script.type="text/javascript";
 	document.getElementsByTagName("body")[0].appendChild(script);
 	
