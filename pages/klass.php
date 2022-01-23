@@ -149,7 +149,8 @@ while ($row = mysql_fetch_row($result)) {
 
         <div class='row'>
             <div class="col-lg-2">
-                <button type="button" class="btn btn-warning" onclick="checkKlass()">Проверить классификатор</button>
+                <button type="button" class="btn btn-warning" onclick="checkKlass(this)">Проверить классификатор
+                </button>
             </div>
 
         </div>
@@ -468,12 +469,59 @@ while ($row = mysql_fetch_row($result)) {
 
     }
 
-    function checkKlass() {
+    function checkKlass(e) {
+        $(e).prop("disabled", true);
         let result = sendAjax('m=ajaxs&u=systemOld&a=checkMatKl', null, null, false, true);
-        console.log(result);
+        $(e).prop("disabled", false);
+        if (!result) {
+            return;
+        }
+        if (result.material && Array.isArray(result.material) && result.material.length == 0
+            && result.tree && Array.isArray(result.tree) && result.tree.length == 0) {
+            MessageBox('Ошибок нет!!!', false);
+            return;
+        }
+
+
         let invalidMat = '';
         let invalidTree = '';
-        //CreateModal('InvalidListKlass','Список ошибок');
+        if (result.material && Array.isArray(result.material) && result.material.length > 0) {
+            invalidMat += '<p><b>Материалы с неправильной привязкой</b></p>';
+            invalidMat += '<ul>';
+            result.material.forEach((element) => {
+                invalidMat += '<li>' + element.M_NAME + '</li>';
+            });
+            invalidMat += '</ul>';
+            invalidMat += '<p><i>* Для элементов в списке будут сброшены идентификаторы классификатора</i></p>';
+        }
+        if (result.tree && Array.isArray(result.tree) && result.tree.length > 0) {
+            invalidTree += '<p><b>Пункты с отсутствующим родительским элементом</b></p>';
+            invalidTree += '<ul>';
+            result.tree.forEach((element) => {
+                invalidTree += '<li>' + element.title + '</li>';
+            });
+            invalidTree += '</ul>';
+            invalidTree += '<p><i>* <b style="color: red">ВНИМАНИЕ!!!</b> Каталоги будут удалены</i></p>';
+        }
+        CreateModal('InvalidListKlass', 'Список ошибок');
+        $("#InvalidListKlassBody").append(invalidMat);
+        $("#InvalidListKlassBody").append(invalidTree);
+
+        let footerModel = $('#InvalidListKlass>.modal-dialog>.modal-content>.modal-footer');
+        footerModel.append('<button class="btn btn-danger" onclick=\'checkKlassSuccess(this, ' + JSON.stringify(result) + ')\'>Исправить</button>');
+
+        $("#InvalidListKlass").modal('show');
+    }
+
+    function checkKlassSuccess(e, element) {
+        $(e).prop("disabled", true);
+        let result = sendAjax('m=ajaxs&u=systemOld&a=checkMatKlSuccess', element, null, false, true);
+        if (result) {
+            $("#InvalidListKlass").modal('hide');
+        } else {
+            MessageBox('Ошибка ответа. Обратитесь с администратору системы', true);
+        }
+        $(e).prop("disabled", false);
     }
 </script>
 </body>

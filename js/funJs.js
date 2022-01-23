@@ -290,21 +290,22 @@ function MessageBox(txt, error) {
 	//текст сообщения
 	var p = document.createElement('p');
 	p.appendChild(document.createTextNode(txt));
+	p.setAttribute('style', "padding: 15px");
 	div.appendChild(p);
 	//кнопка
 	var btn = document.createElement('button');
-	btn.setAttribute('class', "c-btn c-btn--info");
+	btn.setAttribute('class', "btn btn-info");
 	if(error == true)
-		btn.setAttribute('class', "c-btn c-btn--danger");
+		btn.setAttribute('class', "btn btn-danger");
 	else if(error == false)
-		btn.setAttribute('class', "c-btn c-btn--success");
+		btn.setAttribute('class', "btn btn-success");
 	btn.setAttribute('data-dismiss', "modal");
 	btn.setAttribute('style', "float: right");
 	btn.appendChild(document.createTextNode("Закрыть"));
 	div.appendChild(btn);
 	//при скрывании модалки - удаляем её
 	$('#messageAlert').on('hidden.bs.modal', function (e) {
-		removeElement("messageAlert");
+		remove(document.getElementById("messageAlert"));
 	});
 	//открываем модалку
 	$('#messageAlert').modal('show');

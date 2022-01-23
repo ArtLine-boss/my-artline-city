@@ -349,7 +349,7 @@ class core_DBObject extends core_Object
             $w = array();
             $val = '';
             foreach ($this as $k => $v) {
-                if (!in_array($k, $_notfield) && !empty($v)) {
+                if (!in_array($k, $_notfield) && (!empty($v) || is_numeric($v))) {
                     $val .= $k . '=:' . $k . ',';
                     $w[$k] = $v;
                 }
