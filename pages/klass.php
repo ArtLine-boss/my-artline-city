@@ -147,13 +147,14 @@ while ($row = mysql_fetch_row($result)) {
 
         </div>
 
+        <?php if($admin == 4) {  ?>
         <div class='row'>
             <div class="col-lg-2">
                 <button type="button" class="btn btn-warning" onclick="checkKlass(this)">Проверить классификатор
                 </button>
             </div>
-
         </div>
+        <?php } ?>
 
         <div class='row'>
             <div class="col-lg-12">
