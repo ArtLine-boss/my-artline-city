@@ -566,6 +566,7 @@ switch ($flag) {
                 'M_AVA' => $row['M_AVA'],
                 'M_KOL_ALL' => $row['M_KOL_ALL'],
                 'YZEL' => "<a href='/pages/klass.php?idTree=" . intval($row['id_tree']) . "' target='_blank'>" . $row['usel'] . "</a>",
+                'YZEL_EDIT' => "<a onclick='openSelectedNodeTree(" . $row['ID'] . ", " . intval($row['id_tree']) . ")'><i class='fa  fa-code-fork' aria-hidden='true'></i></a>",
                 'CH' => $inp,
             );
         }

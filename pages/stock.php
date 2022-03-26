@@ -193,6 +193,7 @@ while ($row = mysql_fetch_row($result)) {
                             <th>Кол-во</th>
                             <th>Цена, $</th>
                             <th>Узел</th>
+                            <th></th>
                         </tr>
                         </thead>
                     </table>
@@ -256,6 +257,28 @@ while ($row = mysql_fetch_row($result)) {
                         <div class="col-md-12" id='lists'>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- /#Изменение привязки к классификатору -->
+<div id="add_tree_node" class="modal fade " tabindex="-1" data-backdrop="static" data-keyboard="true"
+     style="display: none;">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content ">
+            <div class="modal-header">
+                <button class="close" type="button" data-dismiss="modal">×</button>
+                <h4 class="modal-title">Привязать материал</h4>
+            </div>
+            <div class="modal-body">
+                <input id="tree_id_mat" hidden>
+                <div id="tree_body"></div>
+                <div class="modal-footer">
+                    <button type="button" data-dismiss="modal" class="btn btn-default">Отмена</button>
+                    <button type="button" class="btn btn-primary" onclick="selectedTreeNode()" id='add_bnt1'>Выбрать
+                    </button>
                 </div>
             </div>
         </div>
@@ -783,7 +806,7 @@ while ($row = mysql_fetch_row($result)) {
                         {"data": "M_KOL_ALL"},
                         {"data": "M_PRICE"},
                         {"data": "YZEL"},
-
+                        {"data": "YZEL_EDIT"}
                     ],
                     "aaSorting": [[0, 'abs']]
                 };
@@ -1970,6 +1993,73 @@ while ($row = mysql_fetch_row($result)) {
 
 
                 }
+
+                function openSelectedNodeTree(idMat, idTree) {
+                    if (!idMat) {
+                        return;
+                    }
+
+                    $('#tree_id_mat').val(idMat);
+
+                    $.ajax({
+                        async: true,
+                        type: "GET",
+                        url: "ajax_php_sql.php?flag=31",
+                        dataType: "json",
+                        success: function (jsondata) {
+                            let defaultSetting = {
+                                "core": {
+                                    "check_callback": true,
+                                    'data': jsondata
+                                },
+                                'plugins': ["contextmenu", "search", "sort"],
+                                contextmenu: {items: context_menu},
+                            };
+
+                            $('#tree_body').jstree(defaultSetting);
+                            $('#tree_body').jstree().deselect_all();
+                            $('#tree_body').jstree().close_all();
+
+                            setTimeout(function () {
+                                if (idTree > 0) {
+                                    $('#tree_body').jstree(true).select_node(idTree);
+                                }
+                            }, 250);
+
+                            $('#add_tree_node').modal('show');
+                        },
+
+                        error: function (xhr, ajaxOptions, thrownError) {
+                            alert(xhr.status);
+                            alert(thrownError);
+                        }
+                    });
+                }
+
+                function selectedTreeNode() {
+                    let idTreeArray = $('#tree_body').jstree().get_selected();
+                    let idTree = 0;
+                    if (idTreeArray.length > 0) {
+                        idTree = idTreeArray[0];
+                    }
+                    if (!idTree || idTree <= 0) {
+                        alert('Не выбран пункт');
+                        return;
+                    }
+                    let element = {
+                        'idMat': $('#tree_id_mat').val(),
+                        'idTree': idTree
+                    };
+                    let result = sendAjax('m=ajaxs&u=systemOld&a=updateTreeForMat', element, null, false, true);
+                    if (result) {
+                        $("#add_tree_node").modal('hide');
+                        location.href = location.href;
+                    } else {
+                        MessageBox('Ошибка ответа. Обратитесь с администратору системы', true);
+                    }
+                }
+
+
             </script>
 
             <script src="../vendor/chosen.jquery.min.js"></script>
