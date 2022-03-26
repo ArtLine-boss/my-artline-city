@@ -10,6 +10,12 @@ $result = mysql_query($query) or die($query);
 while ($row = mysql_fetch_row($result)) {
     $admin = $row[0];
 }
+
+$idTree = -1;
+if (isset($_GET['idTree'])) {
+    $idTree = $_GET['idTree'];
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -98,18 +104,23 @@ while ($row = mysql_fetch_row($result)) {
         });
 
         function createJSTree(jsondata) {
-            $('#SimpleJSTree').jstree({
+            let defaultSetting = {
                 "core": {
-                    // so that create works
-                    "check_callback": true
+                    "check_callback": true,
+                    'data': jsondata
                 },
                 'plugins': ["contextmenu", "search", "sort"],
                 contextmenu: {items: context_menu},
-                'core': {
-                    'data': jsondata
-                }
-            });
+            };
 
+            $('#SimpleJSTree').jstree(defaultSetting);
+
+            setTimeout(function () {
+                let idTree =<?php echo $idTree ?>;
+                if (idTree >= 0) {
+                    $('#SimpleJSTree').jstree(true).select_node(idTree);
+                }
+            }, 250);
 
             var to = false;
             $('#plugins4_q').keyup(function () {
@@ -147,13 +158,13 @@ while ($row = mysql_fetch_row($result)) {
 
         </div>
 
-        <?php if($admin == 4) {  ?>
-        <div class='row'>
-            <div class="col-lg-2">
-                <button type="button" class="btn btn-warning" onclick="checkKlass(this)">Проверить классификатор
-                </button>
+        <?php if ($admin == 4) { ?>
+            <div class='row'>
+                <div class="col-lg-2">
+                    <button type="button" class="btn btn-warning" onclick="checkKlass(this)">Проверить классификатор
+                    </button>
+                </div>
             </div>
-        </div>
         <?php } ?>
 
         <div class='row'>
