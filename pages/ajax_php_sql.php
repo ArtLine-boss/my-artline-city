@@ -552,7 +552,7 @@ switch ($flag) {
         $query = "select  m.ID, m2.MT_TYPE, m.M_NAME , m.M_UNIT , m.M_SIZE ,m.M_PRICE ,m.M_AVA , m.M_KOL_ALL, m.id_tree, (select km.title from kl_mat km where km.id = m.id_tree LIMIT 1) usel from material_attr m, material m2 where m.ID_M = m2.ID and m.arh = 0			";
         $result = mysql_query($query) or die($query);
         while ($row = mysql_fetch_assoc($result)) {
-            $inp = "<input type='checkbox' name='chjob' value='" . $row[0] . "'>";
+            $inp = "<input type='checkbox' name='chjob' value='" . $row['ID'] . "'>";
             $json[] = array(
 
                 'edit' => "<a onClick='edit_mat(" . $row['ID'] . ")'><i class='fa  fa-edit' aria-hidden='true'></i></a>",
