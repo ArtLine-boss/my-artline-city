@@ -171,9 +171,9 @@ $html = '
 $flags = 0;
 if ($smeta == "") {
     //$query = "select p_names, total, summ,DIZ,sum_press,units,price from order_product where order_id = ".$ID;
-    $query = "SELECT *
+    $query = "SELECT t1.*
 				FROM
-					(SELECT p_names, total, summ,DIZ,sum_press,units,price,code_stat FROM order_product WHERE order_id=" . $ID . ") t1
+					(SELECT p_names, total, summ,DIZ,sum_press,units,price,ID,code_stat FROM order_product WHERE order_id=" . $ID . ") t1
 				INNER JOIN
 					(SELECT ID,code_stat FROM directoryCodeStat) t2
 				ON t1.code_stat=t2.ID
@@ -182,9 +182,9 @@ if ($smeta == "") {
     $arr_smeta = json_decode($smeta);
     if (count($arr_smeta) <= 0) {
         //$query = "select p_names, total, summ,DIZ,sum_press,units,price from order_product where order_id = ".$ID;
-        $query = "SELECT *
+        $query = "SELECT t1.*
 				FROM
-					(SELECT p_names, total, summ,DIZ,sum_press,units,price,code_stat FROM order_product WHERE order_id=" . $ID . ") t1
+					(SELECT p_names, total, summ,DIZ,sum_press,units,price,ID,code_stat FROM order_product WHERE order_id=" . $ID . ") t1
 				INNER JOIN
 					(SELECT ID,code_stat FROM directoryCodeStat) t2
 				ON t1.code_stat=t2.ID
@@ -195,9 +195,9 @@ if ($smeta == "") {
             $str_smeta .= "," . $arr_smeta[$i];
         }
         //$query = "select p_names, total, summ,DIZ,sum_press,units,price from order_product where id in (".$str_smeta.")";
-        $query = "SELECT *
+        $query = "SELECT t1.*
 				FROM
-					(SELECT p_names, total, summ,DIZ,sum_press,units,price,code_stat FROM order_product WHERE order_id IN (" . $str_smeta . ")) t1
+					(SELECT p_names, total, summ,DIZ,sum_press,units,price,ID,code_stat FROM order_product WHERE order_id IN (" . $str_smeta . ")) t1
 				INNER JOIN
 					(SELECT ID,code_stat FROM directoryCodeStat) t2
 				ON t1.code_stat=t2.ID
