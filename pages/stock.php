@@ -853,9 +853,6 @@ while ($row = mysql_fetch_row($result)) {
                             $('#priceMaterial_edit').val(par[3]);
                             $('#tolMaterial_edit').val(par[4]);
                             arrpar = par[5].split(',');
-                            for (i = 0; i < arrpar.length; i++) {
-                                console.log(arrpar[i]);
-                            }
 
                             var select = document.getElementById('eqFormat');
 
@@ -983,8 +980,6 @@ while ($row = mysql_fetch_row($result)) {
 
                     $.get('ajax_php_sql.php', {unp: $("#unp_firm").val(), flag: '227'}, function (data) {
                         data1 = data.replace(/^\s+|\s+$/gm, '');
-                        console.log($("#unp_firm").val() + " " + typeof data + " |" + data + "|" + " |" + data1 + "|")
-                        console.log(data1 != '0')
                         if (data1 != '0' && $("#id_firm").val() == '0') {
 
                             alert("Внимание контрогент с таким УНП уже существует!");
@@ -1229,7 +1224,6 @@ while ($row = mysql_fetch_row($result)) {
 
                 function addRow(id, name, flafs)  // функция для добавления строки к части шаблона
                 {
-                    console.log(id + " " + name + " " + flafs)
                     id = id.replace(/^\s+|\s+$/gm, '');
 //flafs =  flafs.replace(/^\s+|\s+$/gm,'');
 
@@ -1238,7 +1232,6 @@ while ($row = mysql_fetch_row($result)) {
                     var rws = tbl.rows;                                            // коллекция существующих строк таблицы
                     var lst = rws [rws.length - 1];                                // последняя (самая нижняя) существующая строка таблицы
                     var cls = lst.cells.length;                                    // количество ячеек в последней существующей строке
-                    //console.log(cls);
                     var ro = tbl.insertRow(-1);                                   // добавляем снизу ОБРАЗ ещё одной строки
                     var ce = ro.insertCell(-1);
                     ce.innerHTML = "<input type='checkbox' checked name='chDel' value='" + id + flafs + "'>";
@@ -1282,11 +1275,9 @@ while ($row = mysql_fetch_row($result)) {
                     summ = 0;
                     var nodeList = document.getElementsByName('chDel');
                     var array = Array.prototype.slice.call(nodeList);
-                    console.log(array)
                     for (var i = 0; i < array.length; i++) {
                         if (array[i].checked) {
                             srt = $("#all_sums_" + array[i].value).val();
-                            console.log("srt" + srt)
                             srt = srt.replace(",", ".");
                             summ = Number(summ) + Number(srt);
                             summ = summ.toFixed(2);
@@ -1448,11 +1439,8 @@ while ($row = mysql_fetch_row($result)) {
                             $("#all_sm").val(attr_ttn[4]);
                             $("#seriass").val(attr_ttn[5]);
                             if (arr[1] != "") {
-
-                                str_id = arr[1].slice(0, -1);
+                                str_id = arr[1];
                                 attr_ttn_mat = str_id.split('|');
-
-                                console.log(attr_ttn_mat)
 
                                 for (i = 0; i < attr_ttn_mat.length; i++) {
                                     attr_mat = attr_ttn_mat[i].split('^');
