@@ -3254,7 +3254,7 @@ switch ($flag) {
     case '211':
         $id = $_GET['id'];
         $clientType = $_GET['clientType'];
-        $clientName = $_GET['clientName'];
+        $clientName = addslashes($_GET['clientName']);
         $clientEmail = $_GET['clientEmail'];
         $clientPhoneMob = $_GET['clientPhoneMob'];
         $clientPhoneCity = $_GET['clientPhoneCity'];
@@ -3300,13 +3300,13 @@ switch ($flag) {
             $clientViber = '';
             $clientUnp = $_GET['clientUnp'];
             $clientAcct = $_GET['clientAcct'];
-            $clientBank = $_GET['clientBank'];
+            $clientBank = addslashes($_GET['clientBank']);
             $clientCodeBank = $_GET['clientCodeBank'];
             $str = $_GET['str'];
             $num_doc = $_GET['num_doc'];
             $num_doc_m = $_GET['num_doc_m'];
             $num_dov = $_GET['num_dov'];
-            $osnov = $_GET['osnov'];
+            $osnov = addslashes($_GET['osnov']);
             $fio = $_GET['fio'];
             $fio1 = $_GET['fio1'];
 

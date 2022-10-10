@@ -330,7 +330,7 @@ $pdf->Ln();
 
 $pdf->Cell(100,0,iconv("UTF-8", "cp1251", classes_accordUsers::getPOST($users, classes_accordUsers::ACCORD_TYPE_AM)) );
 $pdf->Ln(3);
-$pdf->Cell(100,5,'                _________________/ Мякишев Е. В.' );
+$pdf->Cell(100,5,'Директор _________________/ Мякишев Е. В.' );
 $pdf->Cell(100,5,'__________________________/'. iconv("UTF-8", "cp1251", $fio_dir1) );
 $pdf->Ln();
 $pdf->Cell(100,10,'                                     м.п');  
