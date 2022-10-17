@@ -168,10 +168,10 @@ $html = '
 <table  border=1 align=center>
   <tr>
     <td align=center width=5>№</td>
-    <td align=center width=45>Наименование товара</td>
+    <td align=center width=40>Наименование товара</td>
     <td align=center width=14>Ед. изм.</td>
-    <td align=center width=12>Кол-во</td>
-    <td align=center width=15>Цена руб. коп.</td>
+    <td align=center width=10>Кол-во</td>
+    <td align=center width=10>Цена руб. коп.</td>
     <td align=center width=5>Опт. надб.</td>
     <td align=center width=18>Сумма руб. коп.</td>
     <td align=center width=5>Ставка НДС, %</td>
