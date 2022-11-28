@@ -329,7 +329,7 @@ $pdf->Cell(100,0,'                                     М.П');
 
 
 $pdf->Ln(10);
-$pdf->Cell(0,0,'Ваш менеджер: '. iconv("UTF-8", "cp1251", $user_fio));  
+$pdf->Cell(0,0,'Ваш менеджер: '. iconv("UTF-8", "cp1251", classes_accordUsers::getFIO($users, classes_accordUsers::ACCORD_TYPE_MA)));
 
 
 

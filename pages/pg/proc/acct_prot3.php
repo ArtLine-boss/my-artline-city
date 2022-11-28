@@ -333,7 +333,7 @@ $pdf->Ln();
 
 $pdf->Cell(100,0,iconv("UTF-8", "cp1251", $user_post) );
 $pdf->Ln(3);
-$pdf->Cell(100,5,'                _________________/'. iconv("UTF-8", "cp1251", $user_fio) );
+$pdf->Cell(100,5,'                _________________/'. iconv("UTF-8", "cp1251", classes_accordUsers::getFIO($users, classes_accordUsers::ACCORD_TYPE_MA)) );
 $pdf->Cell(100,5,'__________________________/'. iconv("UTF-8", "cp1251", $fio_dir1) );
 $pdf->Ln();
 $pdf->Cell(100,10,'                                     М.П');  
@@ -341,7 +341,7 @@ $pdf->Cell(100,10,'                                     М.П');
 
 
 $pdf->Ln(10);
-$pdf->Cell(0,0,'Ваш менеджер: '. iconv("UTF-8", "cp1251", $user_fio));  
+$pdf->Cell(0,0,'Ваш менеджер: '. iconv("UTF-8", "cp1251", classes_accordUsers::getFIO($users, classes_accordUsers::ACCORD_TYPE_MA)));
 
 
 
