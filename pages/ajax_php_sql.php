@@ -915,6 +915,14 @@ switch ($flag) {
         $result = mysql_query($query) or die($query);
         if ($row = mysql_fetch_row($result)) {
             $insert_ID_ord = $row[0];
+
+            // Переход на Мечту
+            $sql = "SELECT parent_company FROM orders WHERE NUMBER=" . $insert_ID_ord;
+            $resultSql = mysql_query($sql) or die($sql);
+            $rowSql = mysql_fetch_assoc($resultSql);
+            if ($rowSql['parent_company'] != 2) {
+                die("Ошибка! Обратитесь к системному администратору!");
+            }
         }
 
         $query = "select ORDER_ID, PRODUCT_ID, TOTAL, PRICE, SUMM, TEMPLATE, TEMP_PR, SIZE, DIZ, SHABLON_CL, p_names, PR, press_diz, print_diz, sum_press, view_diz, view_press, flags, cshivka, cl_file, units, dates_rdy, fast, code_stat from order_product where FIND_IN_SET(id, '" . $array_id . "')";
@@ -2718,7 +2726,9 @@ switch ($flag) {
     //ACCT
     case '200':
         $par = $_GET['orderClient'];
-        $parent_company = empty($_GET['parent_company']) ? 1 : $_GET['parent_company'];
+        // Переход на Мечту
+        $parent_company = 2;
+//        $parent_company = empty($_GET['parent_company']) ? 1 : $_GET['parent_company'];
         $orderClient = (int)$par;
         $orderDate = date("H:i:s");
         if (empty($login)) {
@@ -2763,7 +2773,9 @@ switch ($flag) {
     case '201':
 
         $array_id = $_GET['array_id'];
-        $parent_company = empty($_GET['parent_company']) ? 1 : $_GET['parent_company'];
+        // Переход на Мечту
+        $parent_company = 2;
+//        $parent_company = empty($_GET['parent_company']) ? 1 : $_GET['parent_company'];
         $orderUsers = $login;
         $query = "select DISTINCT client_id from orders o, (select ORDER_ID from order_product where FIND_IN_SET(id, '" . $array_id . "')) o2 where o.NUMBER = o2.order_id LIMIT 1";
         $result = mysql_query($query) or die($query);
@@ -3823,7 +3835,9 @@ switch ($flag) {
     /*---------------------------231---------------------------*/
     case '231':
         $id = $_GET['orderClient'];
-        $parent_company = empty($_GET['parent_company']) ? 1 : $_GET['parent_company'];
+        // Переход на Мечту
+        $parent_company = 2;
+//        $parent_company = empty($_GET['parent_company']) ? 1 : $_GET['parent_company'];
         $msg = '';
 
         do {
