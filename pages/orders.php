@@ -1215,36 +1215,36 @@ while ($row = mysql_fetch_row($result)) {
 
             <!--------------------------------------------------------------------------------------------------------->
             <!------------------------------------------addParentCompany --------------------------------------------------------------->
-<!--            <div id="addParentCompany" class="modal fade bd-example-modal-lg" tabindex="-1" data-backdrop="static"-->
-<!--                 data-keyboard="false" style="display: none;">-->
-<!--                <div class="modal-dialog  modal-lg">-->
-<!--                    <div class="modal-content">-->
-<!--                        <div class="modal-header">-->
-<!--                            <button class="close" type="button" data-dismiss="modal">×</button>-->
-<!--                            <h4 class="modal-title">Добавить фирму</h4>-->
-<!--                        </div>-->
-<!--                        <div class="modal-body">-->
-<!--                            <div class="row">-->
-<!--                                <div class="col-md-2"><label>ФИРМА:</label></div>-->
-<!--                                <div class="col-md-4">-->
-<!--                                    <label class="radio-inline">-->
-<!--                                        <input type="radio" name="addParentCompany_parent_company"-->
-<!--                                               id='addParentCompany_parent_company_a' value="1" checked>ОДО АртЛайнСити-->
-<!--                                    </label>-->
-<!--                                    <label class="radio-inline">-->
-<!--                                        <input type="radio" name="addParentCompany_parent_company"-->
-<!--                                               id='addParentCompany_parent_company_m' value="2">ЧУП Мечта клиента-->
-<!--                                    </label>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                        <div class="modal-footer">-->
-<!--                            <button type="button" data-dismiss="modal" class="btn btn-default">Отмена</button>-->
-<!--                            <button type="button" class="btn btn-primary" onclick='addclient1()'>Добавить</button>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
+            <!--            <div id="addParentCompany" class="modal fade bd-example-modal-lg" tabindex="-1" data-backdrop="static"-->
+            <!--                 data-keyboard="false" style="display: none;">-->
+            <!--                <div class="modal-dialog  modal-lg">-->
+            <!--                    <div class="modal-content">-->
+            <!--                        <div class="modal-header">-->
+            <!--                            <button class="close" type="button" data-dismiss="modal">×</button>-->
+            <!--                            <h4 class="modal-title">Добавить фирму</h4>-->
+            <!--                        </div>-->
+            <!--                        <div class="modal-body">-->
+            <!--                            <div class="row">-->
+            <!--                                <div class="col-md-2"><label>ФИРМА:</label></div>-->
+            <!--                                <div class="col-md-4">-->
+            <!--                                    <label class="radio-inline">-->
+            <!--                                        <input type="radio" name="addParentCompany_parent_company"-->
+            <!--                                               id='addParentCompany_parent_company_a' value="1" checked>ОДО АртЛайнСити-->
+            <!--                                    </label>-->
+            <!--                                    <label class="radio-inline">-->
+            <!--                                        <input type="radio" name="addParentCompany_parent_company"-->
+            <!--                                               id='addParentCompany_parent_company_m' value="2">ЧУП Мечта клиента-->
+            <!--                                    </label>-->
+            <!--                                </div>-->
+            <!--                            </div>-->
+            <!--                        </div>-->
+            <!--                        <div class="modal-footer">-->
+            <!--                            <button type="button" data-dismiss="modal" class="btn btn-default">Отмена</button>-->
+            <!--                            <button type="button" class="btn btn-primary" onclick='addclient1()'>Добавить</button>-->
+            <!--                        </div>-->
+            <!--                    </div>-->
+            <!--                </div>-->
+            <!--            </div>-->
 
             <!--------------------------------------------------------------------------------------------------------->
             <script src="../vendor/jquery/jquery.min.js"></script>
@@ -1607,7 +1607,8 @@ while ($row = mysql_fetch_row($result)) {
                         }
                     }
                     if (array_id != "") {
-                        $("#addParentCompany").modal('show');
+                        addclient1(array_id);
+                        // $("#addParentCompany").modal('show');
                         /*array_id = array_id.substring(0, array_id.length - 1);
                     $.ajax({
                         type: "GET",
@@ -1628,10 +1629,12 @@ while ($row = mysql_fetch_row($result)) {
                     }
                 }
 
-                function addclient1() {
+                function addclient1(array_id) {
                     // Переход на Мечту
                     // var parent_company = $("input[name=addParentCompany_parent_company]:checked").val();
-                    var array_id = $("#copy_p").val();
+                    if (!array_id) {
+                        array_id = $("#copy_p").val();
+                    }
 
                     if (array_id == "") {
                         var nodeList = document.getElementsByName('chDel');
