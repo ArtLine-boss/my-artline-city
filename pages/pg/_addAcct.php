@@ -526,7 +526,10 @@ if (!empty($plottCut->List)) {
                         }
 
                         if ($act_flag == '0') {
-                            echo "<li><a onclick='showacct(" . $idAcct . ")'>АКТ услуг</a></li>";
+                            if ($firm_parent != 2) {
+                                // Убрано для Мечты, работа без ндс
+                                echo "<li><a onclick='showacct(" . $idAcct . ")'>АКТ услуг</a></li>";
+                            }
                             echo "<li><a onclick='showacct1(" . $idAcct . ")'>АКТ услуг БЕЗ НДС</a></li>";
                         } ?>
                         <?php if (in_array(1, $ACCESS_ROLES)) { ?>
