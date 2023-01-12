@@ -156,12 +156,12 @@ $html = '
   <tr>
     <td align=center width=5>№</td>
     <td align=center width=65>Наименование работы(услуги)</td>
-    <td align=center width=14>Ед. изм.</td>
-    <td align=center width=5>Кол-во</td>
-    <td align=center width=5>Цена руб.</td>
+    <td align=center width=5>Ед. изм.</td>
+    <td align=center width=14>Кол-во</td>
+    <td align=center width=14>Цена руб.</td>
     <td align=center width=18>Сумма руб. коп.</td>
     <td align=center width=5>Ставка НДС, %</td>
-    <td align=center width=18>Сумма НДС руб. коп.</td>
+    <td align=center width=9>Сумма НДС руб. коп.</td>
     <td align=center width=18> Стоимость с НДС руб. коп. </td>
   </tr>
 
@@ -285,12 +285,12 @@ while ($row = mysql_fetch_row($result)) {
         '<td align=right border=1111   >' . $flags . '</td>'
         . '<td align=left border=1111  >' . iconv("UTF-8", "cp1251", $p_names) . '</td>'
         . '<td align=left border=1111  >' . iconv("UTF-8", "cp1251", $p_names_unit) . '</td>'
-        . '<td align=right border=1111  >' . number_format($total, 2, ',', ' ') . '</td>'
-        . '<td align=right border=1111  >' . number_format($price, 2, ',', ' ') . '</td>'
-        . '<td align=right border=1111  >' . number_format($summ_no_nds, 2, ',', ' ') . '</td>'
-        . '<td align=right border=1111  >' . $nds . '</td>'
-        . '<td align=right border=1111  >' . number_format($sum_nds, 2, ',', ' ') . '</td>'
-        . '<td align=right border=1111 >' . number_format($summ, 2, ',', ' ') . '</td>'
+        . '<td align=right border=1111  >' . number_format($total, 2, ',', '&nbsp;') . '</td>'
+        . '<td align=right border=1111  >' . number_format($price, 2, ',', '&nbsp;') . '</td>'
+        . '<td align=right border=1111  >' . number_format($summ_no_nds, 2, ',', '&nbsp;') . '</td>'
+        . '<td align=right border=1111  >' . ($no_nds ? 'Без НДС' : $nds) . '</td>'
+        . '<td align=right border=1111  >' . ($no_nds ? '-' : number_format($sum_nds, 2, ',', '&nbsp;')) . '</td>'
+        . '<td align=right border=1111 >' . number_format($summ, 2, ',', '&nbsp;') . '</td>'
         . '</tr>';
     $var = $var + 6.5;
 }
@@ -303,10 +303,10 @@ $html .= '<tr>' .
     . '<td align=center border=1111  >x</td>'
     . '<td align=center border=1111  >x</td>'
     . '<td align=center border=1111  >x</td>'
-    . '<td align=right border=1111  >' . number_format($summ_no_nds_all, 2, ',', ' ') . '</td>'
+    . '<td align=right border=1111  >' . number_format($summ_no_nds_all, 2, ',', '&nbsp;') . '</td>'
     . '<td align=center border=1111  >x</td>'
-    . '<td align=right border=1111  >' . number_format($sum_nds_all, 2, ',', ' ') . '</td>'
-    . '<td align=right border=1111 >' . number_format($summ_all, 2, ',', ' ') . '</td>'
+    . '<td align=right border=1111  >' . ($no_nds ? 'x' : number_format($sum_nds_all, 2, ',', '&nbsp;')) . '</td>'
+    . '<td align=right border=1111 >' . number_format($summ_all, 2, ',', '&nbsp;') . '</td>'
     . '</tr>';
 $html .= '<tr>' .
     '<td align=left border=0000  ></td>'
@@ -316,7 +316,7 @@ $html .= '<tr>' .
     . '<td align=center border=0000  ></td>'
 
     . '<td align=right border=0000  colspan="3">Всего(с учетом НДС):</td>'
-    . '<td align=right border=1111 >' . number_format($summ_all, 2, ',', ' ') . '</td>'
+    . '<td align=right border=1111 >' . number_format($summ_all, 2, ',', '&nbsp;') . '</td>'
     . '</tr>';
 $html .= '</table>';
 $pdf->Ln();
