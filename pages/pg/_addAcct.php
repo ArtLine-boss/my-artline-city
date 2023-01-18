@@ -4176,7 +4176,12 @@ if (!empty($plottCut->List)) {
                                 if (arr.length > 0)
                                     smeta = JSON.stringify(arr);
 
-                                document.getElementById('fr').src = 'proc/act_.php?id=' + idAcct + "&no_nds=0&smeta=" + smeta;
+                                let firm = <?php echo intval($firm_parent); ?>;
+                                let nameFilePrint = 'act_';
+                                if (firm == 2) {
+                                    nameFilePrint = 'act__m';
+                                }
+                                document.getElementById('fr').src = 'proc/' + nameFilePrint + '.php?id=' + idAcct + "&no_nds=0&smeta=" + smeta;
                                 window.setTimeout(ffa, 2000);
                                 // }, function() {
                                 // });
@@ -4191,7 +4196,12 @@ if (!empty($plottCut->List)) {
 
                             var idAcct = "<? echo $idAcct ?>";
 
-                            document.getElementById('fr1').src = 'proc/act_.php?id=' + idAcct + "&no_nds=1";
+                            let firm = <?php echo intval($firm_parent); ?>;
+                            let nameFilePrint = 'act_';
+                            if (firm == 2) {
+                                nameFilePrint = 'act__m';
+                            }
+                            document.getElementById('fr1').src = 'proc/' + nameFilePrint + '.php?id=' + idAcct + "&no_nds=1";
                             window.setTimeout(ffa1, 2000);
                             // }, function() {
                             // });
