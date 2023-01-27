@@ -318,12 +318,12 @@ $pdf->Cell(100, 5, 'ÈÑÏÎËÍÈÒÅËÜ:');
 $pdf->Cell(100, 5, 'ÇÀÊÀÇ×ÈÊ:');
 $pdf->Ln();
 
-
-//$pdf->Cell(100,0,iconv("UTF-8", "cp1251", classes_accordUsers::getPOST($users, classes_accordUsers::ACCORD_TYPE_AM)) );
+$pdf->Ln(3);
+$pdf->Cell(100, 0, iconv("UTF-8", "cp1251", classes_accordUsers::getPOST($users, classes_accordUsers::ACCORD_TYPE_AM)));
 $pdf->Ln(3);
 //$pdf->Cell(100,5,'Äèðåêòîð _________________/ Ìÿêèøåâ Å. Â.' );
-$pdf->Cell(100, 5, iconv("UTF-8", "cp1251", classes_accordUsers::getPOST($users, classes_accordUsers::ACCORD_TYPE_AM))
-    . ' _________________/ ' . iconv("UTF-8", "cp1251", classes_accordUsers::getFIO($users, classes_accordUsers::ACCORD_TYPE_AM)));
+$pdf->Cell(100, 5, ' _________________/ '
+    . iconv("UTF-8", "cp1251", classes_accordUsers::getFIO($users, classes_accordUsers::ACCORD_TYPE_AM)));
 $pdf->Cell(100, 5, '__________________________/' . iconv("UTF-8", "cp1251", $fio_dir1));
 $pdf->Ln();
 $pdf->Cell(100, 10, '                                     ì.ï');

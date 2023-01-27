@@ -296,9 +296,7 @@ $pdf->Ln();
 
 $pdf->Cell(100, 0, iconv("UTF-8", "cp1251", classes_accordUsers::getPOST($users, classes_accordUsers::ACCORD_TYPE_AM)));
 $pdf->Ln(3);
-//$pdf->Cell(100,5,'Директор __________________________/ Мякишев Е. В.');
-$pdf->Cell(100, 5, iconv("UTF-8", "cp1251", classes_accordUsers::getPOST($users, classes_accordUsers::ACCORD_TYPE_AM))
-    . ' __________________________/ ' . iconv("UTF-8", "cp1251", classes_accordUsers::getFIO($users, classes_accordUsers::ACCORD_TYPE_AM)));
+$pdf->Cell(100,5,'Директор __________________________/ Мякишев Е. В.');
 $pdf->Cell(100, 5, '__________________________/' . iconv("UTF-8", "cp1251", $fio_dir1));
 $pdf->Ln();
 $pdf->Cell(100, 10, '                                     м.п');
@@ -314,7 +312,7 @@ $image1 = "stampM.png";
 $pdf->Cell(20, 0, $pdf->ImagePngWithAlpha($image1, $pdf->GetX() + 5, $pdf->GetY() - 35, 40), 0, 0, 'L', false);
 
 $pdf->Ln(10);
-//$pdf->Cell(0,0,'Ваш менеджер: '. iconv("UTF-8", "cp1251", classes_accordUsers::getFIO($users, classes_accordUsers::ACCORD_TYPE_AM)));
+$pdf->Cell(0,0,'Ваш менеджер: '. iconv("UTF-8", "cp1251", classes_accordUsers::getFIO($users, classes_accordUsers::ACCORD_TYPE_AM)));
 
 $strr = $ID . "_" . $clients . ".pdf";
 $pdf->Output("pdf/pdf" . $strr, 'F');
