@@ -1530,7 +1530,15 @@ switch ($flag) {
             $summ1 = $row[10];
 
             $opl = "";
-            if ($admin == '4' or $admin == '2' or $login == '026' or $login == '030' or $login == '028' or $login == '033' or $login == '032') {
+            if (in_array($admin, ['4', '2']) || in_array($login, [
+                    '008',
+                    '026',
+                    '028',
+                    '030',
+                    '032',
+                    '033'
+                ])) {
+//            if ($admin == '4' or $admin == '2' or $login == '026' or $login == '030' or $login == '028' or $login == '033' or $login == '032') {
                 $opl = "<a onclick = add_oplat('$row[0]','$row[6]')><span class = 'pull-right'><i class='glyphicon glyphicon-euro'></i></<span></a>";
             }
 
@@ -2470,7 +2478,15 @@ switch ($flag) {
             $summ1 = $row[10];
 
             $opl = "";
-            if ($admin == '4' or $admin == '2' or $login == '026' or $login == '030' or $login == '028' or $login == '033' or $login == '032') {
+            if (in_array($admin, ['4', '2']) || in_array($login, [
+                    '008',
+                    '026',
+                    '028',
+                    '030',
+                    '032',
+                    '033'
+                ])) {
+//            if ($admin == '4' or $admin == '2' or $login == '026' or $login == '030' or $login == '028' or $login == '033' or $login == '032') {
                 $opl = "<a onclick = add_oplat('$row[0]','$row[6]')><span class = 'pull-right'><i class='glyphicon glyphicon-euro'></i></<span></a>";
             }
             $json[] = array(
@@ -2525,7 +2541,15 @@ switch ($flag) {
                 $summ1 = $row[10];
 
                 $opl = "";
-                if ($admin == '4' or $admin == '2' or $login == '026' or $login == '030' or $login == '028' or $login == '033' or $login == '032') {
+                if (in_array($admin, ['4', '2']) || in_array($login, [
+                        '008',
+                        '026',
+                        '028',
+                        '030',
+                        '032',
+                        '033'
+                    ])) {
+//                if ($admin == '4' or $admin == '2' or $login == '026' or $login == '030' or $login == '028' or $login == '033' or $login == '032') {
                     $opl = "<a onclick = add_oplat('$row[0]','$row[6]')><span class = 'pull-right'><i class='glyphicon glyphicon-euro'></i></<span></a>";
                 }
                 $json[] = array(
