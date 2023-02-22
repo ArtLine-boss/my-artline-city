@@ -3444,11 +3444,12 @@ switch ($flag) {
         while ($row = mysql_fetch_row($result)) {
             $last_num_ = $row[0];
         }
-        $last_num = (int)$last_num + 1;
+        $last_num = (float)$last_num + 1;
         $l_flag = 0;
         if ($last_num > $last_num_) {
             $l_flag = 1;
         }
+        $last_num = strval($last_num);
         $kol = strlen($last_num);
         while ($kol < 8) {
             $last_num = "0" . $last_num;
