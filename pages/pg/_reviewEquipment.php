@@ -30,7 +30,8 @@
         $(document).ready(function () {
             $('#optgroup').multiselect({
                 enableClickableOptGroups: true,
-                enableFiltering: true
+                enableFiltering: true,
+                enableCaseInsensitiveFiltering: true
             });
         });
 
