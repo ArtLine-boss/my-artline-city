@@ -289,7 +289,7 @@ while ($row = mysql_fetch_row($result)) {
                                     $qr = "select u.user_login, u.USER_FIO,u.USER_FIO from users u where u.USER_PER = 3 OR u.USER_PER = 4";
                                     $rt = mysql_query($qr) or die($qr);
                                     while ($row = mysql_fetch_row($rt)) {
-                                        if ($row[0] != '026') {
+                                        if (!in_array($row[0], ['026', '033'])) {
                                             if ($row[0] == $login) {
                                                 echo "<option value='$row[0]' selected>$row[1]</option>";
                                             } else {
