@@ -84,7 +84,7 @@
 <table>
 	<tbody>
 		<tr>
-			<td style="border-bottom: 1px solid" align="center">ОДО "АртЛайнСити", УНП: 290479470</td>
+			<td style="border-bottom: 1px solid" align="center">Частное предприятие "Мечта клиента", УНП 291546971</td>
 		</tr>
 		<tr>
 			<td style="font-size: 8px;" align="center">(наименование организации, УНП)</td>
@@ -114,16 +114,16 @@
 	<tbody>
 		<?php
 			foreach ($products as $k => $v) {
-				$summa = floatval($v->SUMM) / (1 + floatval($setting->VAL)/100);
-				$nds = floatval($v->SUMM) - $summa;
+//				$summa = floatval($v->SUMM) / (1 + floatval($setting->VAL)/100);
+//				$nds = floatval($v->SUMM) - $summa;
 			?>
 				<tr>
 					<td class="tbl"><?php echo $v->p_names; ?></td>
 					<td class="tbl" align="center"><?php echo $v->units; ?></td>
 					<td class="tbl" align="center"><?php echo $v->TOTAL; ?></td>
-					<td class="tbl" align="center"><?php echo API::FormatMoney($summa); ?></td>
-					<td class="tbl" align="center"><?php echo $setting->VAL; ?></td>
-					<td class="tbl" align="center"><?php echo API::FormatMoney($nds); ?></td>
+					<td class="tbl" align="center"><?php echo API::FormatMoney($v->SUMM); ?></td>
+					<td class="tbl" align="center">0</td>
+					<td class="tbl" align="center">-</td>
 					<td class="tbl" align="center"><?php echo API::FormatMoney($v->SUMM); ?></td>
 				</tr>
 			<?php
