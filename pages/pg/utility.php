@@ -171,6 +171,10 @@
 		// преобразуем переменную в текст и возвращаем из функции, ура!
 		return join(' ', $string);
 	}
+
+    function mb_ucfirst($text) {
+        return mb_strtoupper(mb_substr($text, 0, 1)) . mb_substr($text, 1);
+    }
 	
 	//функция скачивания файла
 	function file_force_download($file) {
