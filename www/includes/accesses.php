@@ -1,4 +1,5 @@
 <?php
+
 class ACCESSES
 {
     //Печать товарного чека
@@ -87,6 +88,8 @@ class ACCESSES
     const ACCESS_PAGE_ORDERS_TN = 42;
     //Доступ к странице заказов (Доставка)
     const ACCESS_PAGE_ORDERS_POST = 43;
+    //Доступ к отчету по дизайну без оплаты
+    const ACCESS_PAGE_REPORTS_DESIGNS_NO_PAYMENT = 44;
 }
 
 ?>

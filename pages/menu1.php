@@ -142,6 +142,9 @@ if ($admin == '4') {
 	<li><a class="menu_a" href="diz.php">Загруженность дизайнеров</a></li>
 	</ul>
 	<ul class="nav nav-second-level">
+	<li><a class="menu_a" href="/www/index.php?m=reports&u=designNoPayment">Дизайн без оплаты</a></li>
+	</ul>
+	<ul class="nav nav-second-level">
 	<li><a class="menu_a" href="post.php">Поставщики</a></li>
 	</ul>
 	<ul class="nav nav-second-level">
