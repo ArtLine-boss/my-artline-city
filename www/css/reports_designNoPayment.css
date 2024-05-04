@@ -1,0 +1,22 @@
+.report_filter {
+    display: flex;
+    margin-bottom: 50px;
+}
+
+.report_filter label {
+    margin-left: 20px;
+}
+
+#report_design tbody .c-table__cell {
+    padding: 5px;
+}
+
+.report-table-order {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.report-table-username {
+    white-space: nowrap;
+}
