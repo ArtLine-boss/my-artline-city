@@ -7,8 +7,7 @@ foreach ($listUserDesign as $user) {
 }
 ?>
 <div class="report_filter">
-    <label><b>Дата С:</b></label>&nbsp;<input type="date" id="date_from" name="date_from">
-    <label><b>Дата По:</b></label>&nbsp;<input type="date" id="date_to" name="date_to">
+    <label><b>Отчетный месяц:</b></label>&nbsp;<input type="month" id="month" name="date_from">
     <label><b>Дизайнер:</b></label>&nbsp;<select id="user_design" name="user_design" style="width: 200px">
         <option value="" selected>Все</option>
         <?php echo $selectStr; ?>

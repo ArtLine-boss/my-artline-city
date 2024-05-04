@@ -2,11 +2,10 @@
 $ajaxObject = new core_Dto();
 do {
     // Параметры отчета
-    // Дата С (если не передали, то текущий месяц)
-    $dateFrom = (new DateTime($_POST['date_from'] ?: 'first day of last month'))->format('Y-m-d');
-    // Дата По (устанавливаем следующий день, если не передан, то текущий месяц)
-    $dateTo = (new DateTime($_POST['date_to'] ?: 'last day of last month'))
-        ->add(DateInterval::createFromDateString('1 day'))->format('Y-m-d');
+    // Месяц
+    $month = new DateTime($_POST['month'] ? $_POST['month'] . '-01' : 'first day of last month');
+    $dateFrom = $month->format('Y-m-d');
+    $dateTo = $month->add(DateInterval::createFromDateString('1 month'))->format('Y-m-d');
     // Дизайнер
     $userNameStr = $_POST['username'] ? " AND lt_old.user_log = '" . $_POST['username'] . "'" : "";
 

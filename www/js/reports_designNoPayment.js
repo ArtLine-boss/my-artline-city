@@ -4,14 +4,11 @@ $(document).ready(function () {
 
     // Заполняем даты текущим месяцем
     let date = new Date(), y = date.getFullYear(), m = date.getMonth();
-    let firstDay = new Date(y, m, 1)
-        .toLocaleString('ru-RU', {year: 'numeric', month: 'numeric', day: 'numeric'})
-        .split(".").reverse().join("-");
-    let lastDay = new Date(y, m + 1, 0).toLocaleString('ru-RU', {year: 'numeric', month: 'numeric', day: 'numeric'})
+    let month = new Date(y, m, 1)
+        .toLocaleString('ru-RU', {year: 'numeric', month: 'numeric'})
         .split(".").reverse().join("-");
 
-    $('#date_from').val(firstDay).change();
-    $('#date_to').val(lastDay).change();
+    $('#month').val(month).change();
     load();
 });
 
@@ -24,8 +21,7 @@ function load() {
     sendAjax(
         'm=reports&u=designNoPayment&a=AjaxListAll',
         {
-            date_from: $('#date_from').val(),
-            date_to: $('#date_to').val(),
+            month: $('#month').val(),
             username: $('#user_design option:selected').val()
         },
         'viewData'
