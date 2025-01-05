@@ -24,7 +24,7 @@ $message = '<div style="display: flex; flex-direction: column;">
     <p style="margin: 0">По всем вопросам обращайтесь к</p>
     <p style="margin: 0"><b>Анне Сафроновой</b>,</p>
     <p style="margin: 0">специалисту по работе с клиентами</p>
-    <p style="margin: 0">ЧУП "Мечта клиента"</p>
+    <p style="margin: 0">ООО "Мечта клиента"</p>
     <p style="margin: 0">224030 г. Брест, ул. Карбышева, 74</p>
     <p style="margin: 0"><b>тел.:</b> (033) 644-44-77</p>
     <p style="margin: 0"><b>viber:</b> +375336444477</p>

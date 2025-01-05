@@ -84,7 +84,7 @@
 <table>
 	<tbody>
 		<tr>
-			<td style="border-bottom: 1px solid" align="center">Частное предприятие "Мечта клиента", УНП 291546971</td>
+			<td style="border-bottom: 1px solid" align="center">Общество с ограниченной ответственностью "Мечта клиента", УНП 291546971</td>
 		</tr>
 		<tr>
 			<td style="font-size: 8px;" align="center">(наименование организации, УНП)</td>
