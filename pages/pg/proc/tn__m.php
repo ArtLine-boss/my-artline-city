@@ -281,7 +281,7 @@ $html = '	<TABLE BORDER CELLSPACING=0>
 <TD VALIGN=TOP>&nbsp;
 <TD VALIGN=TOP>&nbsp;
 <TD VALIGN=TOP>&nbsp;
-<TD ALIGN=LEFT VALIGN=TOP COLSPAN=21 border=0010><B>Частное предприятие "Мечта клиента", 224030, г. Брест, ул. Карбышева, 74</B>
+<TD ALIGN=LEFT VALIGN=TOP COLSPAN=21 border=0010><B>Общество с ограниченной ответственностью "Мечта клиента", 224030, г. Брест, ул. Карбышева, 74</B>
 </TR>
 <TR>
 <TD VALIGN=TOP BORDERCOLOR=#ffffff>&nbsp;
