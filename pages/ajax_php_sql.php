@@ -1530,7 +1530,7 @@ switch ($flag) {
             $summ1 = $row[10];
 
             $opl = "";
-            if (in_array($admin, ['4', '2']) || in_array($login, [
+            if (in_array($admin, ['4', '2', '3']) || in_array($login, [
                     '008',
                     '026',
                     '028',
@@ -2478,7 +2478,7 @@ switch ($flag) {
             $summ1 = $row[10];
 
             $opl = "";
-            if (in_array($admin, ['4', '2']) || in_array($login, [
+            if (in_array($admin, ['4', '2', '3']) || in_array($login, [
                     '008',
                     '026',
                     '028',
@@ -2541,7 +2541,7 @@ switch ($flag) {
                 $summ1 = $row[10];
 
                 $opl = "";
-                if (in_array($admin, ['4', '2']) || in_array($login, [
+                if (in_array($admin, ['4', '2', '3']) || in_array($login, [
                         '008',
                         '026',
                         '028',

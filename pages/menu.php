@@ -92,14 +92,14 @@ if ($admin == '4' or $admin == '2' or $admin == '3') {
     echo '<li><a class="menu_a" href="clients.php"><i class="fa fa-align-justify fa-fw"></i> Клиенты</a></li>
 		<li><a class="menu_a" href="list_contact_fresh.php"><i class="fa fa-link fa-fw"></i> Неперенесенные контакты</a></li>';
 }
-if ($admin == '4' || $login == '026' || $login == 'buh2') {
+if ($admin == '4' || $admin == '3') {
     echo '<li><a class="menu_a" href="artliner_report.php"><i class="fa fa-book fa-fw"></i> Отчет по артлайнерам</a></li>';
 }
-if ($admin == '4' or $admin == '2' or $login == '008' or $login == '026' or $login == '030' or $login == '028' or $login == '033' or $login == '032') {
+if ($admin == '4' or $admin == '2' or $admin == '3') {
     echo '<li><a class="menu_a" href="tn_list.php"><i class="fa fa-money fa-fw"></i>ТН</a></li>';
     echo ' <li><a class="menu_a" href="oplati.php"><i class="fa fa-money fa-fw"></i> Оплаты</a></li>';
 }
-if ($login == '026' or $login == '030' or $login == '033' or $login == '032') {
+if ($admin == '3') {
     echo '<li>
 	<a class="menu_a" href="stock.php"><i class="fa fa-money fa-fw"></i> Склад</a>
 	</li>';

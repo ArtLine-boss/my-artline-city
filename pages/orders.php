@@ -341,7 +341,7 @@ while ($row = mysql_fetch_row($result)) {
                             </div>
                             <div class="col-md-3">
                                 <?php
-                                if ($admin == '4' or $login == '026' or $login == '030') {
+                                if ($admin == '4' or $admin == '3') {
                                     echo ' <button type="button" class="btn btn-default"   id = "post">Доставка <span class="fa fa-car"> </span></button>';
                                 }
                                 ?>
