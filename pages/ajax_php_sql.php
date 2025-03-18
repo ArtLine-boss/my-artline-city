@@ -19,6 +19,7 @@
 // 17
 // 18
 // 19
+include "firewall.php";
 include "cron/PHPExcel/Classes/PHPExcel.php";
 include "cron/PHPExcel/Classes/PHPExcel/Writer/Excel5.php";
 
@@ -276,7 +277,6 @@ function track_post($track)
 }
 
 
-include 'firewall1.php';
 session_start();
 $login = $_SESSION['login'];
 $query = "select user_per from users where user_login = '" . $login . "' LIMIT 1";
@@ -2053,21 +2053,52 @@ switch ($flag) {
 
     case '44':
 
+        $isSum = boolval($_GET['isSum']);
+        $selectField = "select t7.dt,t7.ORDER_ID,t7.client_name name,t7.status,t7.flag,t7.num_prod_ord,t7.p_names,t7.prob,t7.comm,t7.id,t7.total,t7.rdy,IF(t8.TOTAL_PROD is null, 0, t8.TOTAL_PROD) zakaz,ROUND(t7.SUMM,2) sum_prod,ROUND(t7.sum_ord,2) sum_ord";
+        if ($isSum) {
+            $selectField = "select ROUND(SUM(t7.SUMM),2) sum_prod,ROUND(SUM(t7.sum_ord),2) sum_ord ";
+        }
+
+        $dt1 = $_GET['dt1'];
+        $dt2 = $_GET['dt2'];
+        $dt1_ = $_GET['dt1_'];
+        $dt2_ = $_GET['dt2_'];
+        $userId = $_GET['user_id'];
+        $userIdStr = "";
+        if ($userId) {
+            $userIdStr = " AND orders.USER_ID='" . $userId . "'";
+        }
+
+        if ($dt1) {
+            core_sessionInfo::getInstance()->setInfoByField('dt1_ord_w', $dt1_);
+        } else {
+            $dt1 = "0000-00-00";
+        }
+        if ($dt2) {
+            core_sessionInfo::getInstance()->setInfoByField('dt2_ord_w', $dt2_);
+        } else {
+            $dt1 = "3000-01-01";
+        }
+
         if ($login == 'admins' || ($admin == 4 && isset($_GET['allListOrdersWork']))) {
-            $query = "select t7.dt,t7.ORDER_ID,t7.client_name name,t7.status,t7.flag,t7.num_prod_ord,t7.p_names,t7.prob,t7.comm,t7.id,t7.total,t7.rdy,IF(t8.TOTAL_PROD is null, 0, t8.TOTAL_PROD) zakaz
+            $query = $selectField . "
 					from
-						(select t5.id,t5.dt,t5.ORDER_ID,t5.p_names,t5.status,t5.num_prod_ord,t5.total,t5.client_name,t5.prob,t5.comm,IF(t6.FINAL_TOTAL is null, 0, t6.FINAL_TOTAL) rdy,t5.flag
+						(select t5.id,t5.dt,t5.ORDER_ID,t5.p_names,t5.status,t5.num_prod_ord,t5.total,t5.client_name,t5.prob,t5.comm,IF(t6.FINAL_TOTAL is null, 0, t6.FINAL_TOTAL) rdy,t5.flag,t5.SUMM,t5.sum_ord
 						from
 							(select t3.id,t3.dt,t3.ORDER_ID,t3.p_names,t3.status,t3.num_prod_ord,(IF(t3.units <> 'тыс.шт.', t3.total, t3.total * 1000 )) total,t4.client_name,
 								(select tt2.prob from log_task tt2 where tt2.id_prod = t3.ID and tt2.status_new = t3.status ORDER BY tt2.id DESC LIMIT 1) prob,
 								(IF((select flags from lock_task lt where lt.id_prod = t3.id and lt.oper = t3.status ORDER BY lt.id DESC LIMIT 1) IS NULL, 0, (select flags from lock_task lt where lt.id_prod = t3.id and lt.oper = t3.status ORDER BY lt.id DESC LIMIT 1))) flag,
-								(select tt2.comm from log_task tt2 where tt2.id_prod = t3.ID and tt2.status_new = t3.status ORDER BY tt2.id DESC LIMIT 1) comm
+								(select tt2.comm from log_task tt2 where tt2.id_prod = t3.ID and tt2.status_new = t3.status ORDER BY tt2.id DESC LIMIT 1) comm,t3.SUMM,t3.sum_ord
 							from
-								(select t1.id,t1.dt,t1.ORDER_ID,t1.p_names,t1.status,t1.num_prod_ord,t1.units,t1.TOTAL,t2.client_id
+								(select t1.id,t1.dt,t1.ORDER_ID,t1.p_names,t1.status,t1.num_prod_ord,t1.units,t1.TOTAL,t2.client_id,t1.SUMM,t2.sum_ord
 								from
-									(select op.ID,DATE_FORMAT(op.dates_rdy, '%d.%m.%Y ') dt,op.ORDER_ID,op.p_names,op.status,op.num_prod_ord,op.units,op.TOTAL from order_product op where op.`status`<>'' and op.`status`<>'3' and op.ORDER_ID>0) t1
+									(select op.ID,DATE_FORMAT(op.dates_rdy, '%d.%m.%Y ') dt,op.ORDER_ID,op.p_names,op.status,op.num_prod_ord,op.units,op.TOTAL,op.SUMM from order_product op where op.`status`<>'' and op.`status`<>'3' and op.ORDER_ID>0) t1
 								inner join
-									(select number,client_id from orders) t2
+									(SELECT orders.NUMBER, orders.CLIENT_ID, SUM(IF(order_product.SUMM IS NULL,0,order_product.SUMM)) sum_ord
+                                    FROM orders
+                                    LEFT JOIN order_product ON order_product.ORDER_ID = orders.NUMBER
+                                    WHERE orders.DATE_OR BETWEEN '" . $dt1 . "' AND '" . $dt2 . "'" . $userIdStr . "
+                                    GROUP BY orders.NUMBER) t2
 								on t1.ORDER_ID=t2.number) t3
 							left join
 								(select id,client_name from clients) t4
@@ -2080,29 +2111,39 @@ switch ($flag) {
 					on t7.id=t8.ID_PROD";
         } else {
             //проверяем или есть совмещение
-            $combo = "";
+            $filterUser = "AND orders.USER_ID='" . $login . "'";
             $slct = "SELECT login_children,active FROM combo_users WHERE login_parent='$login' ORDER BY id DESC LIMIT 1";
             $q = mysql_query($slct) or die(null);
+            $comboUser = null;
             if ($r = mysql_fetch_array($q)) {
                 if ($r['active'] == 0) {
-                    $combo = " or user_id='" . $r['login_children'] . "'";
+                    $comboUser = $r['login_children'];
+                    $filterUser = "AND (orders.USER_ID='" . $login . "' OR orders.USER_ID='" . $r['login_children'] . "')";
                 }
             }
 
-            $query = "select t7.dt,t7.ORDER_ID,t7.client_name name,t7.status,t7.flag,t7.num_prod_ord,t7.p_names,t7.prob,t7.comm,t7.id,t7.total,t7.rdy,IF(t8.TOTAL_PROD is null, 0, t8.TOTAL_PROD) zakaz
+            if ($userId && ($userId == $login || $userId == $comboUser)) {
+                $filterUser = "AND orders.USER_ID='" . $userId . "'";
+            }
+
+            $query = $selectField . "
 				from
-					(select t5.id,t5.dt,t5.ORDER_ID,t5.p_names,t5.status,t5.num_prod_ord,t5.total,t5.client_name,t5.prob,t5.comm,IF(t6.FINAL_TOTAL is null, 0, t6.FINAL_TOTAL) rdy,t5.flag
+					(select t5.id,t5.dt,t5.ORDER_ID,t5.p_names,t5.status,t5.num_prod_ord,t5.total,t5.client_name,t5.prob,t5.comm,IF(t6.FINAL_TOTAL is null, 0, t6.FINAL_TOTAL) rdy,t5.flag,t5.SUMM,t5.sum_ord
 					from
 						(select t3.id,t3.dt,t3.ORDER_ID,t3.p_names,t3.status,t3.num_prod_ord,(IF(t3.units <> 'тыс.шт.', t3.total, t3.total * 1000 )) total,t4.client_name,
 							(select tt2.prob from log_task tt2 where tt2.id_prod = t3.ID and tt2.status_new = t3.status ORDER BY tt2.id DESC LIMIT 1) prob,
 							(IF((select flags from lock_task lt where lt.id_prod = t3.id and lt.oper = t3.status ORDER BY lt.id DESC LIMIT 1) IS NULL, 0, (select flags from lock_task lt where lt.id_prod = t3.id and lt.oper = t3.status ORDER BY lt.id DESC LIMIT 1))) flag,
-							(select tt2.comm from log_task tt2 where tt2.id_prod = t3.ID and tt2.status_new = t3.status ORDER BY tt2.id DESC LIMIT 1) comm
+							(select tt2.comm from log_task tt2 where tt2.id_prod = t3.ID and tt2.status_new = t3.status ORDER BY tt2.id DESC LIMIT 1) comm,t3.SUMM,t3.sum_ord
 						from
-							(select t1.id,t1.dt,t1.ORDER_ID,t1.p_names,t1.status,t1.num_prod_ord,t1.units,t1.TOTAL,t2.client_id
+							(select t1.id,t1.dt,t1.ORDER_ID,t1.p_names,t1.status,t1.num_prod_ord,t1.units,t1.TOTAL,t2.client_id,t1.SUMM,t2.sum_ord
 							from
-								(select op.ID,DATE_FORMAT(op.dates_rdy, '%d.%m.%Y ') dt,op.ORDER_ID,op.p_names,op.status,op.num_prod_ord,op.units,op.TOTAL from order_product op where op.`status`<>'' and op.`status`<>'3' and op.ORDER_ID>0) t1
+								(select op.ID,DATE_FORMAT(op.dates_rdy, '%d.%m.%Y ') dt,op.ORDER_ID,op.p_names,op.status,op.num_prod_ord,op.units,op.TOTAL,op.SUMM from order_product op where op.`status`<>'' and op.`status`<>'3' and op.ORDER_ID>0) t1
 							inner join
-								(select number,client_id from orders where user_id='" . $login . "'" . $combo . ") t2
+								(SELECT orders.NUMBER, orders.CLIENT_ID, SUM(IF(order_product.SUMM IS NULL,0,order_product.SUMM)) sum_ord
+                                FROM orders
+                                LEFT JOIN order_product ON order_product.ORDER_ID = orders.NUMBER
+                                WHERE orders.DATE_OR BETWEEN '" . $dt1 . "' AND '" . $dt2 . "' " . $filterUser . "
+                                GROUP BY orders.NUMBER) t2
 							on t1.ORDER_ID=t2.number) t3
 						left join
 							(select id,client_name from clients) t4
@@ -2117,6 +2158,13 @@ switch ($flag) {
         $json = array();
         $result = mysql_query($query) or die($query);
         while ($row = mysql_fetch_row($result)) {
+            if ($isSum) {
+                $json = [
+                    'sum_prod' => $row[0],
+                    'sum_ord' => $row[1]
+                ];
+                break;
+            }
             if ($login != 'admins' && $login != 'admin' && $row[3] == 4)
                 continue;
             $list_prod1 = "<input type='checkbox' name='chjob' value='" . $row[9] . "'>";
@@ -2181,6 +2229,8 @@ switch ($flag) {
                 'total' => $row[10],
                 'rdy' => $row[11],
                 'zakaz' => $row[12],
+                'sum_prod' => $row[13],
+                'sum_ord' => $row[14],
                 'info' => "<a onClick='info_acct($row[9])'><button type= 'button' class='btn btn-info btn-circle'><span class='glyphicon glyphicon-info-sign  '></span></button></a>",
             );
         }

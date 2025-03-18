@@ -13,6 +13,7 @@ class classes_users extends core_DBObject
     var $USER_MAIL = null;
     var $DT1 = null;
     var $DT2 = null;
+    var $info = null;
     var $cl_id = null;
     var $id_bitrix24 = null;
     var $reset_password = null;
@@ -22,6 +23,20 @@ class classes_users extends core_DBObject
     public function __construct()
     {
         parent::__construct('users', 'ID');
+    }
+
+    /**
+     * Создание объекта по логину
+     * @param $login
+     * @return static|null
+     */
+    public static function newByLogin($login)
+    {
+        $user = new static();
+        if ($user->LoadByLogin($login)) {
+            return null;
+        }
+        return $user;
     }
 
     public function LoadByLogin($login)
@@ -61,5 +76,39 @@ class classes_users extends core_DBObject
             ],
             'USER_FIO'
         );
+    }
+
+    /**
+     * Возврат параметра
+     * @param $field
+     * @return mixed|null
+     */
+    public function getInfoByField($field)
+    {
+        if (!$this->info || !API::isJSON($this->info)) {
+            return null;
+        }
+        $info = json_decode($this->info, true);
+        if (isset($info[$field])) {
+            return $info[$field];
+        }
+
+        return null;
+    }
+
+    /**
+     * Установка параметра
+     * @param $field
+     * @param $value
+     * @return void
+     */
+    public function setInfoByField($field, $value)
+    {
+        $info = [];
+        if ($this->info && API::isJSON($this->info)) {
+            $info = json_decode($this->info, true);
+        }
+        $info[$field] = $value;
+        $this->info = json_encode($info);
     }
 }
