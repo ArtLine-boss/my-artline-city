@@ -456,14 +456,85 @@ while ($row = mysql_fetch_row($result)) {
                                 }
                                 ?>
                             </div>
-                            <?php
-                            if ($admin == 4 && $login != 'admins') {
-                                echo '<div class="row"><div class="col-md-3"><input type="checkbox" id="all_list_orders_work" onchange="refListOrdersWork(this)"><b>Все заявки</b></div></div>';
-                            }
-                            ?>
+                            <div class="row" style="margin-top: 15px">
+                                <div class="col-md-5">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Менеджер</span>
+                                        <select id='user_list_ord' onchange='crt_ord()' class="form-control">
+                                            <option value='0'>Все</option>
+                                            <?php
+                                            if ($admin == '4') {
+                                                $qr = "select u.user_login, u.USER_FIO from users u where u.USER_PER = 3 OR u.USER_PER = 4 ORDER BY u.USER_FIO";
+                                            } else {
+                                                $slct = "SELECT login_children,active FROM combo_users WHERE login_parent='$login' ORDER BY id DESC LIMIT 1";
+                                                $q = mysql_query($slct) or die(null);
+                                                $combo = "";
+                                                if ($r = mysql_fetch_array($q)) {
+                                                    if ($r['active'] == 0) {
+                                                        $combo = " OR u.USER_LOGIN='" . $r['login_children'] . "'";
+                                                    }
+                                                }
+                                                $qr = "
+                                                        SELECT u.user_login, u.USER_FIO
+                                                        FROM users u
+                                                        WHERE u.USER_LOGIN = '" . $login . "'" . $combo . "
+                                                        ORDER BY u.USER_FIO
+                                                ";
+                                            }
+                                            $rt = mysql_query($qr) or die($qr);
+                                            while ($row = mysql_fetch_row($rt)) {
+                                                if ($row[0] == $login) {
+                                                    echo "<option value='$row[0]' selected>$row[1]</option>";
+                                                } else {
+                                                    echo "<option value='$row[0]'>$row[1]</option>";
+                                                }
+                                            }
+                                            ?>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Дата с</span>
+                                        <input type="text" name="dateStartOrd" id="dateStartOrd"
+                                               class="datepicker form-control"
+                                               value="<?php
+                                               $dt1_ord_w = core_sessionInfo::getInstance()->getInfoByField('dt1_ord_w');
+                                               if (!$dt1_ord_w) {
+                                                   if ($admin == 4) {
+                                                       $dt1_ord_w = date("d/m/Y");
+                                                   } else {
+                                                       $dt1_ord_w = date("01/m/Y");
+                                                   }
+                                               }
+                                               echo $dt1_ord_w;
+                                               ?>" size="8"/>
+                                        <span class="input-group-addon">по</span>
+                                        <input type="text" name="dateEndOrd" id="dateEndOrd"
+                                               class="datepicker form-control"
+                                               value="<?php
+                                               $dt2_ord_w = core_sessionInfo::getInstance()->getInfoByField('dt2_ord_w');
+                                               if (!$dt2_ord_w) {
+                                                   if ($admin == 4) {
+                                                       $dt2_ord_w = date("d/m/Y");
+                                                   } else {
+                                                       $dt2_ord_w = date("t/m/Y");
+                                                   }
+                                               }
+                                               echo $dt2_ord_w;
+                                               ?>"
+                                               size="8"/>
+                                    </div>
+                                    <?php
+                                    if ($admin == 4 && $login != 'admins') {
+                                        echo '<div class="col-md-3"><input type="checkbox" id="all_list_orders_work" onchange="refListOrdersWork(this)"><b>Все заявки</b></div>';
+                                    }
+                                    ?>
+                                </div>
+                            </div>
                             <div class="panel-body">
                                 <table width="100%"
-                                       class="table table-striped table-bordered table-hover responsive nowrap "
+                                       class="table table-striped table-bordered table-hover responsive nowrap display"
                                        cellspacing="0" id="example1">
                                     <thead>
                                     <tr>
@@ -478,9 +549,19 @@ while ($row = mysql_fetch_row($result)) {
                                         <th>Требуется</th>
                                         <th>Готово</th>
                                         <th>Заказан</th>
+                                        <th>Сумма счета</th>
+                                        <th>Сумма заказа</th>
                                         <th></th>
                                     </tr>
                                     </thead>
+                                    <tfoot align="right">
+                                    <tr>
+                                        <th colspan="11"></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                    </tfoot>
                                 </table>
                             </div>
                         </div>
@@ -1380,7 +1461,7 @@ while ($row = mysql_fetch_row($result)) {
                         }
                     ],
                     "ajax": {
-                        "url": 'ajax_php_sql.php?flag=44',
+                        "url": 'ajax_php_sql.php?flag=44&dt1=' + parseDateValue2($("#dateStartOrd").val()) + '&' + 'dt2=' + parseDateValue2($("#dateEndOrd").val()) + '&dt1_=' + $("#dateStartOrd").val() + '&dt2_=' + $("#dateEndOrd").val() + '&user_id=' + $("#user_list_ord").val(),
                         "dataSrc": ""
                     },
                     "columns": [
@@ -1395,9 +1476,44 @@ while ($row = mysql_fetch_row($result)) {
                         {"data": "total"},
                         {"data": "rdy"},
                         {"data": "zakaz"},
+                        {"data": "sum_prod"},
+                        {"data": "sum_ord"},
                         {"data": "info"}
                     ],
-                    "aaSorting": [[1, 'asc']]
+                    "aaSorting": [[1, 'asc']],
+                    footerCallback: function (row, data, start, end, display) {
+                        var api = this.api(), data;
+                        $(api.column(0).footer()).html('Всего');
+
+                        var sum_prod = 0.0;
+                        var sum_ord = 0.0;
+                        $.ajax({
+                            type: "GET",
+                            url: 'ajax_php_sql.php',
+                            data: {
+                                flag: 44,
+                                dt1: parseDateValue2($("#dateStartOrd").val()),
+                                dt2: parseDateValue2($("#dateEndOrd").val()),
+                                dt1_: $("#dateStartOrd").val(),
+                                dt2_: $("#dateEndOrd").val(),
+                                user_id: $("#user_list_ord").val(),
+                                isSum: true
+                            },
+                            async: false,
+                            dataType: 'json',
+                            success: function (res) {
+                                if (res.sum_prod) {
+                                    sum_prod = res.sum_prod;
+                                }
+                                if (res.sum_ord) {
+                                    sum_ord = res.sum_ord;
+                                }
+                            }
+                        });
+
+                        $(api.column(11).footer()).html(sum_prod);
+                        $(api.column(12).footer()).html(sum_ord);
+                    }
                 };
 
                 var dTable1 = $('#example1').dataTable(default_options5);
@@ -1784,17 +1900,17 @@ while ($row = mysql_fetch_row($result)) {
                         ;
                         tb_a.DataTable().ajax.url('ajax_php_sql.php?dt1=' + parseDateValue2($("#dateStart").val()) + "&" + 'dt2=' + parseDateValue2($("#dateEnd").val()) + "&" + 'dt1_=' + $("#dateStart").val() + "&" + 'dt2_=' + $("#dateEnd").val() + "&" + 'user_id=' + $("#user_list").val() + "&" + 'flag=46');
                     } else {
-                        tb_a.DataTable().ajax.url('ajax_php_sql.php?flag=38&id_cl=' + id);
+                        tb_a.DataTable().ajax.url('ajax_php_sql.php?flag=38&id_cl=' + id_cl);
                     }
                     tb_a.DataTable().ajax.reload();
-                    tb_p.DataTable().ajax.url('ajax_php_sql.php?flag=39&id_cl=' + id);
+                    tb_p.DataTable().ajax.url('ajax_php_sql.php?flag=39&id_cl=' + id_cl);
                     tb_p.DataTable().ajax.reload();
-                    tb_o.DataTable().ajax.url('ajax_php_sql.php?flag=40&id_cl=' + id);
+                    tb_o.DataTable().ajax.url('ajax_php_sql.php?flag=40&id_cl=' + id_cl);
                     tb_o.DataTable().ajax.reload();
-                    tb_t.DataTable().ajax.url('ajax_php_sql.php?flag=41&id_cl=' + id);
+                    tb_t.DataTable().ajax.url('ajax_php_sql.php?flag=41&id_cl=' + id_cl);
                     tb_t.DataTable().ajax.reload();
-                    tb_post.DataTable().ajax.url('ajax_php_sql.php?flag=48&id_cl=' + id);
-                    tb_post.DataTable().ajax.reload();
+                    $("#tb_post").DataTable().ajax.url('ajax_php_sql.php?flag=48&id_cl=' + id_cl);
+                    $("#tb_post").DataTable().ajax.reload();
                 });
 
                 jQuery(function ($) {
@@ -2098,14 +2214,18 @@ while ($row = mysql_fetch_row($result)) {
                             $('.selectpicker').selectpicker('refresh');
                             tb_a.DataTable().ajax.url('ajax_php_sql.php?dt1=' + parseDateValue2($("#dateStart").val()) + "&" + 'dt2=' + parseDateValue2($("#dateEnd").val()) + "&" + 'dt1_=' + $("#dateStart").val() + "&" + 'dt2_=' + $("#dateEnd").val() + "&" + 'user_id=' + $("#user_list").val() + "&" + 'flag=46');
                             tb_a.DataTable().ajax.reload();
-                            tb_p.DataTable().ajax.url('ajax_php_sql.php?flag=39&id_cl=' + id);
+                            tb_p.DataTable().ajax.url('ajax_php_sql.php?flag=39&id_cl=' + id_cl);
                             tb_p.DataTable().ajax.reload();
-                            tb_o.DataTable().ajax.url('ajax_php_sql.php?flag=40&id_cl=' + id);
+                            tb_o.DataTable().ajax.url('ajax_php_sql.php?flag=40&id_cl=' + id_cl);
                             tb_o.DataTable().ajax.reload();
-                            tb_t.DataTable().ajax.url('ajax_php_sql.php?flag=41&id_cl=' + id);
+                            tb_t.DataTable().ajax.url('ajax_php_sql.php?flag=41&id_cl=' + id_cl);
                             tb_t.DataTable().ajax.reload();
-                            tb_post.DataTable().ajax.url('ajax_php_sql.php?flag=48&id_cl=' + id);
-                            tb_post.DataTable().ajax.reload();
+                            $("#tb_post").DataTable().ajax.url('ajax_php_sql.php?flag=48&id_cl=' + id_cl);
+                            $("#tb_post").DataTable().ajax.reload();
+
+                            dTable1.fnClearTable();
+                            dTable1.DataTable().ajax.url('ajax_php_sql.php?dt1=' + parseDateValue2($("#dateStartOrd").val()) + '&dt2=' + parseDateValue2($("#dateEndOrd").val()) + '&dt1_=' + $("#dateStartOrd").val() + '&dt2_=' + $("#dateEndOrd").val() + '&user_id=' + $("#user_list_ord").val() + '&flag=44');
+                            dTable1.DataTable().ajax.reload();
                         }
                     });
                 });
@@ -2117,14 +2237,20 @@ while ($row = mysql_fetch_row($result)) {
                     $('.selectpicker').selectpicker('refresh');
                     tb_a.DataTable().ajax.url('ajax_php_sql.php?dt1=' + parseDateValue2($("#dateStart").val()) + "&" + 'dt2=' + parseDateValue2($("#dateEnd").val()) + "&" + 'dt1_=' + $("#dateStart").val() + "&" + 'dt2_=' + $("#dateEnd").val() + "&" + 'user_id=' + $("#user_list").val() + "&" + 'flag=46');
                     tb_a.DataTable().ajax.reload();
-                    tb_p.DataTable().ajax.url('ajax_php_sql.php?flag=39&id_cl=' + id);
+                    tb_p.DataTable().ajax.url('ajax_php_sql.php?flag=39&id_cl=' + id_cl);
                     tb_p.DataTable().ajax.reload();
-                    tb_o.DataTable().ajax.url('ajax_php_sql.php?flag=40&id_cl=' + id);
+                    tb_o.DataTable().ajax.url('ajax_php_sql.php?flag=40&id_cl=' + id_cl);
                     tb_o.DataTable().ajax.reload();
-                    tb_t.DataTable().ajax.url('ajax_php_sql.php?flag=41&id_cl=' + id);
+                    tb_t.DataTable().ajax.url('ajax_php_sql.php?flag=41&id_cl=' + id_cl);
                     tb_t.DataTable().ajax.reload();
-                    tb_post.DataTable().ajax.url('ajax_php_sql.php?flag=48&id_cl=' + id);
-                    tb_post.DataTable().ajax.reload();
+                    $("#tb_post").DataTable().ajax.url('ajax_php_sql.php?flag=48&id_cl=' + id_cl);
+                    $("#tb_post").DataTable().ajax.reload();
+                }
+
+                function crt_ord() {
+                    dTable1.fnClearTable();
+                    dTable1.DataTable().ajax.url('ajax_php_sql.php?dt1=' + parseDateValue2($("#dateStartOrd").val()) + '&dt2=' + parseDateValue2($("#dateEndOrd").val()) + '&dt1_=' + $("#dateStartOrd").val() + '&dt2_=' + $("#dateEndOrd").val() + '&user_id=' + $("#user_list_ord").val() + '&flag=44');
+                    dTable1.DataTable().ajax.reload();
                 }
 
                 function format(id) {
@@ -2176,14 +2302,14 @@ while ($row = mysql_fetch_row($result)) {
                             $('.selectpicker').selectpicker('refresh');
                             tb_a.DataTable().ajax.url('ajax_php_sql.php?dt1=' + parseDateValue2($("#dateStart").val()) + "&" + 'dt2=' + parseDateValue2($("#dateEnd").val()) + "&" + 'dt1_=' + $("#dateStart").val() + "&" + 'dt2_=' + $("#dateEnd").val() + "&" + 'user_id=' + $("#user_list").val() + "&" + 'flag=46');
                             tb_a.DataTable().ajax.reload();
-                            tb_p.DataTable().ajax.url('ajax_php_sql.php?flag=39&id_cl=' + id);
+                            tb_p.DataTable().ajax.url('ajax_php_sql.php?flag=39&id_cl=' + id_cl);
                             tb_p.DataTable().ajax.reload();
-                            tb_o.DataTable().ajax.url('ajax_php_sql.php?flag=40&id_cl=' + id);
+                            tb_o.DataTable().ajax.url('ajax_php_sql.php?flag=40&id_cl=' + id_cl);
                             tb_o.DataTable().ajax.reload();
-                            tb_t.DataTable().ajax.url('ajax_php_sql.php?flag=41&id_cl=' + id);
+                            tb_t.DataTable().ajax.url('ajax_php_sql.php?flag=41&id_cl=' + id_cl);
                             tb_t.DataTable().ajax.reload();
-                            tb_post.DataTable().ajax.url('ajax_php_sql.php?flag=48&id_cl=' + id);
-                            tb_post.DataTable().ajax.reload();
+                            $("#tb_post").DataTable().ajax.url('ajax_php_sql.php?flag=48&id_cl=' + id_cl);
+                            $("#tb_post").DataTable().ajax.reload();
                         }
                     });
                 }
@@ -2204,17 +2330,17 @@ while ($row = mysql_fetch_row($result)) {
                             tb_a.fnClearTable();
                             //tb_a.DataTable().ajax.url('orders_json.php?dt1=' + parseDateValue2($("#dateStart").val()) + "&" +' dt2=' + parseDateValue2($("#dateEnd").val()) + "&" + 'user_id=' + $("#user_list").val());
                             //tb_a.DataTable().ajax.reload();
-                            tb_p.DataTable().ajax.url('ajax_php_sql.php?flag=39&id_cl=' + id);
+                            tb_p.DataTable().ajax.url('ajax_php_sql.php?flag=39&id_cl=' + id_cl);
                             tb_p.DataTable().ajax.reload();
 
-                            tb_o.DataTable().ajax.url('ajax_php_sql.php?flag=40&id_cl=' + id);
+                            tb_o.DataTable().ajax.url('ajax_php_sql.php?flag=40&id_cl=' + id_cl);
                             tb_o.DataTable().ajax.reload();
 
-                            tb_t.DataTable().ajax.url('ajax_php_sql.php?flag=41&id_cl=' + id);
+                            tb_t.DataTable().ajax.url('ajax_php_sql.php?flag=41&id_cl=' + id_cl);
                             tb_t.DataTable().ajax.reload();
 
-                            tb_post.DataTable().ajax.url('ajax_php_sql.php?flag=48&id_cl=' + id);
-                            tb_post.DataTable().ajax.reload();
+                            $("#tb_post").DataTable().ajax.url('ajax_php_sql.php?flag=48&id_cl=' + id_cl);
+                            $("#tb_post").DataTable().ajax.reload();
                         }
                     });
                 }
@@ -2231,8 +2357,8 @@ while ($row = mysql_fetch_row($result)) {
                     tb_o.DataTable().ajax.reload();
                     tb_t.DataTable().ajax.url('ajax_php_sql.php?flag=41&id_cl=-1');
                     tb_t.DataTable().ajax.reload();
-                    tb_post.DataTable().ajax.url('ajax_php_sql.php?flag=48&id_cl=-1');
-                    tb_post.DataTable().ajax.reload();
+                    $("#tb_post").DataTable().ajax.url('ajax_php_sql.php?flag=48&id_cl=-1');
+                    $("#tb_post").DataTable().ajax.reload();
                 }
 
                 function tran_() {
