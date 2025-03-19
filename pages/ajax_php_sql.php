@@ -1564,6 +1564,22 @@ switch ($flag) {
 
     /*---------------------------39---------------------------*/
     case '39':
+        $dt1 = $_GET['dt1'];
+        $dt2 = $_GET['dt2'];
+        $dt1_ = $_GET['dt1_'];
+        $dt2_ = $_GET['dt2_'];
+
+        if ($dt1) {
+            core_sessionInfo::getInstance()->setInfoByField('dt1_tb_p', $dt1_);
+        } else {
+            $dt1 = "0000-00-00";
+        }
+        if ($dt2) {
+            core_sessionInfo::getInstance()->setInfoByField('dt2_tb_p', $dt2_);
+        } else {
+            $dt1 = "3000-01-01";
+        }
+
         $id_cl = $_GET['id_cl'];
         $query = "select 
 	op.ORDER_ID , 
@@ -1579,7 +1595,7 @@ switch ($flag) {
 	op.num_prod_ord,
 	op.id,
 	DATE_FORMAT(o.dt, '%d.%m.%Y')
-	from (SELECT number,DATE_FORMAT(o.DATE_OR, '%Y-%m-%d') dt FROM orders o where CLIENT_ID = " . $id_cl . ") o , order_product op where op.ORDER_ID = o.number  ";
+	from (SELECT number,DATE_FORMAT(o.DATE_OR, '%Y-%m-%d') dt FROM orders o where o.DATE_OR BETWEEN '" . $dt1 . "' AND '" . $dt2 . "' AND CLIENT_ID = " . $id_cl . ") o , order_product op where op.ORDER_ID = o.number  ";
 
         if ($id_cl == '-1') {
             $query = "select 
@@ -1596,7 +1612,7 @@ switch ($flag) {
 	op.num_prod_ord,
 	op.id,
 	DATE_FORMAT(o.dt, '%d.%m.%Y')
-	from (SELECT number,DATE_FORMAT(o.DATE_OR, '%Y-%m-%d') dt FROM orders o where USER_ID = '" . $login . "') o , order_product op where op.ORDER_ID = o.number  ";
+	from (SELECT number,DATE_FORMAT(o.DATE_OR, '%Y-%m-%d') dt FROM orders o where o.DATE_OR BETWEEN '" . $dt1 . "' AND '" . $dt2 . "' AND USER_ID = '" . $login . "') o , order_product op where op.ORDER_ID = o.number  ";
         }
 
 

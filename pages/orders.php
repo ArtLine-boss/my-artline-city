@@ -347,6 +347,38 @@ while ($row = mysql_fetch_row($result)) {
                                 ?>
                             </div>
                         </div>
+                        <div class="row" style="margin-top: 15px;">
+                            <div class="col-md-3">
+                                <div class="input-group">
+                                    <input type="text" name="dateStartTbP" id="dateStartTbP"
+                                           class="datepicker form-control"
+                                           value="<?
+                                           $dt1_tb_p = core_sessionInfo::getInstance()->getInfoByField('dt1_tb_p');
+                                           if (!$dt1_tb_p) {
+                                               if ($admin == 4) {
+                                                   $dt1_tb_p = date("d/m/Y");
+                                               } else {
+                                                   $dt1_tb_p = date("01/m/Y");
+                                               }
+                                           }
+                                           echo $dt1_tb_p;
+                                           ?>" size="8"/>
+                                    <span class="input-group-addon">по</span>
+                                    <input type="text" name="dateEndTbP" id="dateEndTbP" class="datepicker form-control"
+                                           value="<?
+                                           $dt2_tb_p = core_sessionInfo::getInstance()->getInfoByField('dt2_tb_p');
+                                           if (!$dt2_tb_p) {
+                                               if ($admin == 4) {
+                                                   $dt2_tb_p = date("d/m/Y");
+                                               } else {
+                                                   $dt2_tb_p = date("t/m/Y");
+                                               }
+                                           }
+                                           echo $dt2_tb_p;
+                                           ?>" size="8"/>
+                                </div>
+                            </div>
+                        </div>
                         <input type='hidden' id='copy_p' value=''>
                         <div class="panel-body">
                             <table width="100%" class="table table-striped table-bordered table-hover " cellspacing="0"
@@ -1386,7 +1418,7 @@ while ($row = mysql_fetch_row($result)) {
                     "paging:": true,
                     "ajax": {
                         type: "GET",
-                        url: 'ajax_php_sql.php?flag=39&id_cl=' + id_cl,
+                        url: 'ajax_php_sql.php?flag=39&id_cl=' + id_cl + '&dt1=' + parseDateValue2($("#dateStartTbP").val()) + '&' + 'dt2=' + parseDateValue2($("#dateEndTbP").val()) + '&dt1_=' + $("#dateStartTbP").val() + '&dt2_=' + $("#dateEndTbP").val(),
                         "dataSrc": ""
                     },
                     "columns": [
@@ -1897,13 +1929,12 @@ while ($row = mysql_fetch_row($result)) {
                     id = document.getElementById('orderClient2').value;
                     if (id == '-1') {
                         $("#orderClient2").val('-1').trigger('change.select2');
-                        ;
                         tb_a.DataTable().ajax.url('ajax_php_sql.php?dt1=' + parseDateValue2($("#dateStart").val()) + "&" + 'dt2=' + parseDateValue2($("#dateEnd").val()) + "&" + 'dt1_=' + $("#dateStart").val() + "&" + 'dt2_=' + $("#dateEnd").val() + "&" + 'user_id=' + $("#user_list").val() + "&" + 'flag=46');
                     } else {
                         tb_a.DataTable().ajax.url('ajax_php_sql.php?flag=38&id_cl=' + id_cl);
                     }
                     tb_a.DataTable().ajax.reload();
-                    tb_p.DataTable().ajax.url('ajax_php_sql.php?flag=39&id_cl=' + id_cl);
+                    tb_p.DataTable().ajax.url('ajax_php_sql.php?flag=39&id_cl=' + id_cl + '&dt1=' + parseDateValue2($("#dateStartTbP").val()) + '&' + 'dt2=' + parseDateValue2($("#dateEndTbP").val()) + '&dt1_=' + $("#dateStartTbP").val() + '&dt2_=' + $("#dateEndTbP").val());
                     tb_p.DataTable().ajax.reload();
                     tb_o.DataTable().ajax.url('ajax_php_sql.php?flag=40&id_cl=' + id_cl);
                     tb_o.DataTable().ajax.reload();
@@ -2210,11 +2241,10 @@ while ($row = mysql_fetch_row($result)) {
                             sum_tn = 0;
                             tb_a.fnClearTable();
                             $("#orderClient2").val('-1').trigger('change.select2');
-                            ;
                             $('.selectpicker').selectpicker('refresh');
                             tb_a.DataTable().ajax.url('ajax_php_sql.php?dt1=' + parseDateValue2($("#dateStart").val()) + "&" + 'dt2=' + parseDateValue2($("#dateEnd").val()) + "&" + 'dt1_=' + $("#dateStart").val() + "&" + 'dt2_=' + $("#dateEnd").val() + "&" + 'user_id=' + $("#user_list").val() + "&" + 'flag=46');
                             tb_a.DataTable().ajax.reload();
-                            tb_p.DataTable().ajax.url('ajax_php_sql.php?flag=39&id_cl=' + id_cl);
+                            tb_p.DataTable().ajax.url('ajax_php_sql.php?flag=39&id_cl=' + id_cl + '&dt1=' + parseDateValue2($("#dateStartTbP").val()) + '&' + 'dt2=' + parseDateValue2($("#dateEndTbP").val()) + '&dt1_=' + $("#dateStartTbP").val() + '&dt2_=' + $("#dateEndTbP").val());
                             tb_p.DataTable().ajax.reload();
                             tb_o.DataTable().ajax.url('ajax_php_sql.php?flag=40&id_cl=' + id_cl);
                             tb_o.DataTable().ajax.reload();
@@ -2233,11 +2263,10 @@ while ($row = mysql_fetch_row($result)) {
                 function crt() {
                     tb_a.fnClearTable();
                     $("#orderClient2").val('-1').trigger('change.select2');
-                    ;
                     $('.selectpicker').selectpicker('refresh');
                     tb_a.DataTable().ajax.url('ajax_php_sql.php?dt1=' + parseDateValue2($("#dateStart").val()) + "&" + 'dt2=' + parseDateValue2($("#dateEnd").val()) + "&" + 'dt1_=' + $("#dateStart").val() + "&" + 'dt2_=' + $("#dateEnd").val() + "&" + 'user_id=' + $("#user_list").val() + "&" + 'flag=46');
                     tb_a.DataTable().ajax.reload();
-                    tb_p.DataTable().ajax.url('ajax_php_sql.php?flag=39&id_cl=' + id_cl);
+                    tb_p.DataTable().ajax.url('ajax_php_sql.php?flag=39&id_cl=' + id_cl + '&dt1=' + parseDateValue2($("#dateStartTbP").val()) + '&' + 'dt2=' + parseDateValue2($("#dateEndTbP").val()) + '&dt1_=' + $("#dateStartTbP").val() + '&dt2_=' + $("#dateEndTbP").val());
                     tb_p.DataTable().ajax.reload();
                     tb_o.DataTable().ajax.url('ajax_php_sql.php?flag=40&id_cl=' + id_cl);
                     tb_o.DataTable().ajax.reload();
@@ -2302,7 +2331,7 @@ while ($row = mysql_fetch_row($result)) {
                             $('.selectpicker').selectpicker('refresh');
                             tb_a.DataTable().ajax.url('ajax_php_sql.php?dt1=' + parseDateValue2($("#dateStart").val()) + "&" + 'dt2=' + parseDateValue2($("#dateEnd").val()) + "&" + 'dt1_=' + $("#dateStart").val() + "&" + 'dt2_=' + $("#dateEnd").val() + "&" + 'user_id=' + $("#user_list").val() + "&" + 'flag=46');
                             tb_a.DataTable().ajax.reload();
-                            tb_p.DataTable().ajax.url('ajax_php_sql.php?flag=39&id_cl=' + id_cl);
+                            tb_p.DataTable().ajax.url('ajax_php_sql.php?flag=39&id_cl=' + id_cl + '&dt1=' + parseDateValue2($("#dateStartTbP").val()) + '&' + 'dt2=' + parseDateValue2($("#dateEndTbP").val()) + '&dt1_=' + $("#dateStartTbP").val() + '&dt2_=' + $("#dateEndTbP").val());
                             tb_p.DataTable().ajax.reload();
                             tb_o.DataTable().ajax.url('ajax_php_sql.php?flag=40&id_cl=' + id_cl);
                             tb_o.DataTable().ajax.reload();
@@ -2330,7 +2359,7 @@ while ($row = mysql_fetch_row($result)) {
                             tb_a.fnClearTable();
                             //tb_a.DataTable().ajax.url('orders_json.php?dt1=' + parseDateValue2($("#dateStart").val()) + "&" +' dt2=' + parseDateValue2($("#dateEnd").val()) + "&" + 'user_id=' + $("#user_list").val());
                             //tb_a.DataTable().ajax.reload();
-                            tb_p.DataTable().ajax.url('ajax_php_sql.php?flag=39&id_cl=' + id_cl);
+                            tb_p.DataTable().ajax.url('ajax_php_sql.php?flag=39&id_cl=' + id_cl + '&dt1=' + parseDateValue2($("#dateStartTbP").val()) + '&' + 'dt2=' + parseDateValue2($("#dateEndTbP").val()) + '&dt1_=' + $("#dateStartTbP").val() + '&dt2_=' + $("#dateEndTbP").val());
                             tb_p.DataTable().ajax.reload();
 
                             tb_o.DataTable().ajax.url('ajax_php_sql.php?flag=40&id_cl=' + id_cl);
@@ -2347,11 +2376,10 @@ while ($row = mysql_fetch_row($result)) {
 
                 function refr() {
                     $("#orderClient2").val('-1').trigger('change.select2');
-                    ;
                     $('.selectpicker').selectpicker('refresh');
                     tb_a.DataTable().ajax.url('ajax_php_sql.php?dt1=' + parseDateValue2($("#dateStart").val()) + "&" + 'dt2=' + parseDateValue2($("#dateEnd").val()) + "&" + 'dt1_=' + $("#dateStart").val() + "&" + 'dt2_=' + $("#dateEnd").val() + "&" + 'user_id=' + $("#user_list").val() + "&" + 'flag=46');
                     tb_a.DataTable().ajax.reload();
-                    tb_p.DataTable().ajax.url('ajax_php_sql.php?flag=39&id_cl=-1');
+                    tb_p.DataTable().ajax.url('ajax_php_sql.php?flag=39&id_cl=-1&dt1=' + parseDateValue2($("#dateStartTbP").val()) + '&' + 'dt2=' + parseDateValue2($("#dateEndTbP").val()) + '&dt1_=' + $("#dateStartTbP").val() + '&dt2_=' + $("#dateEndTbP").val());
                     tb_p.DataTable().ajax.reload();
                     tb_o.DataTable().ajax.url('ajax_php_sql.php?flag=40&id_cl=-1');
                     tb_o.DataTable().ajax.reload();
