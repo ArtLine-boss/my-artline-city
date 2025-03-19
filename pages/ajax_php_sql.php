@@ -2054,9 +2054,9 @@ switch ($flag) {
     case '44':
 
         $isSum = boolval($_GET['isSum']);
-        $selectField = "select t7.dt,t7.ORDER_ID,t7.client_name name,t7.status,t7.flag,t7.num_prod_ord,t7.p_names,t7.prob,t7.comm,t7.id,t7.total,t7.rdy,IF(t8.TOTAL_PROD is null, 0, t8.TOTAL_PROD) zakaz,ROUND(t7.SUMM,2) sum_prod,ROUND(t7.sum_ord,2) sum_ord";
+        $selectField = "select t7.dt,t7.ORDER_ID,t7.client_name name,t7.status,t7.flag,t7.num_prod_ord,t7.p_names,t7.prob,t7.comm,t7.id,t7.total,t7.rdy,IF(t8.TOTAL_PROD is null, 0, t8.TOTAL_PROD) zakaz,ROUND(t7.sum_ord,2) sum_ord,ROUND(t7.SUMM,2) sum_prod";
         if ($isSum) {
-            $selectField = "select ROUND(SUM(t7.SUMM),2) sum_prod,ROUND(SUM(t7.sum_ord),2) sum_ord ";
+            $selectField = "select ROUND(SUM(t7.sum_ord),2) sum_ord,ROUND(SUM(t7.SUMM),2) sum_prod ";
         }
 
         $dt1 = $_GET['dt1'];
@@ -2083,22 +2083,20 @@ switch ($flag) {
         if ($login == 'admins' || ($admin == 4 && isset($_GET['allListOrdersWork']))) {
             $query = $selectField . "
 					from
-						(select t5.id,t5.dt,t5.ORDER_ID,t5.p_names,t5.status,t5.num_prod_ord,t5.total,t5.client_name,t5.prob,t5.comm,IF(t6.FINAL_TOTAL is null, 0, t6.FINAL_TOTAL) rdy,t5.flag,t5.SUMM,t5.sum_ord
+						(select t5.id,t5.dt,t5.ORDER_ID,t5.p_names,t5.status,t5.num_prod_ord,t5.total,t5.client_name,t5.prob,t5.comm,IF(t6.FINAL_TOTAL is null, 0, t6.FINAL_TOTAL) rdy,t5.flag,t5.price_sys sum_ord,t5.SUMM
 						from
 							(select t3.id,t3.dt,t3.ORDER_ID,t3.p_names,t3.status,t3.num_prod_ord,(IF(t3.units <> 'тыс.шт.', t3.total, t3.total * 1000 )) total,t4.client_name,
 								(select tt2.prob from log_task tt2 where tt2.id_prod = t3.ID and tt2.status_new = t3.status ORDER BY tt2.id DESC LIMIT 1) prob,
 								(IF((select flags from lock_task lt where lt.id_prod = t3.id and lt.oper = t3.status ORDER BY lt.id DESC LIMIT 1) IS NULL, 0, (select flags from lock_task lt where lt.id_prod = t3.id and lt.oper = t3.status ORDER BY lt.id DESC LIMIT 1))) flag,
-								(select tt2.comm from log_task tt2 where tt2.id_prod = t3.ID and tt2.status_new = t3.status ORDER BY tt2.id DESC LIMIT 1) comm,t3.SUMM,t3.sum_ord
+								(select tt2.comm from log_task tt2 where tt2.id_prod = t3.ID and tt2.status_new = t3.status ORDER BY tt2.id DESC LIMIT 1) comm,t3.SUMM,t3.price_sys
 							from
-								(select t1.id,t1.dt,t1.ORDER_ID,t1.p_names,t1.status,t1.num_prod_ord,t1.units,t1.TOTAL,t2.client_id,t1.SUMM,t2.sum_ord
+								(select t1.id,t1.dt,t1.ORDER_ID,t1.p_names,t1.status,t1.num_prod_ord,t1.units,t1.TOTAL,t2.client_id,t1.SUMM,t1.price_sys
 								from
-									(select op.ID,DATE_FORMAT(op.dates_rdy, '%d.%m.%Y ') dt,op.ORDER_ID,op.p_names,op.status,op.num_prod_ord,op.units,op.TOTAL,op.SUMM from order_product op where op.`status`<>'' and op.`status`<>'3' and op.ORDER_ID>0) t1
+									(select op.ID,DATE_FORMAT(op.dates_rdy, '%d.%m.%Y ') dt,op.ORDER_ID,op.p_names,op.status,op.num_prod_ord,op.units,op.TOTAL,op.SUMM,op.price_sys from order_product op where op.`status`<>'' and op.`status`<>'3' and op.ORDER_ID>0) t1
 								inner join
-									(SELECT orders.NUMBER, orders.CLIENT_ID, SUM(IF(order_product.SUMM IS NULL,0,order_product.SUMM)) sum_ord
+									(SELECT orders.NUMBER, orders.CLIENT_ID
                                     FROM orders
-                                    LEFT JOIN order_product ON order_product.ORDER_ID = orders.NUMBER
-                                    WHERE orders.DATE_OR BETWEEN '" . $dt1 . "' AND '" . $dt2 . "'" . $userIdStr . "
-                                    GROUP BY orders.NUMBER) t2
+                                    WHERE orders.DATE_OR BETWEEN '" . $dt1 . "' AND '" . $dt2 . "'" . $userIdStr . ") t2
 								on t1.ORDER_ID=t2.number) t3
 							left join
 								(select id,client_name from clients) t4
@@ -2128,22 +2126,20 @@ switch ($flag) {
 
             $query = $selectField . "
 				from
-					(select t5.id,t5.dt,t5.ORDER_ID,t5.p_names,t5.status,t5.num_prod_ord,t5.total,t5.client_name,t5.prob,t5.comm,IF(t6.FINAL_TOTAL is null, 0, t6.FINAL_TOTAL) rdy,t5.flag,t5.SUMM,t5.sum_ord
+					(select t5.id,t5.dt,t5.ORDER_ID,t5.p_names,t5.status,t5.num_prod_ord,t5.total,t5.client_name,t5.prob,t5.comm,IF(t6.FINAL_TOTAL is null, 0, t6.FINAL_TOTAL) rdy,t5.flag,t5.price_sys sum_ord,t5.SUMM
 					from
 						(select t3.id,t3.dt,t3.ORDER_ID,t3.p_names,t3.status,t3.num_prod_ord,(IF(t3.units <> 'тыс.шт.', t3.total, t3.total * 1000 )) total,t4.client_name,
 							(select tt2.prob from log_task tt2 where tt2.id_prod = t3.ID and tt2.status_new = t3.status ORDER BY tt2.id DESC LIMIT 1) prob,
 							(IF((select flags from lock_task lt where lt.id_prod = t3.id and lt.oper = t3.status ORDER BY lt.id DESC LIMIT 1) IS NULL, 0, (select flags from lock_task lt where lt.id_prod = t3.id and lt.oper = t3.status ORDER BY lt.id DESC LIMIT 1))) flag,
-							(select tt2.comm from log_task tt2 where tt2.id_prod = t3.ID and tt2.status_new = t3.status ORDER BY tt2.id DESC LIMIT 1) comm,t3.SUMM,t3.sum_ord
+							(select tt2.comm from log_task tt2 where tt2.id_prod = t3.ID and tt2.status_new = t3.status ORDER BY tt2.id DESC LIMIT 1) comm,t3.SUMM,t3.price_sys
 						from
-							(select t1.id,t1.dt,t1.ORDER_ID,t1.p_names,t1.status,t1.num_prod_ord,t1.units,t1.TOTAL,t2.client_id,t1.SUMM,t2.sum_ord
+							(select t1.id,t1.dt,t1.ORDER_ID,t1.p_names,t1.status,t1.num_prod_ord,t1.units,t1.TOTAL,t2.client_id,t1.SUMM,t1.price_sys
 							from
-								(select op.ID,DATE_FORMAT(op.dates_rdy, '%d.%m.%Y ') dt,op.ORDER_ID,op.p_names,op.status,op.num_prod_ord,op.units,op.TOTAL,op.SUMM from order_product op where op.`status`<>'' and op.`status`<>'3' and op.ORDER_ID>0) t1
+								(select op.ID,DATE_FORMAT(op.dates_rdy, '%d.%m.%Y ') dt,op.ORDER_ID,op.p_names,op.status,op.num_prod_ord,op.units,op.TOTAL,op.SUMM,op.price_sys from order_product op where op.`status`<>'' and op.`status`<>'3' and op.ORDER_ID>0) t1
 							inner join
-								(SELECT orders.NUMBER, orders.CLIENT_ID, SUM(IF(order_product.SUMM IS NULL,0,order_product.SUMM)) sum_ord
+								(SELECT orders.NUMBER, orders.CLIENT_ID
                                 FROM orders
-                                LEFT JOIN order_product ON order_product.ORDER_ID = orders.NUMBER
-                                WHERE orders.DATE_OR BETWEEN '" . $dt1 . "' AND '" . $dt2 . "' " . $filterUser . "
-                                GROUP BY orders.NUMBER) t2
+                                WHERE orders.DATE_OR BETWEEN '" . $dt1 . "' AND '" . $dt2 . "' " . $filterUser . ") t2
 							on t1.ORDER_ID=t2.number) t3
 						left join
 							(select id,client_name from clients) t4
