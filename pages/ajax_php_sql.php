@@ -1564,6 +1564,22 @@ switch ($flag) {
 
     /*---------------------------39---------------------------*/
     case '39':
+        $dt1 = $_GET['dt1'];
+        $dt2 = $_GET['dt2'];
+        $dt1_ = $_GET['dt1_'];
+        $dt2_ = $_GET['dt2_'];
+
+        if ($dt1) {
+            core_sessionInfo::getInstance()->setInfoByField('dt1_tb_p', $dt1_);
+        } else {
+            $dt1 = "0000-00-00";
+        }
+        if ($dt2) {
+            core_sessionInfo::getInstance()->setInfoByField('dt2_tb_p', $dt2_);
+        } else {
+            $dt1 = "3000-01-01";
+        }
+
         $id_cl = $_GET['id_cl'];
         $query = "select 
 	op.ORDER_ID , 
@@ -1579,7 +1595,7 @@ switch ($flag) {
 	op.num_prod_ord,
 	op.id,
 	DATE_FORMAT(o.dt, '%d.%m.%Y')
-	from (SELECT number,DATE_FORMAT(o.DATE_OR, '%Y-%m-%d') dt FROM orders o where CLIENT_ID = " . $id_cl . ") o , order_product op where op.ORDER_ID = o.number  ";
+	from (SELECT number,DATE_FORMAT(o.DATE_OR, '%Y-%m-%d') dt FROM orders o where o.DATE_OR BETWEEN '" . $dt1 . "' AND '" . $dt2 . "' + INTERVAL 1 DAY AND CLIENT_ID = " . $id_cl . ") o , order_product op where op.ORDER_ID = o.number  ";
 
         if ($id_cl == '-1') {
             $query = "select 
@@ -1596,7 +1612,7 @@ switch ($flag) {
 	op.num_prod_ord,
 	op.id,
 	DATE_FORMAT(o.dt, '%d.%m.%Y')
-	from (SELECT number,DATE_FORMAT(o.DATE_OR, '%Y-%m-%d') dt FROM orders o where USER_ID = '" . $login . "') o , order_product op where op.ORDER_ID = o.number  ";
+	from (SELECT number,DATE_FORMAT(o.DATE_OR, '%Y-%m-%d') dt FROM orders o where o.DATE_OR BETWEEN '" . $dt1 . "' AND '" . $dt2 . "' + INTERVAL 1 DAY AND USER_ID = '" . $login . "') o , order_product op where op.ORDER_ID = o.number  ";
         }
 
 
@@ -2054,9 +2070,9 @@ switch ($flag) {
     case '44':
 
         $isSum = boolval($_GET['isSum']);
-        $selectField = "select t7.dt,t7.ORDER_ID,t7.client_name name,t7.status,t7.flag,t7.num_prod_ord,t7.p_names,t7.prob,t7.comm,t7.id,t7.total,t7.rdy,IF(t8.TOTAL_PROD is null, 0, t8.TOTAL_PROD) zakaz,ROUND(t7.SUMM,2) sum_prod,ROUND(t7.sum_ord,2) sum_ord";
+        $selectField = "select t7.dt,t7.ORDER_ID,t7.client_name name,t7.status,t7.flag,t7.num_prod_ord,t7.p_names,t7.prob,t7.comm,t7.id,t7.total,t7.rdy,IF(t8.TOTAL_PROD is null, 0, t8.TOTAL_PROD) zakaz,ROUND(t7.sum_ord,2) sum_ord,ROUND(t7.SUMM,2) sum_prod";
         if ($isSum) {
-            $selectField = "select ROUND(SUM(t7.SUMM),2) sum_prod,ROUND(SUM(t7.sum_ord),2) sum_ord ";
+            $selectField = "select ROUND(SUM(t7.sum_ord),2) sum_ord,ROUND(SUM(t7.SUMM),2) sum_prod ";
         }
 
         $dt1 = $_GET['dt1'];
@@ -2080,25 +2096,23 @@ switch ($flag) {
             $dt1 = "3000-01-01";
         }
 
-        if ($login == 'admins' || ($admin == 4 && isset($_GET['allListOrdersWork']))) {
+        if ($admin == 4) {
             $query = $selectField . "
 					from
-						(select t5.id,t5.dt,t5.ORDER_ID,t5.p_names,t5.status,t5.num_prod_ord,t5.total,t5.client_name,t5.prob,t5.comm,IF(t6.FINAL_TOTAL is null, 0, t6.FINAL_TOTAL) rdy,t5.flag,t5.SUMM,t5.sum_ord
+						(select t5.id,t5.dt,t5.ORDER_ID,t5.p_names,t5.status,t5.num_prod_ord,t5.total,t5.client_name,t5.prob,t5.comm,IF(t6.FINAL_TOTAL is null, 0, t6.FINAL_TOTAL) rdy,t5.flag,t5.price_sys sum_ord,t5.SUMM
 						from
 							(select t3.id,t3.dt,t3.ORDER_ID,t3.p_names,t3.status,t3.num_prod_ord,(IF(t3.units <> 'тыс.шт.', t3.total, t3.total * 1000 )) total,t4.client_name,
 								(select tt2.prob from log_task tt2 where tt2.id_prod = t3.ID and tt2.status_new = t3.status ORDER BY tt2.id DESC LIMIT 1) prob,
 								(IF((select flags from lock_task lt where lt.id_prod = t3.id and lt.oper = t3.status ORDER BY lt.id DESC LIMIT 1) IS NULL, 0, (select flags from lock_task lt where lt.id_prod = t3.id and lt.oper = t3.status ORDER BY lt.id DESC LIMIT 1))) flag,
-								(select tt2.comm from log_task tt2 where tt2.id_prod = t3.ID and tt2.status_new = t3.status ORDER BY tt2.id DESC LIMIT 1) comm,t3.SUMM,t3.sum_ord
+								(select tt2.comm from log_task tt2 where tt2.id_prod = t3.ID and tt2.status_new = t3.status ORDER BY tt2.id DESC LIMIT 1) comm,t3.SUMM,t3.price_sys
 							from
-								(select t1.id,t1.dt,t1.ORDER_ID,t1.p_names,t1.status,t1.num_prod_ord,t1.units,t1.TOTAL,t2.client_id,t1.SUMM,t2.sum_ord
+								(select t1.id,t1.dt,t1.ORDER_ID,t1.p_names,t1.status,t1.num_prod_ord,t1.units,t1.TOTAL,t2.client_id,t1.SUMM,t1.price_sys
 								from
-									(select op.ID,DATE_FORMAT(op.dates_rdy, '%d.%m.%Y ') dt,op.ORDER_ID,op.p_names,op.status,op.num_prod_ord,op.units,op.TOTAL,op.SUMM from order_product op where op.`status`<>'' and op.`status`<>'3' and op.ORDER_ID>0) t1
+									(select op.ID,DATE_FORMAT(op.dates_rdy, '%d.%m.%Y ') dt,op.ORDER_ID,op.p_names,op.status,op.num_prod_ord,op.units,op.TOTAL,op.SUMM,op.price_sys from order_product op where op.`status`<>'' and op.`status`<>'3' and op.ORDER_ID>0) t1
 								inner join
-									(SELECT orders.NUMBER, orders.CLIENT_ID, SUM(IF(order_product.SUMM IS NULL,0,order_product.SUMM)) sum_ord
+									(SELECT orders.NUMBER, orders.CLIENT_ID
                                     FROM orders
-                                    LEFT JOIN order_product ON order_product.ORDER_ID = orders.NUMBER
-                                    WHERE orders.DATE_OR BETWEEN '" . $dt1 . "' AND '" . $dt2 . "'" . $userIdStr . "
-                                    GROUP BY orders.NUMBER) t2
+                                    WHERE orders.DATE_OR BETWEEN '" . $dt1 . "' AND '" . $dt2 . "'" . $userIdStr . ") t2
 								on t1.ORDER_ID=t2.number) t3
 							left join
 								(select id,client_name from clients) t4
@@ -2128,22 +2142,20 @@ switch ($flag) {
 
             $query = $selectField . "
 				from
-					(select t5.id,t5.dt,t5.ORDER_ID,t5.p_names,t5.status,t5.num_prod_ord,t5.total,t5.client_name,t5.prob,t5.comm,IF(t6.FINAL_TOTAL is null, 0, t6.FINAL_TOTAL) rdy,t5.flag,t5.SUMM,t5.sum_ord
+					(select t5.id,t5.dt,t5.ORDER_ID,t5.p_names,t5.status,t5.num_prod_ord,t5.total,t5.client_name,t5.prob,t5.comm,IF(t6.FINAL_TOTAL is null, 0, t6.FINAL_TOTAL) rdy,t5.flag,t5.price_sys sum_ord,t5.SUMM
 					from
 						(select t3.id,t3.dt,t3.ORDER_ID,t3.p_names,t3.status,t3.num_prod_ord,(IF(t3.units <> 'тыс.шт.', t3.total, t3.total * 1000 )) total,t4.client_name,
 							(select tt2.prob from log_task tt2 where tt2.id_prod = t3.ID and tt2.status_new = t3.status ORDER BY tt2.id DESC LIMIT 1) prob,
 							(IF((select flags from lock_task lt where lt.id_prod = t3.id and lt.oper = t3.status ORDER BY lt.id DESC LIMIT 1) IS NULL, 0, (select flags from lock_task lt where lt.id_prod = t3.id and lt.oper = t3.status ORDER BY lt.id DESC LIMIT 1))) flag,
-							(select tt2.comm from log_task tt2 where tt2.id_prod = t3.ID and tt2.status_new = t3.status ORDER BY tt2.id DESC LIMIT 1) comm,t3.SUMM,t3.sum_ord
+							(select tt2.comm from log_task tt2 where tt2.id_prod = t3.ID and tt2.status_new = t3.status ORDER BY tt2.id DESC LIMIT 1) comm,t3.SUMM,t3.price_sys
 						from
-							(select t1.id,t1.dt,t1.ORDER_ID,t1.p_names,t1.status,t1.num_prod_ord,t1.units,t1.TOTAL,t2.client_id,t1.SUMM,t2.sum_ord
+							(select t1.id,t1.dt,t1.ORDER_ID,t1.p_names,t1.status,t1.num_prod_ord,t1.units,t1.TOTAL,t2.client_id,t1.SUMM,t1.price_sys
 							from
-								(select op.ID,DATE_FORMAT(op.dates_rdy, '%d.%m.%Y ') dt,op.ORDER_ID,op.p_names,op.status,op.num_prod_ord,op.units,op.TOTAL,op.SUMM from order_product op where op.`status`<>'' and op.`status`<>'3' and op.ORDER_ID>0) t1
+								(select op.ID,DATE_FORMAT(op.dates_rdy, '%d.%m.%Y ') dt,op.ORDER_ID,op.p_names,op.status,op.num_prod_ord,op.units,op.TOTAL,op.SUMM,op.price_sys from order_product op where op.`status`<>'' and op.`status`<>'3' and op.ORDER_ID>0) t1
 							inner join
-								(SELECT orders.NUMBER, orders.CLIENT_ID, SUM(IF(order_product.SUMM IS NULL,0,order_product.SUMM)) sum_ord
+								(SELECT orders.NUMBER, orders.CLIENT_ID
                                 FROM orders
-                                LEFT JOIN order_product ON order_product.ORDER_ID = orders.NUMBER
-                                WHERE orders.DATE_OR BETWEEN '" . $dt1 . "' AND '" . $dt2 . "' " . $filterUser . "
-                                GROUP BY orders.NUMBER) t2
+                                WHERE orders.DATE_OR BETWEEN '" . $dt1 . "' AND '" . $dt2 . "' " . $filterUser . ") t2
 							on t1.ORDER_ID=t2.number) t3
 						left join
 							(select id,client_name from clients) t4
@@ -2492,6 +2504,11 @@ switch ($flag) {
         $dt2_ = $_GET['dt2_'];
         $user_id = $_GET['user_id'];
 
+        $id_cl = $_GET['id_cl'];
+        $cl_str = "";
+        if ($id_cl > 0) {
+            $cl_str = " AND CLIENT_ID = " . $id_cl;
+        }
 
         $query = "	UPDATE users SET DT1= '{$dt1_}' , DT2= '{$dt2_}', cl_id = '-1' WHERE USER_LOGIN ='{$login}';";
         mysql_query($query) or die($query);
@@ -2506,7 +2523,7 @@ switch ($flag) {
 	(select ROUND(SUM( ROUND((op.price / 1.2) ,2) * op.total * 1.2),2) sum from order_product op where op.order_id = o.NUMBER ORDER BY op.order_id) sumss,
 	DATE_FORMAT(o.DATE_OR, '%Y-%m-%d')						
 	
-	FROM (SELECT * FROM orders WHERE dATE_OR >= '" . $dt1 . "' AND dATE_OR <= '" . $dt2 . "' + INTERVAL 1 DAY) o ";
+	FROM (SELECT * FROM orders WHERE dATE_OR >= '" . $dt1 . "' AND dATE_OR <= '" . $dt2 . "' + INTERVAL 1 DAY" . $cl_str . ") o ";
         } else {
             $query = "SELECT o.NUMBER,  DATE_FORMAT(o.DATE_OR, '%d.%m.%Y'), (select user_fio from users where user_login = o.user_id) user_name, 
 	o.STATUS_ID, (select client_name from clients where id = o.client_id)  client_name,
@@ -2517,7 +2534,7 @@ switch ($flag) {
 	(select ROUND(sum(tn.summ),2) from tn_list_par tn where  tn.order_id = o.NUMBER and tn.del = 0 and num_tm <> 0 group by tn.order_id) ttn	,
 	(		  select ROUND(SUM( ROUND((op.price / 1.2) ,2) * op.total * 1.2),2) sum from order_product op where op.order_id = o.NUMBER ORDER BY op.order_id) sumss,
 	DATE_FORMAT(o.DATE_OR, '%Y-%m-%d')				
-	FROM (SELECT * FROM orders WHERE USER_ID = '" . $user_id . "' AND dATE_OR >= '" . $dt1 . "' AND dATE_OR <= '" . $dt2 . "' + INTERVAL 1 DAY) o ";
+	FROM (SELECT * FROM orders WHERE USER_ID = '" . $user_id . "' AND dATE_OR >= '" . $dt1 . "' AND dATE_OR <= '" . $dt2 . "' + INTERVAL 1 DAY" . $cl_str . ") o ";
         }
 
         $json = array();
@@ -2557,70 +2574,70 @@ switch ($flag) {
             );
         }
 
-        if (count($json) == 0) {
-
-            if ($user_id == '0') {
-                $query = "SELECT o.NUMBER,  DATE_FORMAT(o.DATE_OR, '%d.%m.%Y'),(select user_fio from users where user_login = o.user_id) user_name, 
-	o.STATUS_ID,(select client_name from clients where id = o.client_id)  client_name,
-	(select email from clients where id = o.client_id)  client_mail, o.client_id,
-	(select UNP from clients where id = o.client_id)  client_unp	, 
-	(select ROUND(sum(opl.ALL_SUM),2) from oplati opl where  opl.ORDER_NUM = o.NUMBER  and opl.id > 0 group by opl.ORDER_NUM) opl,
-	(select ROUND(sum(tn.summ),2) from tn_list_par tn where  tn.order_id = o.NUMBER and tn.del = 0 and num_tm <> 0 group by tn.order_id) ttn,
-	(select ROUND(SUM( ROUND((op.price / 1.2) ,2) * op.total * 1.2),2) sum from order_product op where op.order_id = o.NUMBER ORDER BY op.order_id) sumss	,
-	DATE_FORMAT(o.DATE_OR, '%Y-%m-%d')									
-	
-	FROM (SELECT * FROM orders ORDER BY number DESC LIMIT 20) o ";
-            } else {
-                $query = "SELECT o.NUMBER,  DATE_FORMAT(o.DATE_OR, '%d.%m.%Y'), (select user_fio from users where user_login = o.user_id) user_name, 
-	o.STATUS_ID, (select client_name from clients where id = o.client_id)  client_name,
-	(select email from clients where id = o.client_id)  client_mail, o.client_id,
-	
-	(select UNP from clients where id = o.client_id)  client_unp		,
-	( select ROUND(sum(opl.ALL_SUM),2) from oplati opl where  opl.ORDER_NUM = o.NUMBER  and opl.id > 0 group by opl.ORDER_NUM) opl,
-	(select ROUND(sum(tn.summ),2) from tn_list_par tn where  tn.order_id = o.NUMBER and tn.del = 0 and num_tm <> 0 group by tn.order_id) ttn	,
-	(		  select ROUND(SUM( ROUND((op.price / 1.2) ,2) * op.total * 1.2),2) sum from order_product op where op.order_id = o.NUMBER ORDER BY op.order_id) sumss,
-	DATE_FORMAT(o.DATE_OR, '%Y-%m-%d')								
-	FROM (SELECT * FROM orders WHERE USER_ID = '" . $user_id . "' ORDER BY number DESC LIMIT 20) o ";
-            }
-
-            $json = array();
-            $result = mysql_query($query) or die($query);
-            while ($row = mysql_fetch_row($result)) {
-                $aq = $row[8];
-                $tn_sum = $row[9];
-                $summ1 = $row[10];
-
-                $opl = "";
-                if (in_array($admin, ['4', '2', '3']) || in_array($login, [
-                        '008',
-                        '026',
-                        '028',
-                        '030',
-                        '032',
-                        '033'
-                    ])) {
-//                if ($admin == '4' or $admin == '2' or $login == '026' or $login == '030' or $login == '028' or $login == '033' or $login == '032') {
-                    $opl = "<a onclick = add_oplat('$row[0]','$row[6]')><span class = 'pull-right'><i class='glyphicon glyphicon-euro'></i></<span></a>";
-                }
-                $json[] = array(
-                    'q' => "<i class='fa fa-plus-square' aria-hidden='true'></i>",
-                    'dates' => $row[1],
-                    'id' => $row[0],
-                    'names' => $row[4],
-                    'unp' => $row[7],
-                    'mng' => $row[2],
-                    'sum1' => $summ1,
-                    'sum2' => number_format($tn_sum, 2, '.', ' '),
-                    'TM' => $list_prod,
-                    'opl' => number_format($aq, 2, '.', ' '),
-                    'opl_add' => $opl,
-                    'info' => "<a onClick='_smena_cl($row[0])'><button type= 'button' class='btn btn-info btn-circle'><span class='glyphicon glyphicon-user    '></span></button></a>" . '&nbsp;&nbsp;<button type= "button" class="btn btn-info btn-circle" onClick="_smena_dt(' . "'$row[0]','$row[11]'" . ' )"><span class="glyphicon glyphicon-calendar"></span></button>',
-                    'edit' => "<a onClick='acct($row[0])'><i class='fa  fa-edit' aria-hidden='true'></i></a>",
-                );
-            }
-
-
-        }
+//        if (count($json) == 0) {
+//
+//            if ($user_id == '0') {
+//                $query = "SELECT o.NUMBER,  DATE_FORMAT(o.DATE_OR, '%d.%m.%Y'),(select user_fio from users where user_login = o.user_id) user_name,
+//	o.STATUS_ID,(select client_name from clients where id = o.client_id)  client_name,
+//	(select email from clients where id = o.client_id)  client_mail, o.client_id,
+//	(select UNP from clients where id = o.client_id)  client_unp	,
+//	(select ROUND(sum(opl.ALL_SUM),2) from oplati opl where  opl.ORDER_NUM = o.NUMBER  and opl.id > 0 group by opl.ORDER_NUM) opl,
+//	(select ROUND(sum(tn.summ),2) from tn_list_par tn where  tn.order_id = o.NUMBER and tn.del = 0 and num_tm <> 0 group by tn.order_id) ttn,
+//	(select ROUND(SUM( ROUND((op.price / 1.2) ,2) * op.total * 1.2),2) sum from order_product op where op.order_id = o.NUMBER ORDER BY op.order_id) sumss	,
+//	DATE_FORMAT(o.DATE_OR, '%Y-%m-%d')
+//
+//	FROM (SELECT * FROM orders ORDER BY number DESC LIMIT 20) o ";
+//            } else {
+//                $query = "SELECT o.NUMBER,  DATE_FORMAT(o.DATE_OR, '%d.%m.%Y'), (select user_fio from users where user_login = o.user_id) user_name,
+//	o.STATUS_ID, (select client_name from clients where id = o.client_id)  client_name,
+//	(select email from clients where id = o.client_id)  client_mail, o.client_id,
+//
+//	(select UNP from clients where id = o.client_id)  client_unp		,
+//	( select ROUND(sum(opl.ALL_SUM),2) from oplati opl where  opl.ORDER_NUM = o.NUMBER  and opl.id > 0 group by opl.ORDER_NUM) opl,
+//	(select ROUND(sum(tn.summ),2) from tn_list_par tn where  tn.order_id = o.NUMBER and tn.del = 0 and num_tm <> 0 group by tn.order_id) ttn	,
+//	(		  select ROUND(SUM( ROUND((op.price / 1.2) ,2) * op.total * 1.2),2) sum from order_product op where op.order_id = o.NUMBER ORDER BY op.order_id) sumss,
+//	DATE_FORMAT(o.DATE_OR, '%Y-%m-%d')
+//	FROM (SELECT * FROM orders WHERE USER_ID = '" . $user_id . "' ORDER BY number DESC LIMIT 20) o ";
+//            }
+//
+//            $json = array();
+//            $result = mysql_query($query) or die($query);
+//            while ($row = mysql_fetch_row($result)) {
+//                $aq = $row[8];
+//                $tn_sum = $row[9];
+//                $summ1 = $row[10];
+//
+//                $opl = "";
+//                if (in_array($admin, ['4', '2', '3']) || in_array($login, [
+//                        '008',
+//                        '026',
+//                        '028',
+//                        '030',
+//                        '032',
+//                        '033'
+//                    ])) {
+////                if ($admin == '4' or $admin == '2' or $login == '026' or $login == '030' or $login == '028' or $login == '033' or $login == '032') {
+//                    $opl = "<a onclick = add_oplat('$row[0]','$row[6]')><span class = 'pull-right'><i class='glyphicon glyphicon-euro'></i></<span></a>";
+//                }
+//                $json[] = array(
+//                    'q' => "<i class='fa fa-plus-square' aria-hidden='true'></i>",
+//                    'dates' => $row[1],
+//                    'id' => $row[0],
+//                    'names' => $row[4],
+//                    'unp' => $row[7],
+//                    'mng' => $row[2],
+//                    'sum1' => $summ1,
+//                    'sum2' => number_format($tn_sum, 2, '.', ' '),
+//                    'TM' => $list_prod,
+//                    'opl' => number_format($aq, 2, '.', ' '),
+//                    'opl_add' => $opl,
+//                    'info' => "<a onClick='_smena_cl($row[0])'><button type= 'button' class='btn btn-info btn-circle'><span class='glyphicon glyphicon-user    '></span></button></a>" . '&nbsp;&nbsp;<button type= "button" class="btn btn-info btn-circle" onClick="_smena_dt(' . "'$row[0]','$row[11]'" . ' )"><span class="glyphicon glyphicon-calendar"></span></button>',
+//                    'edit' => "<a onClick='acct($row[0])'><i class='fa  fa-edit' aria-hidden='true'></i></a>",
+//                );
+//            }
+//
+//
+//        }
 
 
         echo json_encode($json);
