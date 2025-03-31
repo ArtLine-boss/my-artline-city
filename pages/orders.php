@@ -557,11 +557,6 @@ while ($row = mysql_fetch_row($result)) {
                                                ?>"
                                                size="8"/>
                                     </div>
-                                    <?php
-                                    if ($admin == 4 && $login != 'admins') {
-                                        echo '<div class="col-md-3"><input type="checkbox" id="all_list_orders_work" onchange="refListOrdersWork(this)"><b>Все заявки</b></div>';
-                                    }
-                                    ?>
                                 </div>
                             </div>
                             <div class="panel-body">
@@ -1418,7 +1413,7 @@ while ($row = mysql_fetch_row($result)) {
                     "paging:": true,
                     "ajax": {
                         type: "GET",
-                        url: 'ajax_php_sql.php?flag=39&id_cl=' + id_cl + '&dt1=' + parseDateValue2($("#dateStartTbP").val()) + '&' + 'dt2=' + parseDateValue2($("#dateEndTbP").val()) + '&dt1_=' + $("#dateStartTbP").val() + '&dt2_=' + $("#dateEndTbP").val(),
+                        url: 'ajax_php_sql.php?flag=39&id_cl=' + $("#orderClient2").val() + '&dt1=' + parseDateValue2($("#dateStartTbP").val()) + '&' + 'dt2=' + parseDateValue2($("#dateEndTbP").val()) + '&dt1_=' + $("#dateStartTbP").val() + '&dt2_=' + $("#dateEndTbP").val(),
                         "dataSrc": ""
                     },
                     "columns": [
@@ -1548,43 +1543,32 @@ while ($row = mysql_fetch_row($result)) {
                     }
                 };
 
-                var dTable1 = $('#example1').dataTable(default_options5);
+                var default_options_post = {
+                    "iDisplayLength": 10,
+                    "bStateSave": true,
+                    "responsive": true,
+                    "paging:": true,
+                    "ajax": {
+                        type: "GET",
+                        url: 'ajax_php_sql.php?flag=48&id_cl=' + id_cl,
+                        "dataSrc": ""
+                    },
+                    "columns": [
+                        {"data": "view"},
+                        {"data": "num"},
+                        {"data": "cl"},
+                        {"data": "price"},
+                        {"data": "track"},
+                        {"data": "dates", "sType": "ruDate"},
+                        {"data": "status"},
+                        {"data": "rty"}
+                    ],
+                    "aaSorting": [[0, 'desc']]
+                };
 
-                function refListOrdersWork(e) {
-                    let all = $(e).prop('checked');
-                    let str_all = all ? '&allListOrdersWork' : '';
-                    dTable1.fnDestroy();
-                    dTable1 = $('#example1').dataTable({
-                        "iDisplayLength": 50,
-                        "responsive": true,
-                        "buttons": [
-                            {
-                                extend: 'collection',
-                                text: 'Export',
-                                buttons: ['pdfHtml5', 'csvHtml5', 'copyHtml5', 'excelHtml5']
-                            }
-                        ],
-                        "ajax": {
-                            "url": 'ajax_php_sql.php?flag=44' + str_all,
-                            "dataSrc": ""
-                        },
-                        "columns": [
-                            {"data": "flags"},
-                            {"data": "dats", "sType": "ruDate"},
-                            {"data": "ids"},
-                            {"data": "namess"},
-                            {"data": "namess_orod"},
-                            {"data": "stast"},
-                            {"data": "prob"},
-                            {"data": "comm"},
-                            {"data": "total"},
-                            {"data": "rdy"},
-                            {"data": "zakaz"},
-                            {"data": "info"}
-                        ],
-                        "aaSorting": [[1, 'asc']]
-                    });
-                }
+                var tb_post = $('#tb_post').dataTable(default_options_post);
+
+                var dTable1 = $('#example1').dataTable(default_options5);
 
                 function view_tn(id, type) {
                     if (type == 'tn') {
@@ -1926,13 +1910,14 @@ while ($row = mysql_fetch_row($result)) {
                 }
 
                 $('select.myselect').on('change', function () {
-                    id = document.getElementById('orderClient2').value;
-                    if (id == '-1') {
-                        $("#orderClient2").val('-1').trigger('change.select2');
-                        tb_a.DataTable().ajax.url('ajax_php_sql.php?dt1=' + parseDateValue2($("#dateStart").val()) + "&" + 'dt2=' + parseDateValue2($("#dateEnd").val()) + "&" + 'dt1_=' + $("#dateStart").val() + "&" + 'dt2_=' + $("#dateEnd").val() + "&" + 'user_id=' + $("#user_list").val() + "&" + 'flag=46');
-                    } else {
-                        tb_a.DataTable().ajax.url('ajax_php_sql.php?flag=38&id_cl=' + id_cl);
-                    }
+                    // id = document.getElementById('orderClient2').value;
+                    let id_cl = $("#orderClient2").val();
+                    // if (id_cl == '-1') {
+                    // $("#orderClient2").val('-1').trigger('change.select2');
+                    tb_a.DataTable().ajax.url('ajax_php_sql.php?id_cl=' + id_cl + '&dt1=' + parseDateValue2($("#dateStart").val()) + "&" + 'dt2=' + parseDateValue2($("#dateEnd").val()) + "&" + 'dt1_=' + $("#dateStart").val() + "&" + 'dt2_=' + $("#dateEnd").val() + "&" + 'user_id=' + $("#user_list").val() + "&" + 'flag=46');
+                    // } else {
+                    //     tb_a.DataTable().ajax.url('ajax_php_sql.php?flag=38&id_cl=' + id_cl);
+                    // }
                     tb_a.DataTable().ajax.reload();
                     tb_p.DataTable().ajax.url('ajax_php_sql.php?flag=39&id_cl=' + id_cl + '&dt1=' + parseDateValue2($("#dateStartTbP").val()) + '&' + 'dt2=' + parseDateValue2($("#dateEndTbP").val()) + '&dt1_=' + $("#dateStartTbP").val() + '&dt2_=' + $("#dateEndTbP").val());
                     tb_p.DataTable().ajax.reload();
@@ -2237,12 +2222,13 @@ while ($row = mysql_fetch_row($result)) {
                         dateFormat: 'dd/mm/yy',
                         firstDay: 1,
                         onSelect: function (dateText, inst) {
+                            let id_cl = $("#orderClient2").val();
                             sum_acct = 0;
                             sum_tn = 0;
                             tb_a.fnClearTable();
-                            $("#orderClient2").val('-1').trigger('change.select2');
-                            $('.selectpicker').selectpicker('refresh');
-                            tb_a.DataTable().ajax.url('ajax_php_sql.php?dt1=' + parseDateValue2($("#dateStart").val()) + "&" + 'dt2=' + parseDateValue2($("#dateEnd").val()) + "&" + 'dt1_=' + $("#dateStart").val() + "&" + 'dt2_=' + $("#dateEnd").val() + "&" + 'user_id=' + $("#user_list").val() + "&" + 'flag=46');
+                            // $("#orderClient2").val('-1').trigger('change.select2');
+                            // $('.selectpicker').selectpicker('refresh');
+                            tb_a.DataTable().ajax.url('ajax_php_sql.php?id_cl=' + id_cl + '&dt1=' + parseDateValue2($("#dateStart").val()) + "&" + 'dt2=' + parseDateValue2($("#dateEnd").val()) + "&" + 'dt1_=' + $("#dateStart").val() + "&" + 'dt2_=' + $("#dateEnd").val() + "&" + 'user_id=' + $("#user_list").val() + "&" + 'flag=46');
                             tb_a.DataTable().ajax.reload();
                             tb_p.DataTable().ajax.url('ajax_php_sql.php?flag=39&id_cl=' + id_cl + '&dt1=' + parseDateValue2($("#dateStartTbP").val()) + '&' + 'dt2=' + parseDateValue2($("#dateEndTbP").val()) + '&dt1_=' + $("#dateStartTbP").val() + '&dt2_=' + $("#dateEndTbP").val());
                             tb_p.DataTable().ajax.reload();
@@ -2262,9 +2248,10 @@ while ($row = mysql_fetch_row($result)) {
 
                 function crt() {
                     tb_a.fnClearTable();
-                    $("#orderClient2").val('-1').trigger('change.select2');
-                    $('.selectpicker').selectpicker('refresh');
-                    tb_a.DataTable().ajax.url('ajax_php_sql.php?dt1=' + parseDateValue2($("#dateStart").val()) + "&" + 'dt2=' + parseDateValue2($("#dateEnd").val()) + "&" + 'dt1_=' + $("#dateStart").val() + "&" + 'dt2_=' + $("#dateEnd").val() + "&" + 'user_id=' + $("#user_list").val() + "&" + 'flag=46');
+                    let id_cl = $("#orderClient2").val();
+                    // $("#orderClient2").val('-1').trigger('change.select2');
+                    // $('.selectpicker').selectpicker('refresh');
+                    tb_a.DataTable().ajax.url('ajax_php_sql.php?id_cl=' + id_cl + '&dt1=' + parseDateValue2($("#dateStart").val()) + "&" + 'dt2=' + parseDateValue2($("#dateEnd").val()) + "&" + 'dt1_=' + $("#dateStart").val() + "&" + 'dt2_=' + $("#dateEnd").val() + "&" + 'user_id=' + $("#user_list").val() + "&" + 'flag=46');
                     tb_a.DataTable().ajax.reload();
                     tb_p.DataTable().ajax.url('ajax_php_sql.php?flag=39&id_cl=' + id_cl + '&dt1=' + parseDateValue2($("#dateStartTbP").val()) + '&' + 'dt2=' + parseDateValue2($("#dateEndTbP").val()) + '&dt1_=' + $("#dateStartTbP").val() + '&dt2_=' + $("#dateEndTbP").val());
                     tb_p.DataTable().ajax.reload();
@@ -2326,10 +2313,11 @@ while ($row = mysql_fetch_row($result)) {
                             flag: '208'
                         },
                         success: function (data) {//возвращаемый результат от сервера
+                            let id_cl = $("#orderClient2").val();
                             $('#add_opl').modal('hide');
-                            $("#orderClient2").val('-1').trigger('change.select2');
-                            $('.selectpicker').selectpicker('refresh');
-                            tb_a.DataTable().ajax.url('ajax_php_sql.php?dt1=' + parseDateValue2($("#dateStart").val()) + "&" + 'dt2=' + parseDateValue2($("#dateEnd").val()) + "&" + 'dt1_=' + $("#dateStart").val() + "&" + 'dt2_=' + $("#dateEnd").val() + "&" + 'user_id=' + $("#user_list").val() + "&" + 'flag=46');
+                            // $("#orderClient2").val('-1').trigger('change.select2');
+                            // $('.selectpicker').selectpicker('refresh');
+                            tb_a.DataTable().ajax.url('ajax_php_sql.php?id_cl=' + id_cl + '&dt1=' + parseDateValue2($("#dateStart").val()) + "&" + 'dt2=' + parseDateValue2($("#dateEnd").val()) + "&" + 'dt1_=' + $("#dateStart").val() + "&" + 'dt2_=' + $("#dateEnd").val() + "&" + 'user_id=' + $("#user_list").val() + "&" + 'flag=46');
                             tb_a.DataTable().ajax.reload();
                             tb_p.DataTable().ajax.url('ajax_php_sql.php?flag=39&id_cl=' + id_cl + '&dt1=' + parseDateValue2($("#dateStartTbP").val()) + '&' + 'dt2=' + parseDateValue2($("#dateEndTbP").val()) + '&dt1_=' + $("#dateStartTbP").val() + '&dt2_=' + $("#dateEndTbP").val());
                             tb_p.DataTable().ajax.reload();
@@ -2345,7 +2333,7 @@ while ($row = mysql_fetch_row($result)) {
 
                 function sscm() {
                     id_acct = document.getElementById('smen').value;
-                    id_cl = document.getElementById('orderClient1').value;
+                    let id_cl = $("#orderClient1").val();
                     $.ajax({
                         type: "GET",
                         url: 'ajax_php_sql.php',
@@ -2375,9 +2363,10 @@ while ($row = mysql_fetch_row($result)) {
                 }
 
                 function refr() {
-                    $("#orderClient2").val('-1').trigger('change.select2');
-                    $('.selectpicker').selectpicker('refresh');
-                    tb_a.DataTable().ajax.url('ajax_php_sql.php?dt1=' + parseDateValue2($("#dateStart").val()) + "&" + 'dt2=' + parseDateValue2($("#dateEnd").val()) + "&" + 'dt1_=' + $("#dateStart").val() + "&" + 'dt2_=' + $("#dateEnd").val() + "&" + 'user_id=' + $("#user_list").val() + "&" + 'flag=46');
+                    // $("#orderClient2").val('-1').trigger('change.select2');
+                    let id_cl = $("#orderClient2").val();
+                    // $('.selectpicker').selectpicker('refresh');
+                    tb_a.DataTable().ajax.url('ajax_php_sql.php?id_cl=' + id_cl + '&dt1=' + parseDateValue2($("#dateStart").val()) + "&" + 'dt2=' + parseDateValue2($("#dateEnd").val()) + "&" + 'dt1_=' + $("#dateStart").val() + "&" + 'dt2_=' + $("#dateEnd").val() + "&" + 'user_id=' + $("#user_list").val() + "&" + 'flag=46');
                     tb_a.DataTable().ajax.reload();
                     tb_p.DataTable().ajax.url('ajax_php_sql.php?flag=39&id_cl=-1&dt1=' + parseDateValue2($("#dateStartTbP").val()) + '&' + 'dt2=' + parseDateValue2($("#dateEndTbP").val()) + '&dt1_=' + $("#dateStartTbP").val() + '&dt2_=' + $("#dateEndTbP").val());
                     tb_p.DataTable().ajax.reload();
