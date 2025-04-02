@@ -1644,7 +1644,7 @@ switch ($flag) {
                     break;
                 case '10':
                     if ($row[7] == '1') {
-                        $list_prod = " <span class='label label-primary'>Дизайн " . $row[8] . "</span>";
+                        $list_prod = " <span class='label label-primary'>Дизайн</span>";
                         break;
                     } else {
                         $list_prod = "<span class='label label-primary '>Ожидание дизайна</span>";
@@ -1653,7 +1653,7 @@ switch ($flag) {
                     break;
                 case '11':
                     if ($row[7] == '1') {
-                        $list_prod = "<span class='label label-primary '>Препресс " . $row[8] . "</span>";
+                        $list_prod = "<span class='label label-primary '>Препресс</span>";
                         break;
                     } else {
                         $list_prod = "<span class='label label-primary '>Ожидание препресса</span>";
@@ -1661,7 +1661,7 @@ switch ($flag) {
                     }
                 case '12':
                     if ($row[7] == '1') {
-                        $list_prod = " <span class='label label-info'>Печатает " . $row[8] . "</span>";
+                        $list_prod = " <span class='label label-info'>Печатает</span>";
                         break;
                     } else {
                         $list_prod = " <span class='label label-info'>Ожидание печати</span>";
@@ -2202,7 +2202,7 @@ switch ($flag) {
                     break;
                 case 10:
                     if ($row[4] == '1') {
-                        $list_prod = " <span class='label label-primary'>Дизайн " . $row[13] . "</span>";
+                        $list_prod = " <span class='label label-primary'>Дизайн</span>";
                         break;
                     } else {
                         $list_prod = "<span class='label label-primary '>Ожидание дизайна</span>";
@@ -2211,7 +2211,7 @@ switch ($flag) {
                     break;
                 case 11:
                     if ($row[4] == '1') {
-                        $list_prod = "<span class='label label-primary '>Препресс " . $row[13] . "</span>";
+                        $list_prod = "<span class='label label-primary '>Препресс</span>";
                         break;
                     } else {
                         $list_prod = "<span class='label label-primary '>Ожидание препресса</span>";
@@ -2219,7 +2219,7 @@ switch ($flag) {
                     }
                 case 12:
                     if ($row[4] == '1') {
-                        $list_prod = " <span class='label label-info'>Печатает " . $row[13] . "</span>";
+                        $list_prod = " <span class='label label-info'>Печатает</span>";
                         break;
                     } else {
                         $list_prod = " <span class='label label-info'>Ожидание печати</span>";
