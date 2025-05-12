@@ -3951,7 +3951,7 @@ if (!empty($plottCut->List)) {
                                     <?
                                     $total_time = 0;
                                     $total_sum = 0;
-                                    $query = "select  * from DIZ_OPER where DEFAULT_ = 0";
+                                    $query = "select  * from DIZ_OPER where DEFAULT_ = 0 AND `NAME` <> ''";
                                     $result = mysql_query($query) or die($query);
                                     while ($row = mysql_fetch_row($result)) {
                                         $sums = 0;
@@ -3991,7 +3991,7 @@ if (!empty($plottCut->List)) {
                                     <?
                                     $total_time = 0;
                                     $total_sum = 0;
-                                    $query = "select  * from DIZ_OPER where DEFAULT_ = 1";
+                                    $query = "select  * from DIZ_OPER where DEFAULT_ = 1 AND `NAME` <> ''";
                                     $result = mysql_query($query) or die($query);
                                     while ($row = mysql_fetch_row($result)) {
                                         $sums = 0;
