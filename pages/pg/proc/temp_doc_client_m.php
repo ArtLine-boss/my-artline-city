@@ -130,6 +130,10 @@
 	if($EMAIL != "")
 		$ADDRESS_POST .= $str_rn."e-mail: ".$EMAIL;
 
+    if(!$user_mail) {
+        $user_mail = '6094477@artline.biz';
+    }
+
 	$PHPWord = new PHPWord();
 	$document = $PHPWord->loadTemplate('tmp_doc_client_m.docx'); //шаблон
 	$document->setValue('num','_______'); //номер
