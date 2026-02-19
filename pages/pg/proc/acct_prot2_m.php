@@ -348,7 +348,7 @@ $pdf->Ln();
 
 $pdf->Cell(100,0,iconv("UTF-8", "cp1251", classes_accordUsers::getPOST($users, classes_accordUsers::ACCORD_TYPE_AM)) );
 $pdf->Ln(3);
-$pdf->Cell(100,5,'Директор __________________________/ Мякишев Е. В.');
+$pdf->Cell(100,5,'Директор __________________________/ Стельмах А.А.');
 $pdf->Cell(100,5,'__________________________/'. iconv("UTF-8", "cp1251", $fio_dir1) );
 $pdf->Ln();
 $pdf->Cell(100,10,'                                     м.п');  
@@ -357,7 +357,7 @@ $pdf->Cell(100,10,'                                     м.п');
 
 $pdf->Ln();
 $image1 = "podpisM.png";
-$pdf->Cell( 20, 0, $pdf->ImagePngWithAlpha($image1, $pdf->GetX()+15, $pdf->GetY()-22, 40), 0, 0, 'L', false );
+$pdf->Cell( 20, 0, $pdf->ImagePngWithAlpha($image1, $pdf->GetX()+25, $pdf->GetY()-30, 40), 0, 0, 'L', false );
 
 $pdf->Ln();
 $image1 = "stampM.png";
