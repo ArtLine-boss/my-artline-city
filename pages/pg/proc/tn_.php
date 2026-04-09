@@ -305,7 +305,7 @@ $html = '	<TABLE BORDER CELLSPACING=0>
 <TD VALIGN=TOP BORDERCOLOR=#ffffff>&nbsp;
 <TD VALIGN=TOP BORDERCOLOR=#ffffff>&nbsp;
 <TD VALIGN=TOP BORDERCOLOR=#ffffff>&nbsp;
-<TD ALIGN=CENTER VALIGN=TOP BORDERCOLOR=#ffffff COLSPAN=21><FONT SIZE=5>(дата и номер договора или другого документа)</FONT>
+<TD ALIGN=CENTER VALIGN=TOP BORDERCOLOR=#ffffff COLSPAN=21><FONT SIZE=5>(наименование, дата и номер документа)</FONT>
 </TR>
 
 <TR>
@@ -534,7 +534,7 @@ $html .= '<TR>
 <TD VALIGN=TOP BORDERCOLOR=#ffffff><FONT SIZE=5>&nbsp;</FONT>
 <TD VALIGN=TOP BORDERCOLOR=#ffffff><FONT SIZE=5>&nbsp;</FONT>
 <TD VALIGN=TOP BORDERCOLOR=#ffffff><FONT SIZE=5>&nbsp;</FONT>
-<TD ALIGN=CENTER VALIGN=TOP BORDERCOLOR=#ffffff COLSPAN=22><FONT SIZE=5>(должность, фамилия, инициалы, подпись)</FONT>
+<TD ALIGN=CENTER VALIGN=TOP BORDERCOLOR=#ffffff COLSPAN=22><FONT SIZE=5>(должность служащего (профессия рабочего), фамилия, инициалы, подпись)</FONT>
 </TR>
 <TR>
 <TD VALIGN=TOP COLSPAN=5>Сдал грузоотправитель
@@ -546,7 +546,7 @@ $html .= '<TR>
 <TD VALIGN=TOP BORDERCOLOR=#ffffff><FONT SIZE=5>&nbsp;</FONT>
 <TD VALIGN=TOP BORDERCOLOR=#ffffff><FONT SIZE=5>&nbsp;</FONT>
 <TD VALIGN=TOP BORDERCOLOR=#ffffff><FONT SIZE=5>&nbsp;</FONT>
-<TD ALIGN=CENTER VALIGN=TOP BORDERCOLOR=#ffffff COLSPAN=21><FONT SIZE=5>(должность, фамилия и инициалы, подпись; штамп (печать) грузоотправителя)</FONT>
+<TD ALIGN=CENTER VALIGN=TOP BORDERCOLOR=#ffffff COLSPAN=21><FONT SIZE=5>(должность служащего (профессия рабочего), фамилия, инициалы, подпись)</FONT>
 </TR>
 <TR>
 <TD VALIGN=TOP COLSPAN=7>Товар к доставке принял
@@ -560,7 +560,7 @@ $html .= '<TR>
 <TD VALIGN=TOP BORDERCOLOR=#ffffff><FONT SIZE=5>&nbsp;</FONT>
 <TD VALIGN=TOP BORDERCOLOR=#ffffff><FONT SIZE=5>&nbsp;</FONT>
 <TD VALIGN=TOP BORDERCOLOR=#ffffff><FONT SIZE=5>&nbsp;</FONT>
-<TD ALIGN=CENTER VALIGN=TOP BORDERCOLOR=#ffffff COLSPAN=20><FONT SIZE=5>(должность, фамилия, инициалы, подпись)</FONT>
+<TD ALIGN=CENTER VALIGN=TOP BORDERCOLOR=#ffffff COLSPAN=20><FONT SIZE=5>(должность служащего (профессия рабочего), фамилия, инициалы, подпись)</FONT>
 </TR>
 <TR>
 <TD VALIGN=TOP>по доверенности
@@ -600,7 +600,7 @@ $html .= '<TD VALIGN=TOP COLSPAN=19 border=0010>&nbsp;
 <TD VALIGN=TOP BORDERCOLOR=#ffffff>&nbsp;
 <TD VALIGN=TOP BORDERCOLOR=#ffffff>&nbsp;
 <TD VALIGN=TOP BORDERCOLOR=#ffffff>&nbsp;
-<TD ALIGN=CENTER VALIGN=TOP BORDERCOLOR=#ffffff COLSPAN=20><FONT SIZE=5>(должность, фамилия и инициалы, подпись; штамп (печать) грузополучателя)</FONT>
+<TD ALIGN=CENTER VALIGN=TOP BORDERCOLOR=#ffffff COLSPAN=20><FONT SIZE=5>(должность служащего (профессия рабочего), фамилия, инициалы, подпись)</FONT>
 </TR>
 
 <TR>
